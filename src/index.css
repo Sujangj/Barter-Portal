@@ -1,13 +1,166 @@
-body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+/**
+ * Base minimalist CSS for the whole React app (resets, typography, colors, links)
+ */
+
+/* Momo Trust Display Font */
+.momo-trust-display-regular {
+  font-family: "Momo Trust Display", sans-serif;
+  font-weight: 400;
+  font-style: normal;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+/* Reset some defaults for box-sizing and spacing */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
 }
+
+html {
+  /* So 1rem = 16px, standard base size */
+  font-size: 16px;
+  font-family: 'Momo Trust Display', 'Segoe UI', 'Roboto', 'Arial', sans-serif;
+  background: url('https://images.unsplash.com/photo-1610209455607-89e8b3e0e393?fm=jpg&q=60&w=3000&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OHx8cHVycGxlJTIwZ2FsYXh5fGVufDB8fDB8fHww') no-repeat center center fixed;
+  background-size: cover;
+  min-height: 100vh;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  background: transparent !important;
+}
+
+/* Headings */
+h1, h2, h3, h4, h5, h6 {
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  color: #2e2d2e;
+  margin-top: 0;
+}
+
+/* Paragraphs and text */
+p {
+  color: #5a5a67;
+  font-size: 1.12rem;
+  line-height: 1.7;
+  margin-bottom: 1.3em;
+}
+
+/* Basic inputs */
+input, button, textarea, select {
+  font-family: inherit;
+  font-size: 1rem;
+  outline: none;
+}
+
+/* Buttons */
+button {
+  transition: background 0.2s, color 0.2s, box-shadow 0.2s;
+}
+
+button:active {
+  transform: translateY(1px) scale(0.98);
+}
+
+/* Remove blue background on Chrome for button click */
+button:focus {
+  outline: none;
+  box-shadow: 0 0 2px 1px #8f94fb55;
+}
+
+/* Links */
+a {
+  color: #007bff;
+  text-decoration: none;
+  transition: color 0.18s;
+}
+
+a:hover, a:focus {
+  color: #514bcf;
+  text-decoration: underline;
+}
+
+/* For lists in navigation bars */
+nav ol, nav ul {
+  list-style: none;
+  padding-left: 0;
+  margin: 0;
+}
+
+/* Responsive containers for the app */
+#root, .app-root {
+  min-height: 100vh;
+  width: 100vw;
+  box-sizing: border-box;
+}
+
+/* Scrollbar beautification */
+::-webkit-scrollbar {
+  width: 8px;
+  background: #edeff5;
+}
+::-webkit-scrollbar-thumb {
+  background: #babcc6;
+  border-radius: 6px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #8f94fb77;
+}
+
+/* Cards and panels */
+.card {
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 3px 22px 0 rgba(143,148,251,0.10);
+  padding: 24px 22px;
+}
+
+/* Animation for popping up cards (for modal-like elements) */
+@keyframes popIn {
+  from { transform: scale(0.92); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}
+.popup-card, .modal-card {
+  animation: popIn 0.22s cubic-bezier(0.52, 1.6, 0.63, 1) 1;
+}
+
+/* Overlay background for popups/modals */
+.popup-overlay, .modal-overlay {
+  background: rgba(36,36,64,0.26);
+  z-index: 2001;
+  position: fixed;
+  top:0; left:0; right:0; bottom:0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Helper class for visually hiding */
+.visually-hidden {
+  position: absolute;
+  left: -10000px;
+  top: auto;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+}
+
+/* Fade in transitions for page */
+.fade-in {
+  animation: fadeIn 0.41s ease-in;
+}
+@keyframes fadeIn {
+  from { opacity: 0;}
+  to   { opacity: 1;}
+}
+
+/* Utility for spacing */
+.mt-2 { margin-top: 0.5rem;}
+.mt-3 { margin-top: 1.2rem;}
+.mb-2 { margin-bottom: 0.5rem;}
+.mb-3 { margin-bottom: 1.2rem;}
+.text-center { text-align: center; }
+
+/* Make sure to preserve Home.css and Login.css component styles,
+   this file just fixes base and shared look for consistency. */
