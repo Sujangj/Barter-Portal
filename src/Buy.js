@@ -391,8 +391,8 @@ function Buy() {
 
                     {/* Profile dropdown or Sign Up/Login buttons */}
                     {!isAuthenticated ? (
-                        <div
-                            onMouseEnter={() => setShowProfileDropdown(true)}
+                            <div
+                                onMouseEnter={() => setShowProfileDropdown(true)}
                             onMouseLeave={() => {
                                 // Only hide if not hovering over dropdown
                                 setTimeout(() => {
@@ -402,8 +402,8 @@ function Buy() {
                                 }, 100);
                             }}
                             style={{ position: "relative", zIndex: 1 }}
-                        >
-                            <button
+                            >
+                                <button
                                 style={{
                                     minWidth: "120px",
                                     width: "120px",
@@ -446,20 +446,20 @@ function Buy() {
                                     <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
                                     <circle cx="12" cy="7" r="4"></circle>
                                 </svg>
-                                Login
+                                    Login
                                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ color: "white" }}>
                                     <polyline points="6 9 12 15 18 9"></polyline>
                                 </svg>
-                            </button>
-                            {showProfileDropdown && (
-                                <div
-                                    ref={profileDropdownRef}
-                                    style={{
-                                        ...profileDropdownStyle,
-                                        right: "-20px", // Adjust position as needed
-                                        minWidth: "240px",
-                                        padding: "0", // Remove padding to allow custom item padding
-                                    }}
+                                </button>
+                                {showProfileDropdown && (
+                                    <div
+                                        ref={profileDropdownRef}
+                                        style={{
+                                            ...profileDropdownStyle,
+                                            right: "-20px", // Adjust position as needed
+                                            minWidth: "240px",
+                                            padding: "0", // Remove padding to allow custom item padding
+                                        }}
                                     onMouseEnter={() => {
                                         setIsHoveringDropdown(true);
                                         setShowProfileDropdown(true);
@@ -471,35 +471,35 @@ function Buy() {
                                             setShowProfileDropdown(false);
                                         }, 100);
                                     }}
-                                >
-                                    <div style={{
-                                        display: "flex",
-                                        justifyContent: "space-between",
-                                        alignItems: "center",
+                                    >
+                                        <div style={{
+                                            display: "flex",
+                                            justifyContent: "space-between",
+                                            alignItems: "center",
                                         padding: "16px 20px",
-                                        borderBottom: "1px solid #eee",
-                                        fontFamily: "momo trust display",
-                                    }}>
-                                        <span style={{ color: "#555", fontSize: "14px" }}>New customer?</span>
-                                        <button
-                                            style={{
-                                                background: "none",
-                                                border: "none",
-                                                color: "#2874f0",
+                                            borderBottom: "1px solid #eee",
+                                            fontFamily: "momo trust display",
+                                        }}>
+                                            <span style={{ color: "#555", fontSize: "14px" }}>New customer?</span>
+                                            <button
+                                                style={{
+                                                    background: "none",
+                                                    border: "none",
+                                                    color: "#2874f0",
                                                 fontWeight: "600",
-                                                cursor: "pointer",
+                                                    cursor: "pointer",
                                                 fontSize: "15px",
-                                                fontFamily: "momo trust display",
-                                            }}
-                                            onClick={() => {
-                                                setShowProfileDropdown(false);
-                                                setShowFullSignUpPopup(true);
-                                            }}
-                                        >
-                                            Sign Up
-                                        </button>
-                                    </div>
-                                    {/* Profile menu items */}
+                                                    fontFamily: "momo trust display",
+                                                }}
+                                                onClick={() => {
+                                                    setShowProfileDropdown(false);
+                                                    setShowFullSignUpPopup(true);
+                                                }}
+                                            >
+                                                Sign Up
+                                            </button>
+                                        </div>
+                                        {/* Profile menu items */}
                                     {menuItems.map((item, index) => (
                                         <button
                                             key={index}
@@ -512,9 +512,9 @@ function Buy() {
                                             {item.text}
                                         </button>
                                     ))}
-                                </div>
-                            )}
-                        </div>
+                                    </div>
+                                )}
+                            </div>
                     ) : (
                         // Authenticated user - show profile dropdown
                         <div style={{ position: "relative" }}>
@@ -549,7 +549,7 @@ function Buy() {
                             {showProfileDropdown && (
                                 <div
                                     ref={profileDropdownRef} // Attach the ref here
-                                    style={{
+                                    style={{ 
                                         ...profileDropdownStyle,
                                         opacity: showProfileDropdown ? 1 : 0,
                                         transform: showProfileDropdown ? "translateY(0)" : "translateY(-10px)",
@@ -561,16 +561,16 @@ function Buy() {
                                         // Authenticated user menu
                                         <>
                                             {menuItems.map((item, index) => (
-                                                <button
+                                            <button
                                                     key={index}
                                                     style={{ width: "100%", padding: "12px 20px", background: "none", border: "none", textAlign: "left", cursor: "pointer", fontSize: "14px", fontWeight: "500", color: "#333", transition: "all 0.2s ease", fontFamily: "momo trust display", display: "flex", alignItems: "center", gap: "10px" }}
-                                                    onMouseEnter={(e) => e.target.style.background = "#f8f9fa"}
-                                                    onMouseLeave={(e) => e.target.style.background = "transparent"}
+                                                onMouseEnter={(e) => e.target.style.background = "#f8f9fa"}
+                                                onMouseLeave={(e) => e.target.style.background = "transparent"}
                                                     onClick={() => alert(`Clicked ${item.text}`)} // Placeholder for actual functionality
-                                                >
+                                            >
                                                     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" dangerouslySetInnerHTML={{ __html: item.icon }} />
                                                     {item.text}
-                                                </button>
+                                            </button>
                                             ))}
                                             <button
                                                 style={{
@@ -985,7 +985,7 @@ function Buy() {
                             fontSize: "14px",
                             fontStyle: "italic"
                         }}>
-
+                            
                         </p>
                     </div>
                 </div>

@@ -10,11 +10,8 @@ const BOOKS_BG =
 // Extracted the CenteredInfoCard as a separate component to resolve hooks error inside .map
 function CenteredInfoCard({ text, onClick }) {
   const [pressed, setPressed] = useState(false);
+  const [hovered, setHovered] = useState(false);
   const LOGIN_HEADER_BG = "linear-gradient(135deg, #667eea 0%, #764ba2 100%)";
-  // style matches the login button pressed effect in header
-  const pressedStyle = {
-    transform: "scale(0.96) translateY(1.5px)"
-  };
   return (
     <div
       style={{
@@ -35,11 +32,15 @@ function CenteredInfoCard({ text, onClick }) {
         willChange: "transform", // Match button will-change
         cursor: onClick ? "pointer" : "default", // Clickable if onClick provided
         textTransform: "none", // Match button text transform
-        ...(pressed ? pressedStyle : {}),
+        transform: pressed ? "scale(0.96) translateY(1.5px)" : hovered ? "scale(1.05)" : "scale(1)",
+      }}
+      onMouseEnter={() => setHovered(true)}
+      onMouseLeave={() => {
+        setHovered(false);
+        setPressed(false);
       }}
       onMouseDown={() => setPressed(true)}
       onMouseUp={() => setPressed(false)}
-      onMouseLeave={() => setPressed(false)}
       onTouchStart={() => setPressed(true)}
       onTouchEnd={() => setPressed(false)}
       onClick={onClick}
@@ -60,6 +61,9 @@ function Login() {
     const [loginEmail, setLoginEmail] = useState("");
     const [loginPassword, setLoginPassword] = useState("");
     const [loginError, setLoginError] = useState("");
+
+    // Sign out confirmation state
+    const [showSignOutConfirm, setShowSignOutConfirm] = useState(false);
 
     // SignUp state - with additional fields
     const [signupName, setSignupName] = useState(""); // Restored state
@@ -164,7 +168,7 @@ function Login() {
                 flexDirection: "column"
             }}
         >
-            <Header />
+            <Header showSignOutButton={true} onSignOut={() => setShowSignOutConfirm(true)} />
             {/* Main content area with footer attached */}
             <div style={{
                 flex: "1",
@@ -509,6 +513,110 @@ function Login() {
                                 }}
                             >
                                 Continue without Login
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            )}
+
+            {/* Sign Out Confirmation Popup */}
+            {showSignOutConfirm && (
+                <div style={{
+                    position: "fixed",
+                    top: 0,
+                    left: 0,
+                    right: 0,
+                    bottom: 0,
+                    background: "rgba(0, 0, 0, 0.5)",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    zIndex: 2000
+                }}>
+                    <div style={{
+                        background: "white",
+                        borderRadius: "12px",
+                        padding: "30px",
+                        maxWidth: "400px",
+                        width: "90%",
+                        boxShadow: "0 10px 30px rgba(0,0,0,0.3)",
+                        textAlign: "center",
+                        fontFamily: "momo trust display"
+                    }}>
+                        <div style={{
+                            fontSize: "48px",
+                            marginBottom: "20px",
+                            color: "#f39c12"
+                        }}>
+                        
+                        </div>
+
+                        <h3 style={{
+                            margin: "0 0 15px 0",
+                            color: "#333",
+                            fontSize: "20px",
+                            fontWeight: "600"
+                        }}>
+                            Confirm Sign Out
+                        </h3>
+
+                        <p style={{
+                            margin: "0 0 25px 0",
+                            color: "#666",
+                            fontSize: "16px",
+                            lineHeight: "1.5"
+                        }}>
+                            Are you sure you want to sign out?
+                        </p>
+
+                        <div style={{
+                            display: "flex",
+                            gap: "15px",
+                            justifyContent: "center"
+                        }}>
+                            <button
+                                style={{
+                                    padding: "12px 24px",
+                                    background: "#dc3545",
+                                    color: "white",
+                                    border: "none",
+                                    borderRadius: "6px",
+                                    cursor: "pointer",
+                                    fontSize: "16px",
+                                    fontWeight: "600",
+                                    fontFamily: "momo trust display",
+                                    transition: "all 0.3s ease"
+                                }}
+                                onMouseEnter={(e) => e.target.style.background = "#c82333"}
+                                onMouseLeave={(e) => e.target.style.background = "#dc3545"}
+                                onClick={() => {
+                                    setShowSignOutConfirm(false);
+                                    // Clear authentication state
+                                    localStorage.setItem("isAuthenticated", "false");
+                                    navigate("/");
+                                }}
+                            >
+                                Leave
+                            </button>
+
+                            <button
+                                style={{
+                                    padding: "12px 24px",
+                                    background: "#6c757d",
+                                    color: "white",
+                                    border: "none",
+                                    borderRadius: "6px",
+                                    cursor: "pointer",
+                                    fontSize: "16px",
+                                    fontWeight: "600",
+                                    fontFamily: "momo trust display",
+                                    transition: "all 0.3s ease"
+                                }}
+                                onMouseEnter={(e) => e.target.style.background = "#5a6268"}
+                                onMouseLeave={(e) => e.target.style.background = "#6c757d"}
+                                onClick={() => setShowSignOutConfirm(false)}
+                            >
+                                Cancel
                             </button>
                         </div>
                     </div>

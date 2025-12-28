@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import LoginFormPopup from "./LoginFormPopup";
 import SignUpFormPopup from "./SignUpFormPopup";
@@ -8,13 +8,92 @@ const LOGO_URL =
 
 const LOGIN_HEADER_BG = "linear-gradient(135deg, #667eea 0%, #764ba2 100%)";
 
-function Header({ showBackButton, backButtonColor }) {
+function Header({ showBackButton, backButtonColor, showSignOutButton, onSignOut, showSingleLoginButton }) {
     const navigate = useNavigate();
     const [showLoginFormPopup, setShowLoginFormPopup] = useState(false);
     const [showFullSignUpPopup, setShowFullSignUpPopup] = useState(false);
     const [headerLoginPressed, setHeaderLoginPressed] = useState(false);
+    const [showProfileDropdown, setShowProfileDropdown] = useState(false);
+    const [isHoveringDropdown, setIsHoveringDropdown] = useState(false);
+    const profileDropdownRef = useRef(null);
 
     const isAuthenticated = localStorage.getItem("isAuthenticated") === "true";
+
+    // Helper function to calculate darker hover color
+    const getHoverColor = (bgColor) => {
+        if (bgColor === "red" || bgColor === "#dc3545") {
+            return "#c82333";
+        }
+        // For other colors, return a slightly darker version
+        // This is a simple approximation - in a real app you'd use a color library
+        if (bgColor && bgColor.startsWith('#')) {
+            // Simple darkening by reducing RGB values
+            const r = Math.max(0, parseInt(bgColor.slice(1, 3), 16) - 40);
+            const g = Math.max(0, parseInt(bgColor.slice(3, 5), 16) - 40);
+            const b = Math.max(0, parseInt(bgColor.slice(5, 7), 16) - 40);
+            return `rgb(${r}, ${g}, ${b})`;
+        }
+        return "#c82333"; // fallback
+    };
+
+    // Close profile dropdown when clicking outside
+    useEffect(() => {
+        function handleClickOutside(event) {
+            if (profileDropdownRef.current && !profileDropdownRef.current.contains(event.target)) {
+                setShowProfileDropdown(false);
+            }
+        }
+        document.addEventListener("mousedown", handleClickOutside);
+        return () => {
+            document.removeEventListener("mousedown", handleClickOutside);
+        };
+    }, []); // Empty dependency array since profileDropdownRef is stable
+
+    // SVG Icon Components
+    const ProfileIcon = () => (
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+            <circle cx="12" cy="7" r="4"/>
+        </svg>
+    );
+
+    const OrdersIcon = () => (
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+            <path d="M6 2L3 6v14c0 1.1.9 2 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/>
+            <line x1="3" y1="6" x2="21" y2="6"/>
+            <path d="M16 10a4 4 0 0 1-8 0"/>
+        </svg>
+    );
+
+    const WishlistIcon = () => (
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+            <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
+        </svg>
+    );
+
+    const RewardsIcon = () => (
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+            <circle cx="12" cy="8" r="7"/>
+            <polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88"/>
+        </svg>
+    );
+
+    const ReferEarnIcon = () => (
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+            <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/>
+            <circle cx="9" cy="7" r="4"/>
+            <path d="M19 8v6"/>
+            <path d="M22 11h-6"/>
+        </svg>
+    );
+
+    const menuItems = [
+        { text: "My Profile", icon: <ProfileIcon /> },
+        { text: "Orders", icon: <OrdersIcon /> },
+        { text: "Wishlist", icon: <WishlistIcon /> },
+        { text: "Rewards", icon: <RewardsIcon /> },
+        { text: "Refer & Earn", icon: <ReferEarnIcon /> },
+    ];
 
     const headerButtonStyle = {
         minWidth: "140px",
@@ -106,46 +185,322 @@ function Header({ showBackButton, backButtonColor }) {
                     gap: "22px"
                 }}
             >
-                {!isAuthenticated ? (
-                    <>
+                {showBackButton && !isAuthenticated ? (
                         <button
-                            className="login-button"
                             style={{
                                 ...headerButtonStyle,
-                                ...(headerLoginPressed ? pressedButtonStyle : {})
+                                background: backButtonColor || "#dc3545"
                             }}
-                            onClick={() => setShowLoginFormPopup(true)}
-                            onMouseDown={() => setHeaderLoginPressed(true)}
-                            onMouseUp={() => setHeaderLoginPressed(false)}
-                            onMouseLeave={() => setHeaderLoginPressed(false)}
-                            onTouchStart={() => setHeaderLoginPressed(true)}
-                            onTouchEnd={() => setHeaderLoginPressed(false)}
+                            onClick={() => navigate("/home")}
+                            onMouseEnter={(e) => e.target.style.background = getHoverColor(backButtonColor || "#dc3545")}
+                            onMouseLeave={(e) => e.target.style.background = backButtonColor || "#dc3545"}
                         >
-                            Login
+                            Back to Home
                         </button>
-                        <button
-                            className="signup-button"
-                            style={{
-                                ...headerButtonStyle,
+                ) : !isAuthenticated ? (
+                    showSingleLoginButton ? (
+                        // Show both Back button and Single Login button for unauthenticated users
+                        <>
+                            <button
+                                style={{
+                                    ...headerButtonStyle,
+                                    background: backButtonColor || "#dc3545"
+                                }}
+                                onClick={() => navigate("/home")}
+                                onMouseEnter={(e) => e.target.style.background = getHoverColor(backButtonColor || "#dc3545")}
+                                onMouseLeave={(e) => e.target.style.background = backButtonColor || "#dc3545"}
+                            >
+                                Back to Home
+                            </button>
+                            <div
+                                onMouseEnter={() => setShowProfileDropdown(true)}
+                                onMouseLeave={() => {
+                                    // Only hide if not hovering over dropdown
+                                    setTimeout(() => {
+                                        if (!isHoveringDropdown) {
+                                            setShowProfileDropdown(false);
+                                        }
+                                    }, 100);
+                                }}
+                                style={{ position: "relative", zIndex: 1 }}
+                            >
+                                <button
+                                    style={{
+                                        minWidth: "120px",
+                                        width: "120px",
+                                        padding: "10px 15px",
+                                        fontFamily: "'momo trust display', 'Segoe UI', 'Roboto', 'Arial', sans-serif",
+                                        fontWeight: "bold",
+                                        fontSize: "16px",
+                                        borderRadius: "8px",
+                                        background: "#667eea",
+                                        color: "white",
+                                        border: "none",
+                                        cursor: "pointer",
+                                        boxShadow: "0px 3px 8px rgba(40,116,240,0.28)",
+                                        textAlign: "center",
+                                        display: "flex",
+                                        alignItems: "center",
+                                        justifyContent: "space-around",
+                                        whiteSpace: "nowrap",
+                                        transition: "all 0.3s ease",
+                                        textTransform: "none",
+                                    }}
+                                    onClick={(e) => {
+                                        e.stopPropagation();
+                                        setShowLoginFormPopup(true);
+                                    }}
+                                >
+                                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ color: "white" }}>
+                                        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                                        <circle cx="12" cy="7" r="4"></circle>
+                                    </svg>
+                                    Login
+                                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ color: "white" }}>
+                                        <polyline points="6 9 12 15 18 9"></polyline>
+                                    </svg>
+                                </button>
+                                {showProfileDropdown && (
+                                    <div
+                                        ref={profileDropdownRef}
+                                        style={{
+                                            position: "absolute",
+                                            top: "calc(100% + 5px)",
+                                            right: "-20px",
+                                            background: "white",
+                                            borderRadius: "8px",
+                                            boxShadow: "0 8px 32px rgba(0,0,0,0.15)",
+                                            border: "1px solid #e9ecef",
+                                            minWidth: "240px",
+                                            zIndex: 1000,
+                                            padding: "0",
+                                            fontFamily: "momo trust display",
+                                            opacity: showProfileDropdown ? 1 : 0,
+                                            transform: showProfileDropdown ? "translateY(0)" : "translateY(-10px)",
+                                            transition: "opacity 0.2s ease-out, transform 0.2s ease-out",
+                                            pointerEvents: showProfileDropdown ? "auto" : "none",
+                                        }}
+                                        onMouseEnter={() => {
+                                            setIsHoveringDropdown(true);
+                                            setShowProfileDropdown(true);
+                                        }}
+                                        onMouseLeave={() => {
+                                            setIsHoveringDropdown(false);
+                                            // Hide menu after a short delay to allow mouse to move
+                                            setTimeout(() => {
+                                                setShowProfileDropdown(false);
+                                            }, 100);
+                                        }}
+                                    >
+                                        <div style={{
+                                            display: "flex",
+                                            justifyContent: "space-between",
+                                            alignItems: "center",
+                                            padding: "16px 20px",
+                                            borderBottom: "1px solid #eee",
+                                            fontFamily: "momo trust display",
+                                        }}>
+                                            <span style={{ color: "#555", fontSize: "14px" }}>New customer?</span>
+                                            <button
+                                                style={{
+                                                    background: "none",
+                                                    border: "none",
+                                                    color: "#2874f0",
+                                                    fontWeight: "600",
+                                                    cursor: "pointer",
+                                                    fontSize: "15px",
+                                                    fontFamily: "momo trust display",
+                                                }}
+                                                onClick={() => {
+                                                    setShowProfileDropdown(false);
+                                                    setShowFullSignUpPopup(true);
+                                                }}
+                                            >
+                                                Sign Up
+                                            </button>
+                                        </div>
+                                        {menuItems.map((item, index) => (
+                                            <button
+                                                key={index}
+                                                style={{ display: "flex", alignItems: "center", gap: "10px", width: "100%", padding: "12px 20px", background: "none", border: "none", textAlign: "left", cursor: "pointer", fontSize: "14px", fontWeight: "500", color: "#333", transition: "all 0.2s ease" }}
+                                                onMouseEnter={(e) => e.target.style.background = "#f8f9fa"}
+                                                onMouseLeave={(e) => e.target.style.background = "transparent"}
+                                                onClick={() => alert(`Clicked ${item.text}`)}
+                                            >
+                                                {item.icon}
+                                                {item.text}
+                                            </button>
+                                        ))}
+                                    </div>
+                                )}
+                            </div>
+                        </>
+                    ) : showSingleLoginButton ? (
+                        <div
+                            onMouseEnter={() => setShowProfileDropdown(true)}
+                            onMouseLeave={() => {
+                                // Only hide if not hovering over dropdown
+                                setTimeout(() => {
+                                    if (!isHoveringDropdown) {
+                                        setShowProfileDropdown(false);
+                                    }
+                                }, 100);
                             }}
-                            onClick={() => setShowFullSignUpPopup(true)}
+                            style={{ position: "relative", zIndex: 1 }}
                         >
-                            Sign Up
-                        </button>
-                    </>
+                            <button
+                                style={{
+                                    minWidth: "120px",
+                                    width: "120px",
+                                    padding: "10px 15px",
+                                    fontFamily: "'momo trust display', 'Segoe UI', 'Roboto', 'Arial', sans-serif",
+                                    fontWeight: "bold",
+                                    fontSize: "16px",
+                                    borderRadius: "8px",
+                                    background: "#667eea",
+                                    color: "white",
+                                    border: "none",
+                                    cursor: "pointer",
+                                    boxShadow: "0px 3px 8px rgba(40,116,240,0.28)",
+                                    textAlign: "center",
+                                    display: "flex",
+                                    alignItems: "center",
+                                    justifyContent: "space-around",
+                                    whiteSpace: "nowrap",
+                                    transition: "all 0.3s ease",
+                                    textTransform: "none",
+                                }}
+                                onClick={(e) => {
+                                    e.stopPropagation();
+                                    setShowLoginFormPopup(true);
+                                }}
+                            >
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ color: "white" }}>
+                                    <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                                    <circle cx="12" cy="7" r="4"></circle>
+                                </svg>
+                                Login
+                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ color: "white" }}>
+                                    <polyline points="6 9 12 15 18 9"></polyline>
+                                </svg>
+                            </button>
+                            {showProfileDropdown && (
+                                <div
+                                    ref={profileDropdownRef}
+                                    style={{
+                                        position: "absolute",
+                                        top: "calc(100% + 5px)",
+                                        right: "-20px",
+                                        background: "white",
+                                        borderRadius: "8px",
+                                        boxShadow: "0 8px 32px rgba(0,0,0,0.15)",
+                                        border: "1px solid #e9ecef",
+                                        minWidth: "240px",
+                                        zIndex: 1000,
+                                        padding: "0",
+                                        fontFamily: "momo trust display",
+                                        opacity: showProfileDropdown ? 1 : 0,
+                                        transform: showProfileDropdown ? "translateY(0)" : "translateY(-10px)",
+                                        transition: "opacity 0.2s ease-out, transform 0.2s ease-out",
+                                        pointerEvents: showProfileDropdown ? "auto" : "none",
+                                    }}
+                                    onMouseEnter={() => {
+                                        setIsHoveringDropdown(true);
+                                        setShowProfileDropdown(true);
+                                    }}
+                                    onMouseLeave={() => {
+                                        setIsHoveringDropdown(false);
+                                        // Hide menu after a short delay to allow mouse to move
+                                        setTimeout(() => {
+                                            setShowProfileDropdown(false);
+                                        }, 100);
+                                    }}
+                                >
+                                    <div style={{
+                                        display: "flex",
+                                        justifyContent: "space-between",
+                                        alignItems: "center",
+                                        padding: "16px 20px",
+                                        borderBottom: "1px solid #eee",
+                                        fontFamily: "momo trust display",
+                                    }}>
+                                        <span style={{ color: "#555", fontSize: "14px" }}>New customer?</span>
+                                        <button
+                                            style={{
+                                                background: "none",
+                                                border: "none",
+                                                color: "#2874f0",
+                                                fontWeight: "600",
+                                                cursor: "pointer",
+                                                fontSize: "15px",
+                                                fontFamily: "momo trust display",
+                                            }}
+                                            onClick={() => {
+                                                setShowProfileDropdown(false);
+                                                setShowFullSignUpPopup(true);
+                                            }}
+                                        >
+                                            Sign Up
+                                        </button>
+                                    </div>
+                                    {menuItems.map((item, index) => (
+                                        <button
+                                            key={index}
+                                            style={{ display: "flex", alignItems: "center", gap: "10px", width: "100%", padding: "12px 20px", background: "none", border: "none", textAlign: "left", cursor: "pointer", fontSize: "14px", fontWeight: "500", color: "#333", transition: "all 0.2s ease" }}
+                                            onMouseEnter={(e) => e.target.style.background = "#f8f9fa"}
+                                            onMouseLeave={(e) => e.target.style.background = "transparent"}
+                                            onClick={() => alert(`Clicked ${item.text}`)}
+                                        >
+                                            {item.icon}
+                                            {item.text}
+                                        </button>
+                                    ))}
+                                </div>
+                            )}
+                        </div>
+                    ) : (
+                        <>
+                            <button
+                                className="login-button"
+                                style={{
+                                    ...headerButtonStyle,
+                                    ...(headerLoginPressed ? pressedButtonStyle : {})
+                                }}
+                                onClick={() => setShowLoginFormPopup(true)}
+                                onMouseDown={() => setHeaderLoginPressed(true)}
+                                onMouseUp={() => setHeaderLoginPressed(false)}
+                                onMouseLeave={() => setHeaderLoginPressed(false)}
+                                onTouchStart={() => setHeaderLoginPressed(true)}
+                                onTouchEnd={() => setHeaderLoginPressed(false)}
+                            >
+                                Login
+                            </button>
+                            <button
+                                className="signup-button"
+                                style={{
+                                    ...headerButtonStyle,
+                                }}
+                                onClick={() => setShowFullSignUpPopup(true)}
+                            >
+                                Sign Up
+                            </button>
+                        </>
+                    )
                 ) : (
                     // Placeholder for authenticated user dropdown/buttons
                     <React.Fragment>
-                        {showBackButton ? (
-                                <button
-                                    style={{
-                                        ...headerButtonStyle,
-                                        background: backButtonColor || LOGIN_HEADER_BG,
-                                    }}
-                                    onClick={() => navigate("/home")}
-                                >
-                                    Back to Home
-                                </button>
+                        {showSignOutButton ? (
+                            <button
+                                style={{
+                                    ...headerButtonStyle,
+                                    background: "#dc3545"
+                                }}
+                                onClick={onSignOut}
+                                onMouseEnter={(e) => e.target.style.background = "#c82333"}
+                                onMouseLeave={(e) => e.target.style.background = "#dc3545"}
+                            >
+                                Sign Out
+                            </button>
                         ) : (
                             <button
                                 style={{

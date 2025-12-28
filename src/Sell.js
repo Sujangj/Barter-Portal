@@ -490,7 +490,7 @@ function Sell() {
                                         fontFamily: "momo trust display",
                                     }}>
                                         <span style={{ color: "#555", fontSize: "14px" }}>New customer?</span>
-                                        <button
+                            <button
                                             style={{
                                                 background: "none",
                                                 border: "none",
@@ -504,9 +504,9 @@ function Sell() {
                                                 setShowProfileDropdown(false);
                                                 setShowFullSignUpPopup(true);
                                             }}
-                                        >
-                                            Sign Up
-                                        </button>
+                            >
+                                Sign Up
+                            </button>
                                     </div>
                                     {/* Profile menu items */}
                                     {menuItems.map((item, index) => (

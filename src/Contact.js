@@ -160,7 +160,7 @@ function Contact() {
                             fontWeight: "bold",
                             fontSize: "16px",
                             borderRadius: "8px",
-                            background: "red",
+                            background: "#dc3545",
                             color: "#fff",
                             border: "none",
                             cursor: "pointer",
@@ -174,6 +174,8 @@ function Contact() {
                             fontFamily: "momo trust display", // updated font family for header button
                         }}
                         onClick={() => navigate("/home")}
+                        onMouseEnter={(e) => e.target.style.background = "#c82333"}
+                        onMouseLeave={(e) => e.target.style.background = "#dc3545"}
                     >
                         Back to Home
                     </button>
