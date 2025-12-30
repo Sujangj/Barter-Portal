@@ -123,26 +123,6 @@ function Sell() {
         };
     }, [profileDropdownRef, setShowProfileDropdown]);
 
-    const headerButtonStyle = {
-        minWidth: "140px",
-        width: "140px",
-        padding: "13px 20px",
-        fontWeight: "bold",
-        fontSize: "16px",
-        borderRadius: "8px",
-        background: "#667eea", // Changed to the primary button color
-        color: "#fff",
-        border: "none",
-        cursor: "pointer",
-        boxShadow: "0px 3px 8px rgba(102,126,234,0.28)", // Updated shadow
-        textAlign: "center",
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
-        whiteSpace: "nowrap",
-        transition: "all 0.3s ease",
-        fontFamily: "momo trust display", // updated font family for header button
-    };
 
     const searchIconButtonStyle = {
         background: "none",

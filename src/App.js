@@ -6,6 +6,7 @@ import Sell from './Sell';
 import About from './About';
 import Books from './Books';
 import Contact from './Contact';
+import Collectables from './Collectables';
 import Error from "./Error";
 import Login from "./Login";
 
@@ -20,6 +21,7 @@ function App(){
                     <Route path="/about" element={<About />} />
                     <Route path="/books" element={<Books />} />
                     <Route path="/contact" element={<Contact />} />
+                    <Route path="/collectables" element={<Collectables />} />
                     <Route path="*" element={<Error />} />
                 </Routes>
             </Router>   

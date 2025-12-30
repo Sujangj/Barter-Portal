@@ -502,14 +502,29 @@ function Header({ showBackButton, backButtonColor, showSignOutButton, onSignOut,
                                 Sign Out
                             </button>
                         ) : (
-                            <button
-                                style={{
-                                    ...headerButtonStyle,
-                                }}
-                                onClick={() => navigate("/profile")}
-                            >
-                                Profile
-                            </button>
+                            // For Books, Collectables, and About pages, show Back to Home button instead of Profile
+                            (window.location.pathname === '/books' || window.location.pathname === '/collectables' || window.location.pathname === '/about') ? (
+                                <button
+                                    style={{
+                                        ...headerButtonStyle,
+                                        background: backButtonColor || "#dc3545"
+                                    }}
+                                    onClick={() => navigate("/home")}
+                                    onMouseEnter={(e) => e.target.style.background = getHoverColor(backButtonColor || "#dc3545")}
+                                    onMouseLeave={(e) => e.target.style.background = backButtonColor || "#dc3545"}
+                                >
+                                    Back to Home
+                                </button>
+                            ) : (
+                                <button
+                                    style={{
+                                        ...headerButtonStyle,
+                                    }}
+                                    onClick={() => navigate("/home")}
+                                >
+                                    Home
+                                </button>
+                            )
                         )}
                     </React.Fragment>
                 )}

@@ -126,26 +126,6 @@ function Home() {
         };
     }, [profileDropdownRef, setShowProfileDropdown]);
 
-    const headerButtonStyle = {
-        minWidth: "140px",
-        width: "140px",
-        padding: "13px 20px",
-        fontWeight: "bold",
-        fontSize: "16px",
-        borderRadius: "8px",
-        background: "#667eea", // Changed to the primary button color
-        color: "#fff",
-        border: "none",
-        cursor: "pointer",
-        boxShadow: "0px 3px 8px rgba(102,126,234,0.28)", // Updated shadow
-        textAlign: "center",
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
-        whiteSpace: "nowrap",
-        transition: "all 0.3s ease",
-        fontFamily: "momo trust display", // updated font family for header button
-    };
 
     const searchIconButtonStyle = {
         background: "none",
@@ -587,7 +567,7 @@ function Home() {
                                                 onMouseEnter={(e) => e.target.style.background = "#f8f9fa"}
                                                 onMouseLeave={(e) => e.target.style.background = "transparent"}
                                                 onClick={() => {
-                                                    navigate("/profile");
+                                                    navigate("/home");
                                                     setShowProfileDropdown(false);
                                                 }}
                                             >
@@ -1034,6 +1014,7 @@ function Home() {
                                             e.target.style.background = "#f8f9fa";
                                             e.target.style.transform = "translateY(0px)";
                                         }}
+                                        onClick={() => navigate("/collectables")}
                                     >
                                         Collectables
                                     </button>

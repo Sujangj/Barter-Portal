@@ -33,7 +33,6 @@ function LoginFormPopup({ onClose, onLoginSuccess }) {
         }
         setLoginError("");
         // In a real app, you would authenticate here
-        console.log("Login attempt:", { loginEmail, loginPassword });
 
         // Simulate successful login
         localStorage.setItem("isAuthenticated", "true");

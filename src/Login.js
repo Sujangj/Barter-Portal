@@ -83,7 +83,6 @@ function Login() {
         }
         setLoginError("");
         // In a real app, you would authenticate here
-        console.log("Login attempt:", { loginEmail, loginPassword });
         setShowLogin(false);
         // Set authenticated state
         localStorage.setItem("isAuthenticated", "true");
