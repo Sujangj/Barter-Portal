@@ -118,17 +118,17 @@ function Books() {
             {[
               {
                 text: "Study",
-                backgroundImage: "https://images.unsplash.com/photo-1509228468518-180dd4864904?fm=jpg&q=60&w=3000&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8N3x8c2NpZW5jZSUyMHRleHRib29rc3xlbnwwfHwwfHw%3D",
+                backgroundImage: "https://images.unsplash.com/photo-1635070041078-e363dbe005cb?auto=format&fit=crop&w=900&q=80",
                 onClick: () => alert("Study clicked")
               },
               {
                 text: "Novel",
-                backgroundImage: "https://images.unsplash.com/photo-1544947950-fa07a98d237f?fm=jpg&q=60&w=3000&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8ZmljdGlvbiUyMGJvb2tzfGVufDB8fDB8fHww",
+                backgroundImage: "https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?auto=format&fit=crop&w=1200&q=80",
                 onClick: () => alert("Novel clicked")
               },
               {
                 text: "Other",
-                backgroundImage: "https://images.unsplash.com/photo-1481627834876-b7833e8f5570?fm=jpg&q=60&w=3000&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8Ym9vayUyMGNvbGxlY3Rpb258ZW58MHx8MHx8fDA%3D",
+                backgroundImage: "https://images.unsplash.com/photo-1524995997946-a1c2e315a42f?auto=format&fit=crop&w=1200&q=80",
                 onClick: () => alert("Other clicked")
               }
             ].map((item, idx) => (
