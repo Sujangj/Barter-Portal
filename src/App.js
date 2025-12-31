@@ -7,6 +7,8 @@ import About from './About';
 import Books from './Books';
 import Contact from './Contact';
 import Collectables from './Collectables';
+import Electronics from './Electronics';
+import Others from './Others';
 import Error from "./Error";
 import Login from "./Login";
 
@@ -22,6 +24,8 @@ function App(){
                     <Route path="/books" element={<Books />} />
                     <Route path="/contact" element={<Contact />} />
                     <Route path="/collectables" element={<Collectables />} />
+                    <Route path="/electronics" element={<Electronics />} />
+                    <Route path="/others" element={<Others />} />
                     <Route path="*" element={<Error />} />
                 </Routes>
             </Router>   

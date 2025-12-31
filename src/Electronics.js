@@ -3,18 +3,18 @@ import Header from "./Header";
 import Footer from "./Footer";
 import CenteredInfoCard from "./CenteredInfoCard";
 
-const COLLECTABLES_BG =
+const ELECTRONICS_BG =
   "https://images.unsplash.com/photo-1610209455607-89e8b3e0e393?fm=jpg&q=60&w=3000&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OHx8cHVycGxlJTIwZ2FsYXh5fGVufDB8fDB8fHww";
 
 
-function Collectables() {
+function Electronics() {
   return (
     <div
       style={{
         minHeight: "100vh",
         height: "100dvh",
         overflowY: "auto",
-        backgroundImage: `url('${COLLECTABLES_BG}')`,
+        backgroundImage: `url('${ELECTRONICS_BG}')`,
         backgroundColor: "#fff",
         backgroundPosition: "center center",
         backgroundRepeat: "no-repeat",
@@ -59,18 +59,18 @@ function Collectables() {
           >
             {[
               {
-                text: "Paintings",
-                backgroundImage: "https://images.unsplash.com/photo-1578321272176-b7bbc0679853?fm=jpg&q=60&w=3000&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8N3x8cGFpbnRpbmdzfGVufDB8fDB8fHww",
-                onClick: () => alert("Paintings clicked")
+                text: "Smart Phone",
+                backgroundImage: "https://images.unsplash.com/photo-1592899677977-9c10ca588bbd?auto=format&fit=crop&w=1200&q=80",
+                onClick: () => alert("Smart Phone clicked")
               },
               {
-                text: "Jewellery",
-                backgroundImage: "https://images.unsplash.com/photo-1515562141207-7a88fb7ce338?fm=jpg&q=60&w=3000&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8amV3ZWxsZXJ5JTIwY29sbGVjdGlvbnxlbnwwfHwwfHw%3D",
-                onClick: () => alert("Jewellery clicked")
+                text: "Laptop/PC",
+                backgroundImage: "https://images.unsplash.com/photo-1496181133206-80ce9b88a853?auto=format&fit=crop&w=1200&q=80",
+                onClick: () => alert("Laptop/PC clicked")
               },
               {
                 text: "Other",
-                backgroundImage: "https://images.unsplash.com/photo-1520523839897-bd0b52f945a0?auto=format&fit=crop&w=1200&q=80",
+                backgroundImage: "https://images.unsplash.com/photo-1587145820266-a5951ee6f620?auto=format&fit=crop&w=900&q=80",
                 onClick: () => alert("Other clicked")
               }
             ].map((item, idx) => (
@@ -85,4 +85,4 @@ function Collectables() {
   );
 }
 
-export default Collectables;
+export default Electronics;

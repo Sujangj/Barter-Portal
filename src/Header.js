@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import LoginFormPopup from "./LoginFormPopup";
 import SignUpFormPopup from "./SignUpFormPopup";
 
@@ -10,6 +10,7 @@ const LOGIN_HEADER_BG = "linear-gradient(135deg, #667eea 0%, #764ba2 100%)";
 
 function Header({ showBackButton, backButtonColor, showSignOutButton, onSignOut, showSingleLoginButton }) {
     const navigate = useNavigate();
+    const location = useLocation();
     const [showLoginFormPopup, setShowLoginFormPopup] = useState(false);
     const [showFullSignUpPopup, setShowFullSignUpPopup] = useState(false);
     const [headerLoginPressed, setHeaderLoginPressed] = useState(false);
@@ -459,32 +460,32 @@ function Header({ showBackButton, backButtonColor, showSignOutButton, onSignOut,
                             )}
                         </div>
                     ) : (
-                        <>
-                            <button
-                                className="login-button"
-                                style={{
-                                    ...headerButtonStyle,
-                                    ...(headerLoginPressed ? pressedButtonStyle : {})
-                                }}
-                                onClick={() => setShowLoginFormPopup(true)}
-                                onMouseDown={() => setHeaderLoginPressed(true)}
-                                onMouseUp={() => setHeaderLoginPressed(false)}
-                                onMouseLeave={() => setHeaderLoginPressed(false)}
-                                onTouchStart={() => setHeaderLoginPressed(true)}
-                                onTouchEnd={() => setHeaderLoginPressed(false)}
-                            >
-                                Login
-                            </button>
-                            <button
-                                className="signup-button"
-                                style={{
-                                    ...headerButtonStyle,
-                                }}
-                                onClick={() => setShowFullSignUpPopup(true)}
-                            >
-                                Sign Up
-                            </button>
-                        </>
+                    <>
+                        <button
+                            className="login-button"
+                            style={{
+                                ...headerButtonStyle,
+                                ...(headerLoginPressed ? pressedButtonStyle : {})
+                            }}
+                            onClick={() => setShowLoginFormPopup(true)}
+                            onMouseDown={() => setHeaderLoginPressed(true)}
+                            onMouseUp={() => setHeaderLoginPressed(false)}
+                            onMouseLeave={() => setHeaderLoginPressed(false)}
+                            onTouchStart={() => setHeaderLoginPressed(true)}
+                            onTouchEnd={() => setHeaderLoginPressed(false)}
+                        >
+                            Login
+                        </button>
+                        <button
+                            className="signup-button"
+                            style={{
+                                ...headerButtonStyle,
+                            }}
+                            onClick={() => setShowFullSignUpPopup(true)}
+                        >
+                            Sign Up
+                        </button>
+                    </>
                     )
                 ) : (
                     // Placeholder for authenticated user dropdown/buttons
@@ -502,8 +503,8 @@ function Header({ showBackButton, backButtonColor, showSignOutButton, onSignOut,
                                 Sign Out
                             </button>
                         ) : (
-                            // For Books, Collectables, and About pages, show Back to Home button instead of Profile
-                            (window.location.pathname === '/books' || window.location.pathname === '/collectables' || window.location.pathname === '/about') ? (
+                            // For Books, Collectables, About, Electronics, and Others pages, show Back to Home button instead of Profile
+                            (location.pathname === '/books' || location.pathname === '/collectables' || location.pathname === '/about' || location.pathname === '/electronics' || location.pathname === '/others') ? (
                                 <button
                                     style={{
                                         ...headerButtonStyle,
@@ -515,15 +516,15 @@ function Header({ showBackButton, backButtonColor, showSignOutButton, onSignOut,
                                 >
                                     Back to Home
                                 </button>
-                            ) : (
-                                <button
-                                    style={{
-                                        ...headerButtonStyle,
-                                    }}
+                        ) : (
+                            <button
+                                style={{
+                                    ...headerButtonStyle,
+                                }}
                                     onClick={() => navigate("/home")}
-                                >
+                            >
                                     Home
-                                </button>
+                            </button>
                             )
                         )}
                     </React.Fragment>

@@ -1041,6 +1041,7 @@ function Home() {
                                             e.target.style.background = "#f8f9fa";
                                             e.target.style.transform = "translateY(0px)";
                                         }}
+                                        onClick={() => navigate("/electronics")}
                                     >
                                         Electronics
                                     </button>
@@ -1067,6 +1068,7 @@ function Home() {
                                             e.target.style.background = "#f8f9fa";
                                             e.target.style.transform = "translateY(0px)";
                                         }}
+                                        onClick={() => navigate("/others")}
                                     >
                                         Others
                                     </button>
