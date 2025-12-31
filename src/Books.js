@@ -25,7 +25,7 @@ function Books() {
         flexDirection: "column"
       }}
     >
-            <Header showBackButton={true} backButtonColor="#dc3545" />
+            <Header />
       <div
         style={{
           flex: "1",

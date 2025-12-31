@@ -22,7 +22,7 @@ function About() {
                 flexDirection: "column"
             }}
         >
-            <Header showBackButton={true} backButtonColor="#dc3545" />
+            <Header />
             {/* Main content area with footer attached */}
             <div style={{
                 flex: "1",

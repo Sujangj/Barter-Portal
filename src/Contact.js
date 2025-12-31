@@ -1,5 +1,4 @@
 import React from "react";
-import { useNavigate } from "react-router-dom";
 import "./Contact.css";
 
 // Logo image url – copied from Login.js
@@ -78,7 +77,6 @@ function SocialIcon({ type, url }) {
 
 // Contact page component
 function Contact() {
-    const navigate = useNavigate();
 
     return (
         <div
@@ -152,33 +150,6 @@ function Contact() {
                         fontFamily: "momo trust display", // propagate to search bar and buttons
                     }}
                 >
-                    <button
-                        style={{
-                            minWidth: "140px",
-                            width: "140px",
-                            padding: "13px 20px",
-                            fontWeight: "bold",
-                            fontSize: "16px",
-                            borderRadius: "8px",
-                            background: "#dc3545",
-                            color: "#fff",
-                            border: "none",
-                            cursor: "pointer",
-                            boxShadow: "0px 3px 8px rgba(220,53,69,0.28)",
-                            textAlign: "center",
-                            display: "flex",
-                            alignItems: "center",
-                            justifyContent: "center",
-                            whiteSpace: "nowrap",
-                            transition: "all 0.3s ease",
-                            fontFamily: "momo trust display", // updated font family for header button
-                        }}
-                        onClick={() => navigate("/home")}
-                        onMouseEnter={(e) => e.target.style.background = "#c82333"}
-                        onMouseLeave={(e) => e.target.style.background = "#dc3545"}
-                    >
-                        Back to Home
-                    </button>
                 </div>
             </header>
             {/* Main content area with footer attached */}

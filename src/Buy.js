@@ -369,6 +369,49 @@ function Buy() {
                         )}
                     </div>
 
+                    {/* Cart button */}
+                    <button
+                        style={{
+                            width: "50px",
+                            height: "36px",
+                            borderRadius: "8px",
+                            background: "#667eea",
+                            border: "none",
+                            cursor: "pointer",
+                            boxShadow: "0px 3px 8px rgba(40,116,240,0.28)",
+                            display: "flex",
+                            alignItems: "center",
+                            justifyContent: "center",
+                            transition: "all 0.3s ease",
+                            fontFamily: "momo trust display"
+                        }}
+                        onMouseEnter={(e) => {
+                            e.target.style.background = "linear-gradient(135deg, #667eea 0%, #764ba2 100%)";
+                        }}
+                        onMouseLeave={(e) => {
+                            e.target.style.background = "#667eea";
+                        }}
+                        onClick={() => navigate("/cart")}
+                        aria-label="Shopping Cart"
+                        title="Go to Cart"
+                    >
+                        <svg
+                            width="24"
+                            height="24"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="white"
+                            strokeWidth="2"
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            style={{ color: "white" }}
+                        >
+                            <circle cx="9" cy="21" r="1"></circle>
+                            <circle cx="20" cy="21" r="1"></circle>
+                            <path d="M1 1h4l2.68 13.39c.12.63.71 1.11 1.35 1.11h11.66c.63 0 1.21-.48 1.35-1.11L23 6H6"></path>
+                        </svg>
+                    </button>
+
                     {/* Profile dropdown or Sign Up/Login buttons */}
                     {!isAuthenticated ? (
                             <div
