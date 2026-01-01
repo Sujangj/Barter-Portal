@@ -10,6 +10,7 @@ import Collectables from './Collectables';
 import Electronics from './Electronics';
 import Others from './Others';
 import Cart from './Cart';
+import MyProfile from './MyProfile';
 import Error from "./Error";
 import Login from "./Login";
 
@@ -28,6 +29,7 @@ function App(){
                     <Route path="/electronics" element={<Electronics />} />
                     <Route path="/others" element={<Others />} />
                     <Route path="/cart" element={<Cart />} />
+                    <Route path="/myprofile" element={<MyProfile />} />
                     <Route path="*" element={<Error />} />
                 </Routes>
             </Router>   

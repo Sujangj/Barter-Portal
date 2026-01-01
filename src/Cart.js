@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import Header from "./Header";
 import Footer from "./Footer";
 import LoginFormPopup from "./LoginFormPopup";
@@ -7,8 +8,11 @@ const CART_BG =
   "https://images.unsplash.com/photo-1610209455607-89e8b3e0e393?fm=jpg&q=60&w=3000&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OHx8cHVycGxlJTIwZ2FsYXh5fGVufDB8fDB8fHww";
 
 function Cart() {
+  const navigate = useNavigate();
   const [showLoginFormPopup, setShowLoginFormPopup] = useState(false);
-  const isAuthenticated = localStorage.getItem("isAuthenticated") === "true";
+  const [isAuthenticated, setIsAuthenticated] = useState(() => {
+    return localStorage.getItem("isAuthenticated") === "true";
+  });
   return (
     <div
       style={{
@@ -132,9 +136,9 @@ function Cart() {
           onClose={() => setShowLoginFormPopup(false)}
           onLoginSuccess={() => {
             localStorage.setItem("isAuthenticated", "true");
+            setIsAuthenticated(true);
             setShowLoginFormPopup(false);
-            // Optionally refresh the page or update state
-            window.location.reload();
+            navigate("/home");
           }}
         />
       )}

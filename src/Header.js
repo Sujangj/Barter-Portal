@@ -17,6 +17,7 @@ function Header({ showSignOutButton, onSignOut, showSingleLoginButton }) {
     const [showProfileDropdown, setShowProfileDropdown] = useState(false);
     const [isHoveringDropdown, setIsHoveringDropdown] = useState(false);
     const profileDropdownRef = useRef(null);
+    const dropdownTimeoutRef = useRef(null);
 
     const isAuthenticated = localStorage.getItem("isAuthenticated") === "true";
 
@@ -31,6 +32,9 @@ function Header({ showSignOutButton, onSignOut, showSingleLoginButton }) {
         document.addEventListener("mousedown", handleClickOutside);
         return () => {
             document.removeEventListener("mousedown", handleClickOutside);
+            if (dropdownTimeoutRef.current) {
+                clearTimeout(dropdownTimeoutRef.current);
+            }
         };
     }, []); // Empty dependency array since profileDropdownRef is stable
 
@@ -171,15 +175,18 @@ function Header({ showSignOutButton, onSignOut, showSingleLoginButton }) {
                 }}
             >
                 {!isAuthenticated ? (
-                    // For Cart, Books, Collectables, Electronics, Others, About, and Contact pages, don't show any buttons for unauthenticated users
+                    // For Cart, Books, Collectables, Electronics, Others, About, Contact, and MyProfile pages, don't show any buttons
                     (location.pathname === '/cart' || location.pathname === '/books' || location.pathname === '/collectables' || location.pathname === '/electronics' ||
-                     location.pathname === '/others' || location.pathname === '/about' || location.pathname === '/contact') ? null : (
+                     location.pathname === '/others' || location.pathname === '/about' || location.pathname === '/contact' || location.pathname === '/myprofile') ? null : (
                         showSingleLoginButton ? (
                         <div
                                 onMouseEnter={() => setShowProfileDropdown(true)}
                                 onMouseLeave={() => {
                                     // Only hide if not hovering over dropdown
-                                    setTimeout(() => {
+                                    if (dropdownTimeoutRef.current) {
+                                        clearTimeout(dropdownTimeoutRef.current);
+                                    }
+                                    dropdownTimeoutRef.current = setTimeout(() => {
                                         if (!isHoveringDropdown) {
                                             setShowProfileDropdown(false);
                                         }
@@ -250,7 +257,10 @@ function Header({ showSignOutButton, onSignOut, showSingleLoginButton }) {
                                         onMouseLeave={() => {
                                             setIsHoveringDropdown(false);
                                             // Hide menu after a short delay to allow mouse to move
-                                            setTimeout(() => {
+                                            if (dropdownTimeoutRef.current) {
+                                                clearTimeout(dropdownTimeoutRef.current);
+                                            }
+                                            dropdownTimeoutRef.current = setTimeout(() => {
                                                 setShowProfileDropdown(false);
                                             }, 100);
                                         }}
@@ -288,7 +298,18 @@ function Header({ showSignOutButton, onSignOut, showSingleLoginButton }) {
                                                 style={{ display: "flex", alignItems: "center", gap: "10px", width: "100%", padding: "12px 20px", background: "none", border: "none", textAlign: "left", cursor: "pointer", fontSize: "14px", fontWeight: "500", color: "#333", transition: "all 0.2s ease" }}
                                                 onMouseEnter={(e) => e.target.style.background = "#f8f9fa"}
                                                 onMouseLeave={(e) => e.target.style.background = "transparent"}
-                                                onClick={() => alert(`Clicked ${item.text}`)}
+                                                onClick={() => {
+                                                    if (item.text === "My Profile") {
+                                                        if (isAuthenticated) {
+                                                            // My Profile only accessible from Buy page
+                                                            alert("My Profile is only accessible from the Buy page.");
+                                                        } else {
+                                                            setShowLoginFormPopup(true);
+                                                        }
+                                                    } else {
+                                                        alert(`Clicked ${item.text}`); // Placeholder for other menu items
+                                                    }
+                                                }}
                                             >
                                                 {item.icon}
                                                 {item.text}
@@ -327,10 +348,10 @@ function Header({ showSignOutButton, onSignOut, showSingleLoginButton }) {
                     )
                 )
                 ) : (
-                    // For Cart, Books, Collectables, Electronics, Others, About, and Contact pages, don't show any button
+                    // For Cart, Books, Collectables, Electronics, Others, About, Contact, and MyProfile pages, don't show any button
                     (location.pathname === '/cart' || location.pathname === '/books' || location.pathname === '/collectables' ||
                      location.pathname === '/electronics' || location.pathname === '/others' || location.pathname === '/about' ||
-                     location.pathname === '/contact') ? null : (
+                     location.pathname === '/contact' || location.pathname === '/myprofile') ? null : (
                     // Placeholder for authenticated user dropdown/buttons
                     <React.Fragment>
                             {showSignOutButton ? (

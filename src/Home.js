@@ -105,6 +105,7 @@ function Home() {
     });
     const searchInputRef = useRef(null);
     const profileDropdownRef = useRef(null); // Add useRef for profile dropdown
+    const searchTimeoutRef = useRef(null);
 
     // Show sign up prompt for unauthenticated users on component mount
     useEffect(() => {
@@ -123,6 +124,9 @@ function Home() {
         document.addEventListener("mousedown", handleClickOutside);
         return () => {
             document.removeEventListener("mousedown", handleClickOutside);
+            if (searchTimeoutRef.current) {
+                clearTimeout(searchTimeoutRef.current);
+            }
         };
     }, [profileDropdownRef, setShowProfileDropdown]);
 
@@ -206,7 +210,10 @@ function Home() {
         setShowSearchBar((prev) => {
             const willShow = !prev;
             if (!prev) {
-                setTimeout(() => {
+                if (searchTimeoutRef.current) {
+                    clearTimeout(searchTimeoutRef.current);
+                }
+                searchTimeoutRef.current = setTimeout(() => {
                     searchInputRef.current && searchInputRef.current.focus();
                 }, 150);
             }
@@ -215,7 +222,10 @@ function Home() {
     };
 
     const handleBlur = (e) => {
-        setTimeout(() => {
+        if (searchTimeoutRef.current) {
+            clearTimeout(searchTimeoutRef.current);
+        }
+        searchTimeoutRef.current = setTimeout(() => {
             if (
                 document.activeElement !== searchInputRef.current
             ) {
@@ -493,7 +503,17 @@ function Home() {
                                             style={{ display: "flex", alignItems: "center", gap: "10px", width: "100%", padding: "12px 20px", background: "none", border: "none", textAlign: "left", cursor: "pointer", fontSize: "14px", fontWeight: "500", color: "#333", transition: "all 0.2s ease" }}
                                             onMouseEnter={(e) => e.target.style.background = "#f8f9fa"}
                                             onMouseLeave={(e) => e.target.style.background = "transparent"}
-                                            onClick={() => alert(`Clicked ${item.text}`)} // Placeholder for actual functionality
+                                            onClick={() => {
+                                                if (item.text === "My Profile") {
+                                                    if (isAuthenticated) {
+                                                        navigate("/myprofile");
+                                                    } else {
+                                                        setShowLoginFormPopup(true);
+                                                    }
+                                                } else {
+                                                    alert(`Clicked ${item.text}`); // Placeholder for other menu items
+                                                }
+                                            }}
                                         >
                                             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" dangerouslySetInnerHTML={{ __html: item.icon }} />
                                             {item.text}
