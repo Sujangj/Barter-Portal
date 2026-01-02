@@ -2,11 +2,7 @@ import React, { useState, useRef, useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import LoginFormPopup from "./LoginFormPopup";
 import SignUpFormPopup from "./SignUpFormPopup";
-
-const LOGO_URL =
-  "https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcRcsGEl_k_ju03oX1HX_A9lK-VvqKCm0WVdABkw4Y3k6uvo4zw45lzrgevt2B4CDWJNAOpAV8D8";
-
-const LOGIN_HEADER_BG = "linear-gradient(135deg, #667eea 0%, #764ba2 100%)";
+import { LOGO_URL, LOGIN_HEADER_BG } from "./constants";
 
 function Header({ showSignOutButton, onSignOut, showSingleLoginButton }) {
     const navigate = useNavigate();

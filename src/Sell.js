@@ -2,15 +2,11 @@ import React, { useRef, useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import SignUpFormPopup from "./SignUpFormPopup"; // Import SignUpFormPopup
 import LoginFormPopup from "./LoginFormPopup"; // Import LoginFormPopup
+import { LOGO_URL, HOME_BG_URL } from "./constants";
 import "./Sell.css";
 
-// Logo image url – copied from Login.js
-const LOGO_URL =
-  "https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcRcsGEl_k_ju03oX1HX_A9lK-VvqKCm0WVdABkw4Y3k6uvo4zw45lzrgevt2B4CDWJNAOpAV8D8";
-
 // Sell page background image
-const SELL_BG_URL =
-  "https://images.unsplash.com/photo-1610209455607-89e8b3e0e393?fm=jpg&q=60&w=3000&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OHx8cHVycGxlJTIwZ2FsYXh5fGVufDB8fDB8fHww";
+const SELL_BG_URL = HOME_BG_URL;
 
 // Social media icons as inline SVGs (fontawesome style, but inline for no dependency)
 function SocialIcon({ type, url }) {
@@ -588,6 +584,14 @@ function Sell() {
                                                 }}
                                                 onMouseEnter={(e) => e.target.style.background = "#f8f9fa"}
                                                 onMouseLeave={(e) => e.target.style.background = "transparent"}
+                                                onClick={() => {
+                                                    if (isAuthenticated) {
+                                                        navigate("/myprofile");
+                                                    } else {
+                                                        setShowLoginFormPopup(true);
+                                                    }
+                                                    setShowProfileDropdown(false);
+                                                }}
                                             >
                                                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                                                     <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>

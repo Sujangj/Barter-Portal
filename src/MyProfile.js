@@ -2,9 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import Header from "./Header";
 import Footer from "./Footer";
-
-const PROFILE_BG =
-  "https://images.unsplash.com/photo-1610209455607-89e8b3e0e393?fm=jpg&q=60&w=3000&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OHx8cHVycGxlJTIwZ2FsYXh5fGVufDB8fDB8fHww";
+import { PROFILE_BG } from "./constants";
 
 function MyProfile() {
   const navigate = useNavigate();
@@ -100,7 +98,7 @@ function MyProfile() {
               fontFamily: "momo trust display",
               textAlign: "center"
             }}>
-              👤 Profile Menu
+  
             </h2>
 
             {/* Profile Information Button */}
@@ -419,27 +417,6 @@ function MyProfile() {
                     margin: "0"
                   }}>
                     Updating your email address (or mobile number) doesn't invalidate your account. Your account remains fully functional. You'll continue seeing your Order history, saved information and personal details.
-                  </p>
-                </div>
-
-                <div>
-                  <h4 style={{
-                    color: "#333",
-                    fontSize: "16px",
-                    fontWeight: "bold",
-                    marginBottom: "8px",
-                    fontFamily: "momo trust display"
-                  }}>
-                    Does my Seller account get affected when I update my email address?
-                  </h4>
-                  <p style={{
-                    color: "#666",
-                    fontSize: "14px",
-                    lineHeight: "1.6",
-                    fontFamily: "momo trust display",
-                    margin: "0"
-                  }}>
-                    Barter Portal has a 'single sign-on' policy. Any changes will reflect in your Seller account also.
                   </p>
                 </div>
               </div>

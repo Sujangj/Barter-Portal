@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Header from "./Header";
 import Footer from "./Footer";
+import { LOGIN_HEADER_BG } from "./constants";
 import "./Login.css";
 
 const BOOKS_BG =
@@ -11,7 +12,6 @@ const BOOKS_BG =
 function CenteredInfoCard({ text, onClick }) {
   const [pressed, setPressed] = useState(false);
   const [hovered, setHovered] = useState(false);
-  const LOGIN_HEADER_BG = "linear-gradient(135deg, #667eea 0%, #764ba2 100%)";
   return (
     <div
       style={{

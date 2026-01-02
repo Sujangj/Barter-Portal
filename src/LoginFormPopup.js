@@ -1,6 +1,5 @@
 import React, { useState } from "react";
-
-const LOGIN_HEADER_BG = "linear-gradient(135deg, #667eea 0%, #764ba2 100%)";
+import { LOGIN_HEADER_BG } from "./constants";
 
 function LoginFormPopup({ onClose, onLoginSuccess }) {
     const [loginEmail, setLoginEmail] = useState("");
