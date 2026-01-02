@@ -7,9 +7,42 @@ import { PROFILE_BG } from "./constants";
 function MyProfile() {
   const navigate = useNavigate();
   const [showPersonalInfo, setShowPersonalInfo] = useState(false);
+  const [showManageAddresses, setShowManageAddresses] = useState(false);
   const [gender, setGender] = useState("male");
   const [email, setEmail] = useState("user@example.com");
   const [mobile, setMobile] = useState("+91 9876543210");
+
+  // Addresses state
+  const [addresses, setAddresses] = useState(() => {
+    const saved = localStorage.getItem('userAddresses');
+    return saved ? JSON.parse(saved) : [
+      {
+        id: 1,
+        type: 'Home',
+        name: 'John Doe',
+        phone: '+91 9876543210',
+        address: '123 Main Street, Apartment 4B',
+        city: 'Mumbai',
+        state: 'Maharashtra',
+        pincode: '400001',
+        isDefault: true
+      },
+      {
+        id: 2,
+        type: 'Work',
+        name: 'John Doe',
+        phone: '+91 9876543210',
+        address: '456 Business Park, Office 101',
+        city: 'Mumbai',
+        state: 'Maharashtra',
+        pincode: '400002',
+        isDefault: false
+      }
+    ];
+  });
+
+  const [showAddAddressForm, setShowAddAddressForm] = useState(false);
+  const [editingAddress, setEditingAddress] = useState(null);
 
   useEffect(() => {
     // Check if user came from Buy page, Home page, or Sell page
@@ -42,6 +75,43 @@ function MyProfile() {
       // Handle deletion
       alert("Account deletion requested. Our team will contact you soon.");
     }
+  };
+
+  // Address management functions
+  const handleAddAddress = (addressData) => {
+    const newAddress = {
+      ...addressData,
+      id: Date.now(),
+      isDefault: addresses.length === 0 // First address is default
+    };
+    const updatedAddresses = [...addresses, newAddress];
+    setAddresses(updatedAddresses);
+    localStorage.setItem('userAddresses', JSON.stringify(updatedAddresses));
+  };
+
+  const handleUpdateAddress = (id, addressData) => {
+    const updatedAddresses = addresses.map(addr =>
+      addr.id === id ? { ...addr, ...addressData } : addr
+    );
+    setAddresses(updatedAddresses);
+    localStorage.setItem('userAddresses', JSON.stringify(updatedAddresses));
+  };
+
+  const handleDeleteAddress = (id) => {
+    if (window.confirm("Are you sure you want to delete this address?")) {
+      const updatedAddresses = addresses.filter(addr => addr.id !== id);
+      setAddresses(updatedAddresses);
+      localStorage.setItem('userAddresses', JSON.stringify(updatedAddresses));
+    }
+  };
+
+  const handleSetDefaultAddress = (id) => {
+    const updatedAddresses = addresses.map(addr => ({
+      ...addr,
+      isDefault: addr.id === id // Only the selected address is default
+    }));
+    setAddresses(updatedAddresses);
+    localStorage.setItem('userAddresses', JSON.stringify(updatedAddresses));
   };
 
   return (
@@ -98,7 +168,7 @@ function MyProfile() {
               fontFamily: "momo trust display",
               textAlign: "center"
             }}>
-  
+              Profile Menu
             </h2>
 
             {/* Profile Information Button */}
@@ -125,7 +195,10 @@ function MyProfile() {
                   e.target.style.transform = "translateY(0)";
                 }
               }}
-              onClick={() => setShowPersonalInfo(!showPersonalInfo)}
+              onClick={() => {
+                setShowPersonalInfo(!showPersonalInfo);
+                setShowManageAddresses(false);
+              }}
             >
               <h3 style={{
                 fontSize: "1.2rem",
@@ -151,6 +224,62 @@ function MyProfile() {
                 transition: "transform 0.3s ease"
               }}>
                 {showPersonalInfo ? "−" : "+"}
+              </div>
+            </div>
+
+            {/* Manage Addresses Button */}
+            <div
+              style={{
+                background: showManageAddresses ? "rgba(102, 126, 234, 0.2)" : "rgba(102, 126, 234, 0.1)",
+                border: showManageAddresses ? "2px solid #667eea" : "2px solid transparent",
+                borderRadius: "12px",
+                padding: "20px",
+                marginBottom: "20px",
+                cursor: "pointer",
+                transition: "all 0.3s ease",
+                textAlign: "center"
+              }}
+              onMouseEnter={(e) => {
+                if (!showManageAddresses) {
+                  e.target.style.background = "rgba(102, 126, 234, 0.15)";
+                  e.target.style.transform = "translateY(-2px)";
+                }
+              }}
+              onMouseLeave={(e) => {
+                if (!showManageAddresses) {
+                  e.target.style.background = "rgba(102, 126, 234, 0.1)";
+                  e.target.style.transform = "translateY(0)";
+                }
+              }}
+              onClick={() => {
+                setShowManageAddresses(!showManageAddresses);
+                setShowPersonalInfo(false);
+              }}
+            >
+              <h3 style={{
+                fontSize: "1.2rem",
+                color: "#667eea",
+                marginBottom: "8px",
+                fontFamily: "momo trust display",
+                fontWeight: "bold"
+              }}>
+                Manage Addresses
+              </h3>
+              <p style={{
+                color: "#666",
+                fontSize: "0.9rem",
+                fontFamily: "momo trust display",
+                margin: "0"
+              }}>
+                {showManageAddresses ? "Click to hide addresses" : "Click to view and manage"}
+              </p>
+              <div style={{
+                marginTop: "10px",
+                fontSize: "1.2rem",
+                color: "#667eea",
+                transition: "transform 0.3s ease"
+              }}>
+                {showManageAddresses ? "−" : "+"}
               </div>
             </div>
           </div>
@@ -511,8 +640,316 @@ function MyProfile() {
               </div>
             )}
 
+            {/* Manage Addresses Section */}
+            {showManageAddresses && (
+              <div
+                style={{
+                  background: "rgba(255, 255, 255, 0.95)",
+                  borderRadius: "12px",
+                  padding: "30px",
+                  marginBottom: "30px",
+                  boxShadow: "0 8px 32px rgba(0, 0, 0, 0.1)",
+                  width: "100%",
+                  maxWidth: "1000px"
+                }}
+              >
+                <h3 style={{
+                  fontSize: "2rem",
+                  fontWeight: "bold",
+                  color: "#184872",
+                  marginBottom: "30px",
+                  fontFamily: "momo trust display",
+                  textAlign: "center"
+                }}>
+                  Manage Addresses
+                </h3>
+
+                {/* Add New Address Button */}
+                <div style={{ textAlign: "center", marginBottom: "30px" }}>
+                  <button
+                    onClick={() => setShowAddAddressForm(true)}
+                    style={{
+                      background: "#28a745",
+                      color: "#fff",
+                      border: "none",
+                      padding: "12px 24px",
+                      borderRadius: "8px",
+                      fontSize: "16px",
+                      fontWeight: "bold",
+                      cursor: "pointer",
+                      boxShadow: "0 4px 12px rgba(40, 167, 69, 0.3)",
+                      fontFamily: "momo trust display",
+                      transition: "all 0.3s ease"
+                    }}
+                    onMouseEnter={(e) => {
+                      e.target.style.background = "#218838";
+                      e.target.style.transform = "translateY(-2px)";
+                      e.target.style.boxShadow = "0 6px 16px rgba(40, 167, 69, 0.4)";
+                    }}
+                    onMouseLeave={(e) => {
+                      e.target.style.background = "#28a745";
+                      e.target.style.transform = "translateY(0)";
+                      e.target.style.boxShadow = "0 4px 12px rgba(40, 167, 69, 0.3)";
+                    }}
+                  >
+                    + Add New Address
+                  </button>
+                </div>
+
+                {/* Saved Addresses */}
+                <div style={{ marginBottom: "30px" }}>
+                  <div style={{ marginBottom: "20px" }}>
+                  <h4 style={{
+                    color: "#333",
+                    fontSize: "1.5rem",
+                    fontWeight: "bold",
+                    marginBottom: "8px",
+                    fontFamily: "momo trust display"
+                  }}>
+                    Saved Addresses
+                  </h4>
+                  <p style={{
+                    color: "#666",
+                    fontSize: "14px",
+                    margin: "0",
+                    fontFamily: "momo trust display"
+                  }}>
+                    Click "Set as Default" to change your primary delivery address
+                  </p>
+                </div>
+
+                  {addresses.length === 0 ? (
+                    <p style={{
+                      textAlign: "center",
+                      color: "#666",
+                      fontSize: "16px",
+                      fontFamily: "momo trust display",
+                      padding: "40px"
+                    }}>
+                      No addresses saved yet. Add your first address above.
+                    </p>
+                  ) : (
+                    <div style={{ display: "grid", gap: "20px" }}>
+                      {addresses.map((address) => (
+                        <div
+                          key={address.id}
+                          style={{
+                            border: address.isDefault ? "2px solid #667eea" : "2px solid #e9ecef",
+                            borderRadius: "8px",
+                            padding: "20px",
+                            background: address.isDefault ? "rgba(102, 126, 234, 0.05)" : "#fff",
+                            position: "relative"
+                          }}
+                        >
+                          {address.isDefault && (
+                            <span style={{
+                              position: "absolute",
+                              top: "10px",
+                              right: "10px",
+                              background: "#6c757d",
+                              color: "#fff",
+                              padding: "4px 8px",
+                              borderRadius: "4px",
+                              fontSize: "12px",
+                              fontFamily: "momo trust display",
+                              fontWeight: "bold"
+                            }}>
+                              Default
+                            </span>
+                          )}
+
+                          <div style={{ position: "relative", minHeight: "120px" }}>
+                            {/* Address Content */}
+                            <div style={{ marginBottom: "60px" }}>
+                              <h5 style={{
+                                color: "#333",
+                                fontSize: "1.2rem",
+                                fontWeight: "bold",
+                                marginBottom: "8px",
+                                fontFamily: "momo trust display"
+                              }}>
+                                {address.type} Address
+                              </h5>
+                              <p style={{
+                                color: "#333",
+                                fontSize: "16px",
+                                fontWeight: "bold",
+                                marginBottom: "4px",
+                                fontFamily: "momo trust display"
+                              }}>
+                                {address.name}
+                              </p>
+                              <p style={{
+                                color: "#666",
+                                fontSize: "14px",
+                                marginBottom: "2px",
+                                fontFamily: "momo trust display"
+                              }}>
+                                {address.phone}
+                              </p>
+                              <p style={{
+                                color: "#666",
+                                fontSize: "14px",
+                                lineHeight: "1.4",
+                                fontFamily: "momo trust display"
+                              }}>
+                                {address.address}, {address.city}, {address.state} - {address.pincode}
+                              </p>
+                            </div>
+
+                            {/* Action Buttons - Positioned at bottom-right */}
+                            <div style={{
+                              position: "absolute",
+                              bottom: "15px",
+                              right: "15px",
+                              display: "flex",
+                              flexDirection: "column",
+                              gap: "6px",
+                              alignItems: "stretch",
+                              width: "120px"
+                            }}>
+                              <button
+                                onClick={() => setEditingAddress(address)}
+                                style={{
+                                  background: "#667eea",
+                                  color: "#fff",
+                                  border: "none",
+                                  padding: "8px 12px",
+                                  borderRadius: "5px",
+                                  fontSize: "12px",
+                                  fontWeight: "bold",
+                                  cursor: "pointer",
+                                  fontFamily: "momo trust display",
+                                  transition: "all 0.2s ease",
+                                  width: "100%"
+                                }}
+                                onMouseEnter={(e) => e.target.style.background = "#5a67d8"}
+                                onMouseLeave={(e) => e.target.style.background = "#667eea"}
+                              >
+                                Edit
+                              </button>
+                              {!address.isDefault && (
+                                <>
+                                  <button
+                                    onClick={() => handleDeleteAddress(address.id)}
+                                    style={{
+                                      background: "#667eea",
+                                      color: "#fff",
+                                      border: "none",
+                                      padding: "8px 12px",
+                                      borderRadius: "5px",
+                                      fontSize: "12px",
+                                      fontWeight: "bold",
+                                      cursor: "pointer",
+                                      fontFamily: "momo trust display",
+                                      transition: "all 0.2s ease",
+                                      width: "100%"
+                                    }}
+                                    onMouseEnter={(e) => e.target.style.background = "#5a67d8"}
+                                    onMouseLeave={(e) => e.target.style.background = "#667eea"}
+                                  >
+                                    Delete
+                                  </button>
+                                  <button
+                                    onClick={() => handleSetDefaultAddress(address.id)}
+                                    style={{
+                                      background: "#667eea",
+                                      color: "#fff",
+                                      border: "none",
+                                      padding: "8px 12px",
+                                      borderRadius: "5px",
+                                      fontSize: "12px",
+                                      fontWeight: "bold",
+                                      cursor: "pointer",
+                                      fontFamily: "momo trust display",
+                                      transition: "all 0.2s ease",
+                                      width: "100%"
+                                    }}
+                                    onMouseEnter={(e) => e.target.style.background = "#5a67d8"}
+                                    onMouseLeave={(e) => e.target.style.background = "#667eea"}
+                                  >
+                                    Set as Default
+                                  </button>
+                                </>
+                              )}
+                            </div>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  )}
+                </div>
+              </div>
+            )}
+
+            {/* Add/Edit Address Form */}
+            {(showAddAddressForm || editingAddress) && (
+              <div
+                style={{
+                  position: "fixed",
+                  top: "0",
+                  left: "0",
+                  right: "0",
+                  bottom: "0",
+                  background: "rgba(0, 0, 0, 0.5)",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  zIndex: "1000",
+                  padding: "20px"
+                }}
+                onClick={(e) => {
+                  if (e.target === e.currentTarget) {
+                    setShowAddAddressForm(false);
+                    setEditingAddress(null);
+                  }
+                }}
+              >
+                <div
+                  style={{
+                    background: "#fff",
+                    borderRadius: "12px",
+                    padding: "30px",
+                    width: "100%",
+                    maxWidth: "500px",
+                    maxHeight: "90vh",
+                    overflowY: "auto"
+                  }}
+                  onClick={(e) => e.stopPropagation()}
+                >
+                  <h3 style={{
+                    fontSize: "1.8rem",
+                    fontWeight: "bold",
+                    color: "#184872",
+                    marginBottom: "20px",
+                    fontFamily: "momo trust display",
+                    textAlign: "center"
+                  }}>
+                    {editingAddress ? "Edit Address" : "Add New Address"}
+                  </h3>
+
+                  <AddressForm
+                    address={editingAddress}
+                    onSave={(addressData) => {
+                      if (editingAddress) {
+                        handleUpdateAddress(editingAddress.id, addressData);
+                      } else {
+                        handleAddAddress(addressData);
+                      }
+                      setShowAddAddressForm(false);
+                      setEditingAddress(null);
+                    }}
+                    onCancel={() => {
+                      setShowAddAddressForm(false);
+                      setEditingAddress(null);
+                    }}
+                  />
+                </div>
+              </div>
+            )}
+
             {/* Empty State Message */}
-            {!showPersonalInfo && (
+            {!showPersonalInfo && !showManageAddresses && (
               <div
                 style={{
                   background: "rgba(255, 255, 255, 0.95)",
@@ -549,6 +986,297 @@ function MyProfile() {
         <Footer />
       </div>
     </div>
+  );
+}
+
+// Address Form Component
+function AddressForm({ address, onSave, onCancel }) {
+  const [formData, setFormData] = useState({
+    type: address?.type || 'Home',
+    name: address?.name || '',
+    phone: address?.phone || '',
+    address: address?.address || '',
+    city: address?.city || '',
+    state: address?.state || '',
+    pincode: address?.pincode || ''
+  });
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (!formData.name || !formData.phone || !formData.address || !formData.city || !formData.state || !formData.pincode) {
+      alert('Please fill in all fields');
+      return;
+    }
+    onSave(formData);
+  };
+
+  const handleChange = (field, value) => {
+    setFormData(prev => ({ ...prev, [field]: value }));
+  };
+
+  return (
+    <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '15px' }}>
+      {/* Address Type */}
+      <div>
+        <label style={{
+          display: 'block',
+          marginBottom: '5px',
+          fontWeight: 'bold',
+          color: '#333',
+          fontFamily: 'momo trust display',
+          fontSize: '14px'
+        }}>
+          Address Type:
+        </label>
+        <select
+          value={formData.type}
+          onChange={(e) => handleChange('type', e.target.value)}
+          style={{
+            width: '100%',
+            padding: '10px',
+            border: '1px solid #ddd',
+            borderRadius: '6px',
+            fontSize: '14px',
+            fontFamily: 'momo trust display',
+            boxSizing: 'border-box'
+          }}
+        >
+          <option value="Home">Home</option>
+          <option value="Work">Work</option>
+          <option value="Other">Other</option>
+        </select>
+      </div>
+
+      {/* Name */}
+      <div>
+        <label style={{
+          display: 'block',
+          marginBottom: '5px',
+          fontWeight: 'bold',
+          color: '#333',
+          fontFamily: 'momo trust display',
+          fontSize: '14px'
+        }}>
+          Full Name:
+        </label>
+        <input
+          type="text"
+          value={formData.name}
+          onChange={(e) => handleChange('name', e.target.value)}
+          placeholder="Enter full name"
+          style={{
+            width: '100%',
+            padding: '10px',
+            border: '1px solid #ddd',
+            borderRadius: '6px',
+            fontSize: '14px',
+            fontFamily: 'momo trust display',
+            boxSizing: 'border-box'
+          }}
+          required
+        />
+      </div>
+
+      {/* Phone */}
+      <div>
+        <label style={{
+          display: 'block',
+          marginBottom: '5px',
+          fontWeight: 'bold',
+          color: '#333',
+          fontFamily: 'momo trust display',
+          fontSize: '14px'
+        }}>
+          Phone Number:
+        </label>
+        <input
+          type="tel"
+          value={formData.phone}
+          onChange={(e) => handleChange('phone', e.target.value)}
+          placeholder="Enter phone number"
+          style={{
+            width: '100%',
+            padding: '10px',
+            border: '1px solid #ddd',
+            borderRadius: '6px',
+            fontSize: '14px',
+            fontFamily: 'momo trust display',
+            boxSizing: 'border-box'
+          }}
+          required
+        />
+      </div>
+
+      {/* Address */}
+      <div>
+        <label style={{
+          display: 'block',
+          marginBottom: '5px',
+          fontWeight: 'bold',
+          color: '#333',
+          fontFamily: 'momo trust display',
+          fontSize: '14px'
+        }}>
+          Address:
+        </label>
+        <textarea
+          value={formData.address}
+          onChange={(e) => handleChange('address', e.target.value)}
+          placeholder="Enter full address"
+          rows="3"
+          style={{
+            width: '100%',
+            padding: '10px',
+            border: '1px solid #ddd',
+            borderRadius: '6px',
+            fontSize: '14px',
+            fontFamily: 'momo trust display',
+            boxSizing: 'border-box',
+            resize: 'vertical'
+          }}
+          required
+        />
+      </div>
+
+      {/* City */}
+      <div>
+        <label style={{
+          display: 'block',
+          marginBottom: '5px',
+          fontWeight: 'bold',
+          color: '#333',
+          fontFamily: 'momo trust display',
+          fontSize: '14px'
+        }}>
+          City:
+        </label>
+        <input
+          type="text"
+          value={formData.city}
+          onChange={(e) => handleChange('city', e.target.value)}
+          placeholder="Enter city"
+          style={{
+            width: '100%',
+            padding: '10px',
+            border: '1px solid #ddd',
+            borderRadius: '6px',
+            fontSize: '14px',
+            fontFamily: 'momo trust display',
+            boxSizing: 'border-box'
+          }}
+          required
+        />
+      </div>
+
+      {/* State */}
+      <div>
+        <label style={{
+          display: 'block',
+          marginBottom: '5px',
+          fontWeight: 'bold',
+          color: '#333',
+          fontFamily: 'momo trust display',
+          fontSize: '14px'
+        }}>
+          State:
+        </label>
+        <input
+          type="text"
+          value={formData.state}
+          onChange={(e) => handleChange('state', e.target.value)}
+          placeholder="Enter state"
+          style={{
+            width: '100%',
+            padding: '10px',
+            border: '1px solid #ddd',
+            borderRadius: '6px',
+            fontSize: '14px',
+            fontFamily: 'momo trust display',
+            boxSizing: 'border-box'
+          }}
+          required
+        />
+      </div>
+
+      {/* Pincode */}
+      <div>
+        <label style={{
+          display: 'block',
+          marginBottom: '5px',
+          fontWeight: 'bold',
+          color: '#333',
+          fontFamily: 'momo trust display',
+          fontSize: '14px'
+        }}>
+          Pincode:
+        </label>
+        <input
+          type="text"
+          value={formData.pincode}
+          onChange={(e) => handleChange('pincode', e.target.value)}
+          placeholder="Enter pincode"
+          maxLength="6"
+          style={{
+            width: '100%',
+            padding: '10px',
+            border: '1px solid #ddd',
+            borderRadius: '6px',
+            fontSize: '14px',
+            fontFamily: 'momo trust display',
+            boxSizing: 'border-box'
+          }}
+          required
+        />
+      </div>
+
+      {/* Buttons */}
+      <div style={{
+        display: 'flex',
+        gap: '10px',
+        justifyContent: 'flex-end',
+        marginTop: '20px'
+      }}>
+        <button
+          type="button"
+          onClick={onCancel}
+          style={{
+            background: '#6c757d',
+            color: '#fff',
+            border: 'none',
+            padding: '10px 20px',
+            borderRadius: '6px',
+            fontSize: '14px',
+            fontWeight: 'bold',
+            cursor: 'pointer',
+            fontFamily: 'momo trust display',
+            transition: 'all 0.2s ease'
+          }}
+          onMouseEnter={(e) => e.target.style.background = '#5a6268'}
+          onMouseLeave={(e) => e.target.style.background = '#6c757d'}
+        >
+          Cancel
+        </button>
+        <button
+          type="submit"
+          style={{
+            background: '#007bff',
+            color: '#fff',
+            border: 'none',
+            padding: '10px 20px',
+            borderRadius: '6px',
+            fontSize: '14px',
+            fontWeight: 'bold',
+            cursor: 'pointer',
+            fontFamily: 'momo trust display',
+            transition: 'all 0.2s ease'
+          }}
+          onMouseEnter={(e) => e.target.style.background = '#0056b3'}
+          onMouseLeave={(e) => e.target.style.background = '#007bff'}
+        >
+          {address ? 'Update Address' : 'Save Address'}
+        </button>
+      </div>
+    </form>
   );
 }
 
