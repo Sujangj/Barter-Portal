@@ -49,8 +49,8 @@ function MyProfile() {
     const referrer = document.referrer;
     const currentUrl = window.location.href;
     const isFromAllowedPage = referrer.includes('/buy') || referrer.includes('buy') ||
-                             referrer.includes('/home') || referrer.includes('home') ||
-                             referrer.includes('/sell') || referrer.includes('sell');
+      referrer.includes('/home') || referrer.includes('home') ||
+      referrer.includes('/sell') || referrer.includes('sell');
 
     // If not from Buy, Home, or Sell page and not a direct navigation, redirect to home
     if (!isFromAllowedPage && referrer !== '' && !currentUrl.includes('#')) {
@@ -174,26 +174,21 @@ function MyProfile() {
             {/* Profile Information Button */}
             <div
               style={{
-                background: showPersonalInfo ? "rgba(102, 126, 234, 0.2)" : "rgba(102, 126, 234, 0.1)",
-                border: showPersonalInfo ? "2px solid #667eea" : "2px solid transparent",
+                background: "#667eea",
+                border: "none",
                 borderRadius: "12px",
                 padding: "20px",
                 marginBottom: "20px",
                 cursor: "pointer",
                 transition: "all 0.3s ease",
-                textAlign: "center"
+                textAlign: "center",
+                boxShadow: "0 2px 6px rgba(102,126,234,0.2)"
               }}
               onMouseEnter={(e) => {
-                if (!showPersonalInfo) {
-                  e.target.style.background = "rgba(102, 126, 234, 0.15)";
-                  e.target.style.transform = "translateY(-2px)";
-                }
+                e.currentTarget.style.background = "#5a67d8";
               }}
               onMouseLeave={(e) => {
-                if (!showPersonalInfo) {
-                  e.target.style.background = "rgba(102, 126, 234, 0.1)";
-                  e.target.style.transform = "translateY(0)";
-                }
+                e.currentTarget.style.background = "#667eea";
               }}
               onClick={() => {
                 setShowPersonalInfo(!showPersonalInfo);
@@ -202,54 +197,34 @@ function MyProfile() {
             >
               <h3 style={{
                 fontSize: "1.2rem",
-                color: "#667eea",
+                color: "#fff",
                 marginBottom: "8px",
                 fontFamily: "momo trust display",
-                fontWeight: "bold"
+                fontWeight: "bold",
+                pointerEvents: "none"
               }}>
                 Personal Information
               </h3>
-              <p style={{
-                color: "#666",
-                fontSize: "0.9rem",
-                fontFamily: "momo trust display",
-                margin: "0"
-              }}>
-                {showPersonalInfo ? "Click to hide details" : "Click to view and edit"}
-              </p>
-              <div style={{
-                marginTop: "10px",
-                fontSize: "1.2rem",
-                color: "#667eea",
-                transition: "transform 0.3s ease"
-              }}>
-                {showPersonalInfo ? "−" : "+"}
-              </div>
             </div>
 
             {/* Manage Addresses Button */}
             <div
               style={{
-                background: showManageAddresses ? "rgba(102, 126, 234, 0.2)" : "rgba(102, 126, 234, 0.1)",
-                border: showManageAddresses ? "2px solid #667eea" : "2px solid transparent",
+                background: "#667eea",
+                border: "none",
                 borderRadius: "12px",
                 padding: "20px",
                 marginBottom: "20px",
                 cursor: "pointer",
                 transition: "all 0.3s ease",
-                textAlign: "center"
+                textAlign: "center",
+                boxShadow: "0 2px 6px rgba(102,126,234,0.2)"
               }}
               onMouseEnter={(e) => {
-                if (!showManageAddresses) {
-                  e.target.style.background = "rgba(102, 126, 234, 0.15)";
-                  e.target.style.transform = "translateY(-2px)";
-                }
+                e.currentTarget.style.background = "#5a67d8";
               }}
               onMouseLeave={(e) => {
-                if (!showManageAddresses) {
-                  e.target.style.background = "rgba(102, 126, 234, 0.1)";
-                  e.target.style.transform = "translateY(0)";
-                }
+                e.currentTarget.style.background = "#667eea";
               }}
               onClick={() => {
                 setShowManageAddresses(!showManageAddresses);
@@ -258,29 +233,14 @@ function MyProfile() {
             >
               <h3 style={{
                 fontSize: "1.2rem",
-                color: "#667eea",
+                color: "#fff",
                 marginBottom: "8px",
                 fontFamily: "momo trust display",
-                fontWeight: "bold"
+                fontWeight: "bold",
+                pointerEvents: "none"
               }}>
                 Manage Addresses
               </h3>
-              <p style={{
-                color: "#666",
-                fontSize: "0.9rem",
-                fontFamily: "momo trust display",
-                margin: "0"
-              }}>
-                {showManageAddresses ? "Click to hide addresses" : "Click to view and manage"}
-              </p>
-              <div style={{
-                marginTop: "10px",
-                fontSize: "1.2rem",
-                color: "#667eea",
-                transition: "transform 0.3s ease"
-              }}>
-                {showManageAddresses ? "−" : "+"}
-              </div>
             </div>
           </div>
 
@@ -304,7 +264,7 @@ function MyProfile() {
               fontFamily: "momo trust display",
               textAlign: "center"
             }}>
-            
+
             </h1>
 
             {/* Personal Information Form */}
@@ -699,24 +659,24 @@ function MyProfile() {
                 {/* Saved Addresses */}
                 <div style={{ marginBottom: "30px" }}>
                   <div style={{ marginBottom: "20px" }}>
-                  <h4 style={{
-                    color: "#333",
-                    fontSize: "1.5rem",
-                    fontWeight: "bold",
-                    marginBottom: "8px",
-                    fontFamily: "momo trust display"
-                  }}>
-                    Saved Addresses
-                  </h4>
-                  <p style={{
-                    color: "#666",
-                    fontSize: "14px",
-                    margin: "0",
-                    fontFamily: "momo trust display"
-                  }}>
-                    Click "Set as Default" to change your primary delivery address
-                  </p>
-                </div>
+                    <h4 style={{
+                      color: "#333",
+                      fontSize: "1.5rem",
+                      fontWeight: "bold",
+                      marginBottom: "8px",
+                      fontFamily: "momo trust display"
+                    }}>
+                      Saved Addresses
+                    </h4>
+                    <p style={{
+                      color: "#666",
+                      fontSize: "14px",
+                      margin: "0",
+                      fontFamily: "momo trust display"
+                    }}>
+                      Click "Set as Default" to change your primary delivery address
+                    </p>
+                  </div>
 
                   {addresses.length === 0 ? (
                     <p style={{
