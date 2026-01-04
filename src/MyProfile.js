@@ -6,11 +6,33 @@ import { PROFILE_BG } from "./constants";
 
 function MyProfile() {
   const navigate = useNavigate();
-  const [showPersonalInfo, setShowPersonalInfo] = useState(false);
+  const [showPersonalInfo, setShowPersonalInfo] = useState(true);
   const [showManageAddresses, setShowManageAddresses] = useState(false);
   const [gender, setGender] = useState("male");
   const [email, setEmail] = useState("user@example.com");
   const [mobile, setMobile] = useState("+91 9876543210");
+
+  // PAN Card state
+  const [showPanCardInfo, setShowPanCardInfo] = useState(false);
+  const [panNumber, setPanNumber] = useState("");
+  const [panFullName, setPanFullName] = useState("");
+  const [panFile, setPanFile] = useState(null);
+
+  const [panDeclaration, setPanDeclaration] = useState(false);
+
+  // Payments State
+  const [showSavedUPI, setShowSavedUPI] = useState(false);
+  const [showSavedCards, setShowSavedCards] = useState(false);
+  const [upiList, setUpiList] = useState([]);
+  const [newUpiId, setNewUpiId] = useState("");
+  const [cardList, setCardList] = useState([]);
+  const [newCard, setNewCard] = useState({ number: "", holder: "", expiry: "", cvv: "" });
+  const [showAddUpiForm, setShowAddUpiForm] = useState(false);
+
+  const [showAddCardForm, setShowAddCardForm] = useState(false);
+
+  // Logout confirmation state
+  const [showLogoutConfirm, setShowLogoutConfirm] = useState(false);
 
   // Addresses state
   const [addresses, setAddresses] = useState(() => {
@@ -63,19 +85,7 @@ function MyProfile() {
     alert("Profile updated successfully!");
   };
 
-  const handleDeactivate = () => {
-    if (window.confirm("Are you sure you want to deactivate your account?")) {
-      // Handle deactivation
-      alert("Account deactivation requested. Our team will contact you soon.");
-    }
-  };
 
-  const handleDelete = () => {
-    if (window.confirm("Are you sure you want to permanently delete your account? This action cannot be undone.")) {
-      // Handle deletion
-      alert("Account deletion requested. Our team will contact you soon.");
-    }
-  };
 
   // Address management functions
   const handleAddAddress = (addressData) => {
@@ -168,7 +178,7 @@ function MyProfile() {
               fontFamily: "momo trust display",
               textAlign: "center"
             }}>
-              Profile Menu
+              Account settings
             </h2>
 
             {/* Profile Information Button */}
@@ -191,8 +201,11 @@ function MyProfile() {
                 e.currentTarget.style.background = "#667eea";
               }}
               onClick={() => {
-                setShowPersonalInfo(!showPersonalInfo);
+                setShowPersonalInfo(true);
                 setShowManageAddresses(false);
+                setShowPanCardInfo(false);
+                setShowSavedUPI(false);
+                setShowSavedCards(false);
               }}
             >
               <h3 style={{
@@ -227,8 +240,11 @@ function MyProfile() {
                 e.currentTarget.style.background = "#667eea";
               }}
               onClick={() => {
-                setShowManageAddresses(!showManageAddresses);
+                setShowManageAddresses(true);
                 setShowPersonalInfo(false);
+                setShowPanCardInfo(false);
+                setShowSavedUPI(false);
+                setShowSavedCards(false);
               }}
             >
               <h3 style={{
@@ -240,6 +256,170 @@ function MyProfile() {
                 pointerEvents: "none"
               }}>
                 Manage Addresses
+              </h3>
+            </div>
+
+            {/* PAN Card Information Button */}
+            <div
+              style={{
+                background: "#667eea",
+                border: "none",
+                borderRadius: "12px",
+                padding: "20px",
+                marginBottom: "20px",
+                cursor: "pointer",
+                transition: "all 0.3s ease",
+                textAlign: "center",
+                boxShadow: "0 2px 6px rgba(102,126,234,0.2)"
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.background = "#5a67d8";
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.background = "#667eea";
+              }}
+              onClick={() => {
+                setShowPanCardInfo(true);
+                setShowPersonalInfo(false);
+                setShowManageAddresses(false);
+                setShowSavedUPI(false);
+                setShowSavedCards(false);
+              }}
+            >
+              <h3 style={{
+                fontSize: "1.2rem",
+                color: "#fff",
+                marginBottom: "8px",
+                fontFamily: "momo trust display",
+                fontWeight: "bold",
+                pointerEvents: "none"
+              }}>
+                PAN Card information
+              </h3>
+            </div>
+
+            <h2 style={{
+              fontSize: "1.8rem",
+              fontWeight: "bold",
+              color: "#184872",
+              margin: "30px 0 20px",
+              fontFamily: "momo trust display",
+              textAlign: "center"
+            }}>
+              Payments
+            </h2>
+
+            {/* Saved UPI Button */}
+            <div
+              style={{
+                background: "#667eea",
+                border: "none",
+                borderRadius: "12px",
+                padding: "20px",
+                marginBottom: "20px",
+                cursor: "pointer",
+                transition: "all 0.3s ease",
+                textAlign: "center",
+                boxShadow: "0 2px 6px rgba(102,126,234,0.2)"
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.background = "#5a67d8";
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.background = "#667eea";
+              }}
+              onClick={() => {
+                setShowSavedUPI(true);
+                setShowSavedCards(false);
+                setShowPersonalInfo(false);
+                setShowManageAddresses(false);
+                setShowPanCardInfo(false);
+              }}
+            >
+              <h3 style={{
+                fontSize: "1.2rem",
+                color: "#fff",
+                marginBottom: "8px",
+                fontFamily: "momo trust display",
+                fontWeight: "bold",
+                pointerEvents: "none"
+              }}>
+                Saved UPI
+              </h3>
+            </div>
+
+            {/* Saved Cards Button */}
+            <div
+              style={{
+                background: "#667eea",
+                border: "none",
+                borderRadius: "12px",
+                padding: "20px",
+                marginBottom: "20px",
+                cursor: "pointer",
+                transition: "all 0.3s ease",
+                textAlign: "center",
+                boxShadow: "0 2px 6px rgba(102,126,234,0.2)"
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.background = "#5a67d8";
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.background = "#667eea";
+              }}
+              onClick={() => {
+                setShowSavedCards(true);
+                setShowSavedUPI(false);
+                setShowPersonalInfo(false);
+                setShowManageAddresses(false);
+                setShowPanCardInfo(false);
+              }}
+            >
+              <h3 style={{
+                fontSize: "1.2rem",
+                color: "#fff",
+                marginBottom: "8px",
+                fontFamily: "momo trust display",
+                fontWeight: "bold",
+                pointerEvents: "none"
+              }}>
+                Saved Cards
+              </h3>
+            </div>
+
+            {/* Logout Button */}
+            <div
+              style={{
+                marginTop: "40px",
+                background: "#fff",
+                border: "2px solid #dc3545",
+                borderRadius: "12px",
+                padding: "15px",
+                cursor: "pointer",
+                transition: "all 0.3s ease",
+                textAlign: "center"
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.background = "#dc3545";
+                e.currentTarget.querySelector('h3').style.color = "#fff";
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.background = "#fff";
+                e.currentTarget.querySelector('h3').style.color = "#dc3545";
+              }}
+              onClick={() => {
+                setShowLogoutConfirm(true);
+              }}
+            >
+              <h3 style={{
+                fontSize: "1.2rem",
+                color: "#dc3545",
+                marginBottom: "0",
+                fontFamily: "momo trust display",
+                fontWeight: "bold",
+                pointerEvents: "none"
+              }}>
+                Logout
               </h3>
             </div>
           </div>
@@ -256,16 +436,7 @@ function MyProfile() {
               overflowY: "auto"
             }}
           >
-            <h1 style={{
-              fontSize: "2.5rem",
-              fontWeight: "bold",
-              color: "#184872",
-              marginBottom: "40px",
-              fontFamily: "momo trust display",
-              textAlign: "center"
-            }}>
 
-            </h1>
 
             {/* Personal Information Form */}
             {showPersonalInfo && (
@@ -285,7 +456,7 @@ function MyProfile() {
                   marginBottom: "25px",
                   fontFamily: "momo trust display",
                   textAlign: "center",
-                  fontSize: "1.5rem"
+                  fontSize: "2rem"
                 }}>
                   Edit Personal Information
                 </h3>
@@ -443,158 +614,266 @@ function MyProfile() {
                   textAlign: "center",
                   fontSize: "1.5rem"
                 }}>
-                  Frequently Asked Questions
+                  FAQs
                 </h3>
 
-                <div style={{ marginBottom: "20px" }}>
-                  <h4 style={{
-                    color: "#333",
-                    fontSize: "16px",
+                <div style={{ marginBottom: "15px" }}>
+                  <p style={{
                     fontWeight: "bold",
-                    marginBottom: "8px",
-                    fontFamily: "momo trust display"
+                    marginBottom: "5px"
                   }}>
                     What happens when I update my email address (or mobile number)?
-                  </h4>
+                  </p>
                   <p style={{
-                    color: "#666",
                     fontSize: "14px",
-                    lineHeight: "1.6",
-                    fontFamily: "momo trust display",
-                    margin: "0"
+                    color: "#555",
+                    lineHeight: "1.5"
                   }}>
-                    Your login email id (or mobile number) changes, likewise. You'll receive all your account related communication on your updated email address (or mobile number).
+                    Your login email id (or mobile number) changes, likewise. You'll receive all your account related
+                    communication on your updated email address (or mobile number).
                   </p>
                 </div>
 
-                <div style={{ marginBottom: "20px" }}>
-                  <h4 style={{
-                    color: "#333",
-                    fontSize: "16px",
-                    fontWeight: "bold",
-                    marginBottom: "8px",
-                    fontFamily: "momo trust display"
-                  }}>
-                    When will my Barter Portal account be updated with the new email address (or mobile number)?
-                  </h4>
+                <div style={{ marginBottom: "15px" }}>
                   <p style={{
-                    color: "#666",
-                    fontSize: "14px",
-                    lineHeight: "1.6",
-                    fontFamily: "momo trust display",
-                    margin: "0"
+                    fontWeight: "bold",
+                    marginBottom: "5px"
                   }}>
-                    It happens as soon as you confirm the verification code sent to your email (or mobile) and save the changes.
+                    When will my Barter Portal account be updated with the new email address (or mobile
+                    number)?
+                  </p>
+                  <p style={{
+                    fontSize: "14px",
+                    color: "#555",
+                    lineHeight: "1.5"
+                  }}>
+                    It happens as soon as you confirm the verification code sent to your email (or mobile) and save the
+                    changes.
                   </p>
                 </div>
 
-                <div style={{ marginBottom: "20px" }}>
-                  <h4 style={{
-                    color: "#333",
-                    fontSize: "16px",
+                <div>
+                  <p style={{
                     fontWeight: "bold",
-                    marginBottom: "8px",
-                    fontFamily: "momo trust display"
+                    marginBottom: "5px"
                   }}>
                     What happens to my existing account when I update my email address (or mobile number)?
-                  </h4>
+                  </p>
                   <p style={{
-                    color: "#666",
                     fontSize: "14px",
-                    lineHeight: "1.6",
-                    fontFamily: "momo trust display",
-                    margin: "0"
+                    color: "#555",
+                    lineHeight: "1.5"
                   }}>
-                    Updating your email address (or mobile number) doesn't invalidate your account. Your account remains fully functional. You'll continue seeing your Order history, saved information and personal details.
+                    Updating your email address (or mobile number) doesn't invalidate your account. Your account remains
+                    fully functional. You'll continue seeing your Order history, saved information and personal details.
                   </p>
                 </div>
               </div>
             )}
 
-            {/* Account Action Buttons */}
-            {showPersonalInfo && (
-              <div style={{
-                background: "rgba(255, 255, 255, 0.95)",
-                borderRadius: "12px",
-                padding: "30px",
-                boxShadow: "0 8px 32px rgba(0, 0, 0, 0.1)",
-                width: "100%",
-                maxWidth: "800px",
-                textAlign: "center"
-              }}>
+
+
+            {/* PAN Card Information Section */}
+            {showPanCardInfo && (
+              <div
+                style={{
+                  background: "rgba(255, 255, 255, 0.95)",
+                  borderRadius: "12px",
+                  padding: "30px",
+                  marginBottom: "30px",
+                  boxShadow: "0 8px 32px rgba(0, 0, 0, 0.1)",
+                  width: "100%",
+                  maxWidth: "800px"
+                }}
+              >
                 <h3 style={{
+                  fontSize: "2rem",
+                  fontWeight: "bold",
                   color: "#184872",
-                  marginBottom: "25px",
+                  marginBottom: "30px",
                   fontFamily: "momo trust display",
-                  fontSize: "1.3rem"
+                  textAlign: "center"
                 }}>
-                  Account Management
+                  PAN Card Information
                 </h3>
 
-                <div style={{
-                  display: "flex",
-                  gap: "20px",
-                  justifyContent: "center",
-                  flexWrap: "wrap"
-                }}>
-                  <button
-                    onClick={handleDeactivate}
+                <div style={{ marginBottom: "25px" }}>
+                  <label style={{
+                    display: "block",
+                    marginBottom: "8px",
+                    fontWeight: "bold",
+                    color: "#333",
+                    fontFamily: "momo trust display",
+                    fontSize: "1.1rem"
+                  }}>
+                    PAN Card Number:
+                  </label>
+                  <input
+                    type="text"
+                    value={panNumber}
+                    onChange={(e) => setPanNumber(e.target.value.toUpperCase())}
+                    placeholder="Enter PAN Number"
+                    maxLength={10}
                     style={{
-                      background: "#ffc107",
-                      color: "#212529",
-                      border: "none",
-                      padding: "12px 24px",
-                      borderRadius: "8px",
+                      width: "100%",
+                      padding: "12px",
+                      border: "1px solid #ddd",
+                      borderRadius: "6px",
                       fontSize: "16px",
-                      fontWeight: "bold",
-                      cursor: "pointer",
-                      boxShadow: "0 4px 12px rgba(255, 193, 7, 0.3)",
                       fontFamily: "momo trust display",
-                      transition: "all 0.3s ease",
-                      minWidth: "180px"
+                      boxSizing: "border-box",
+                      textTransform: "uppercase"
                     }}
-                    onMouseEnter={(e) => {
-                      e.target.style.background = "#e0a800";
-                      e.target.style.transform = "translateY(-2px)";
-                      e.target.style.boxShadow = "0 6px 16px rgba(255, 193, 7, 0.4)";
+                  />
+                </div>
+
+                <div style={{ marginBottom: "25px" }}>
+                  <label style={{
+                    display: "block",
+                    marginBottom: "8px",
+                    fontWeight: "bold",
+                    color: "#333",
+                    fontFamily: "momo trust display",
+                    fontSize: "1.1rem"
+                  }}>
+                    Full Name (as on PAN Card):
+                  </label>
+                  <input
+                    type="text"
+                    value={panFullName}
+                    onChange={(e) => setPanFullName(e.target.value)}
+                    placeholder="Enter Full Name"
+                    style={{
+                      width: "100%",
+                      padding: "12px",
+                      border: "1px solid #ddd",
+                      borderRadius: "6px",
+                      fontSize: "16px",
+                      fontFamily: "momo trust display",
+                      boxSizing: "border-box"
                     }}
-                    onMouseLeave={(e) => {
-                      e.target.style.background = "#ffc107";
-                      e.target.style.transform = "translateY(0)";
-                      e.target.style.boxShadow = "0 4px 12px rgba(255, 193, 7, 0.3)";
+                  />
+                </div>
+
+                <div style={{ marginBottom: "25px" }}>
+                  <label style={{
+                    display: "block",
+                    marginBottom: "8px",
+                    fontWeight: "bold",
+                    color: "#333",
+                    fontFamily: "momo trust display",
+                    fontSize: "1.1rem"
+                  }}>
+                    Upload PAN Card (JPEG only):
+                  </label>
+                  <input
+                    type="file"
+                    accept=".jpg, .jpeg"
+                    onChange={(e) => {
+                      const file = e.target.files[0];
+                      if (file && (file.type === "image/jpeg" || file.type === "image/jpg")) {
+                        setPanFile(file);
+                      } else {
+                        alert("Please upload a JPEG file only.");
+                        e.target.value = null;
+                        setPanFile(null);
+                      }
+                    }}
+                    style={{
+                      width: "100%",
+                      padding: "10px",
+                      border: "1px solid #ddd",
+                      borderRadius: "6px",
+                      fontSize: "16px",
+                      fontFamily: "momo trust display",
+                      boxSizing: "border-box",
+                      background: "#f9f9f9"
+                    }}
+                  />
+                  {panFile && (
+                    <p style={{ marginTop: "5px", fontSize: "14px", color: "green", fontFamily: "momo trust display" }}>
+                      Selected file: {panFile.name}
+                    </p>
+                  )}
+                </div>
+
+                <div style={{ marginBottom: "25px", display: "flex", alignItems: "flex-start" }}>
+                  <input
+                    type="checkbox"
+                    checked={panDeclaration}
+                    onChange={(e) => setPanDeclaration(e.target.checked)}
+                    style={{
+                      marginTop: "5px",
+                      marginRight: "10px",
+                      cursor: "pointer",
+                      width: "18px",
+                      height: "18px"
+                    }}
+                  />
+                  <label style={{
+                    fontSize: "0.95rem",
+                    color: "#555",
+                    fontFamily: "momo trust display",
+                    lineHeight: "1.5",
+                    cursor: "pointer"
+                  }} onClick={() => setPanDeclaration(!panDeclaration)}>
+                    I do hereby declare that PAN furnished/stated above is correct and belongs to me, registered as an account holder with www.Barterportal.com. I further declare that I shall solely be held responsible for the consequences, in case of any false PAN declaration.
+                  </label>
+                </div>
+
+                <div style={{ textAlign: "center", marginBottom: "20px" }}>
+                  <a
+                    href="#"
+                    onClick={(e) => {
+                      e.preventDefault();
+                      alert("Terms and conditions popup would open here.");
+                    }}
+                    style={{
+                      color: "#667eea",
+                      textDecoration: "underline",
+                      fontFamily: "momo trust display",
+                      fontSize: "14px",
+                      cursor: "pointer"
                     }}
                   >
-                    Deactivate Account
-                  </button>
+                    Read Terms and conditions of PAN card information
+                  </a>
+                </div>
 
+                <div style={{ textAlign: "center" }}>
                   <button
-                    onClick={handleDelete}
+                    onClick={() => {
+                      if (!panNumber || !panFullName || !panFile || !panDeclaration) {
+                        alert("Please fill all details and accept the declaration.");
+                        return;
+                      }
+                      // Handle save logic here
+                      alert("PAN Card details saved successfully!");
+                    }}
                     style={{
-                      background: "#dc3545",
+                      background: "#28a745",
                       color: "white",
                       border: "none",
-                      padding: "12px 24px",
-                      borderRadius: "8px",
+                      padding: "12px 30px",
+                      borderRadius: "6px",
                       fontSize: "16px",
                       fontWeight: "bold",
                       cursor: "pointer",
-                      boxShadow: "0 4px 12px rgba(220, 53, 69, 0.3)",
                       fontFamily: "momo trust display",
                       transition: "all 0.3s ease",
-                      minWidth: "180px"
+                      opacity: (panNumber && panFullName && panFile && panDeclaration) ? 1 : 0.6,
+                      pointerEvents: (panNumber && panFullName && panFile && panDeclaration) ? "auto" : "none"
                     }}
                     onMouseEnter={(e) => {
-                      e.target.style.background = "#c82333";
+                      e.target.style.background = "#218838";
                       e.target.style.transform = "translateY(-2px)";
-                      e.target.style.boxShadow = "0 6px 16px rgba(220, 53, 69, 0.4)";
                     }}
                     onMouseLeave={(e) => {
-                      e.target.style.background = "#dc3545";
+                      e.target.style.background = "#28a745";
                       e.target.style.transform = "translateY(0)";
-                      e.target.style.boxShadow = "0 4px 12px rgba(220, 53, 69, 0.3)";
                     }}
                   >
-                    Delete Account
+                    Save PAN Info
                   </button>
                 </div>
               </div>
@@ -908,43 +1187,385 @@ function MyProfile() {
               </div>
             )}
 
-            {/* Empty State Message */}
-            {!showPersonalInfo && !showManageAddresses && (
+            {/* Saved UPI Section */}
+            {showSavedUPI && (
               <div
                 style={{
                   background: "rgba(255, 255, 255, 0.95)",
                   borderRadius: "12px",
-                  padding: "60px 40px",
+                  padding: "30px",
+                  marginBottom: "30px",
                   boxShadow: "0 8px 32px rgba(0, 0, 0, 0.1)",
-                  textAlign: "center",
                   width: "100%",
-                  maxWidth: "600px"
+                  maxWidth: "800px"
                 }}
               >
-                <div style={{ fontSize: "4rem", marginBottom: "20px" }}>👤</div>
                 <h3 style={{
+                  fontSize: "2rem",
+                  fontWeight: "bold",
                   color: "#184872",
-                  marginBottom: "15px",
+                  marginBottom: "30px",
                   fontFamily: "momo trust display",
-                  fontSize: "1.5rem"
+                  textAlign: "center"
                 }}>
-                  Welcome to Your Profile
+                  Saved UPI
                 </h3>
-                <p style={{
-                  color: "#666",
-                  fontSize: "1.1rem",
-                  fontFamily: "momo trust display",
-                  lineHeight: "1.6"
-                }}>
-                  Click on "Personal Information" in the sidebar to view and manage your account settings.
-                </p>
+
+                {/* Add New UPI Button */}
+                <div style={{ textAlign: "center", marginBottom: "30px" }}>
+                  <button
+                    onClick={() => setShowAddUpiForm(!showAddUpiForm)}
+                    style={{
+                      background: "#28a745",
+                      color: "#fff",
+                      border: "none",
+                      padding: "10px 20px",
+                      borderRadius: "8px",
+                      fontSize: "16px",
+                      fontWeight: "bold",
+                      cursor: "pointer",
+                      fontFamily: "momo trust display"
+                    }}
+                  >
+                    {showAddUpiForm ? "- Cancel" : "+ Add New UPI ID"}
+                  </button>
+                </div>
+
+                {showAddUpiForm && (
+                  <div style={{ marginBottom: "30px", padding: "20px", background: "#f9f9f9", borderRadius: "8px" }}>
+                    <input
+                      type="text"
+                      placeholder="Enter UPI ID (e.g., name@bank)"
+                      value={newUpiId}
+                      onChange={(e) => setNewUpiId(e.target.value)}
+                      style={{
+                        width: "100%",
+                        padding: "10px",
+                        marginBottom: "10px",
+                        borderRadius: "6px",
+                        border: "1px solid #ddd"
+                      }}
+                    />
+                    <button
+                      onClick={() => {
+                        if (newUpiId) {
+                          setUpiList([...upiList, { id: Date.now(), upiId: newUpiId }]);
+                          setNewUpiId("");
+                          setShowAddUpiForm(false);
+                        }
+                      }}
+                      style={{
+                        background: "#667eea",
+                        color: "#fff",
+                        border: "none",
+                        padding: "8px 16px",
+                        borderRadius: "6px",
+                        cursor: "pointer"
+                      }}
+                    >
+                      Save UPI
+                    </button>
+                  </div>
+                )}
+
+                {/* UPI List */}
+                {upiList.length > 0 ? (
+                  <div style={{ marginBottom: "30px" }}>
+                    {upiList.map(item => (
+                      <div key={item.id} style={{
+                        padding: "15px",
+                        borderBottom: "1px solid #eee",
+                        display: "flex",
+                        justifyContent: "space-between",
+                        alignItems: "center"
+                      }}>
+                        <span style={{ fontSize: "16px", fontFamily: "momo trust display" }}>{item.upiId}</span>
+                        <button
+                          onClick={() => setUpiList(upiList.filter(u => u.id !== item.id))}
+                          style={{
+                            color: "red",
+                            background: "none",
+                            border: "none",
+                            cursor: "pointer",
+                            fontSize: "14px"
+                          }}
+                        >
+                          Delete
+                        </button>
+                      </div>
+                    ))}
+                  </div>
+                ) : (
+                  <p style={{ textAlign: "center", color: "#666", marginBottom: "30px" }}>No saved UPI IDs yet.</p>
+                )}
+
+                {/* UPI FAQs */}
+                <div style={{ marginTop: "40px" }}>
+                  <h4 style={{ fontSize: "1.2rem", color: "#184872", marginBottom: "15px", fontFamily: "momo trust display" }}>FAQs</h4>
+                  <div style={{ marginBottom: "15px" }}>
+                    <p style={{ fontWeight: "bold", marginBottom: "5px" }}>Why is my UPI being saved on Barter Portal?</p>
+                    <p style={{ fontSize: "14px", color: "#555", lineHeight: "1.5" }}>It's quicker. You can save the hassle of typing in the complete UPI information every time you shop at Barter Portal by saving your UPI details. You can make your payment by selecting the saved UPI ID of your choice at checkout. While this is obviously faster, it is also very secure.</p>
+                  </div>
+                  <div style={{ marginBottom: "15px" }}>
+                    <p style={{ fontWeight: "bold", marginBottom: "5px" }}>Is it safe to save my UPI on Barter Portal?</p>
+                    <p style={{ fontSize: "14px", color: "#555", lineHeight: "1.5" }}>Absolutely. Your UPI ID information is 100 percent safe with us. UPI ID details are non PCI compliant and are non confidential data.</p>
+                  </div>
+                  <div style={{ marginBottom: "15px" }}>
+                    <p style={{ fontWeight: "bold", marginBottom: "5px" }}>What all UPI information does Barter Portal store?</p>
+                    <p style={{ fontSize: "14px", color: "#555", lineHeight: "1.5" }}>Barter Portal only stores UPI ID and payment provider details. We do not store UPI PIN/MPIN.</p>
+                  </div>
+                  <div>
+                    <p style={{ fontWeight: "bold", marginBottom: "5px" }}>Can I delete my saved UPI?</p>
+                    <p style={{ fontSize: "14px", color: "#555", lineHeight: "1.5" }}>Yes, you can delete your UPI ID at any given time.</p>
+                  </div>
+                </div>
               </div>
             )}
+
+            {/* Saved Cards Section */}
+            {showSavedCards && (
+              <div
+                style={{
+                  background: "rgba(255, 255, 255, 0.95)",
+                  borderRadius: "12px",
+                  padding: "30px",
+                  marginBottom: "30px",
+                  boxShadow: "0 8px 32px rgba(0, 0, 0, 0.1)",
+                  width: "100%",
+                  maxWidth: "800px"
+                }}
+              >
+                <h3 style={{
+                  fontSize: "2rem",
+                  fontWeight: "bold",
+                  color: "#184872",
+                  marginBottom: "30px",
+                  fontFamily: "momo trust display",
+                  textAlign: "center"
+                }}>
+                  Saved Cards
+                </h3>
+
+                {/* Add New Card Button */}
+                <div style={{ textAlign: "center", marginBottom: "30px" }}>
+                  <button
+                    onClick={() => setShowAddCardForm(!showAddCardForm)}
+                    style={{
+                      background: "#28a745",
+                      color: "#fff",
+                      border: "none",
+                      padding: "10px 20px",
+                      borderRadius: "8px",
+                      fontSize: "16px",
+                      fontWeight: "bold",
+                      cursor: "pointer",
+                      fontFamily: "momo trust display"
+                    }}
+                  >
+                    {showAddCardForm ? "- Cancel" : "+ Add New Card"}
+                  </button>
+                </div>
+
+                {showAddCardForm && (
+                  <div style={{ marginBottom: "30px", padding: "20px", background: "#f9f9f9", borderRadius: "8px" }}>
+                    <input
+                      type="text"
+                      placeholder="Card Number"
+                      value={newCard.number}
+                      onChange={(e) => setNewCard({ ...newCard, number: e.target.value })}
+                      style={{ width: "100%", padding: "10px", marginBottom: "10px", borderRadius: "6px", border: "1px solid #ddd" }}
+                    />
+                    <input
+                      type="text"
+                      placeholder="Card Holder Name"
+                      value={newCard.holder}
+                      onChange={(e) => setNewCard({ ...newCard, holder: e.target.value })}
+                      style={{ width: "100%", padding: "10px", marginBottom: "10px", borderRadius: "6px", border: "1px solid #ddd" }}
+                    />
+                    <div style={{ display: "flex", gap: "10px", marginBottom: "10px" }}>
+                      <input
+                        type="text"
+                        placeholder="Expiry (MM/YY)"
+                        value={newCard.expiry}
+                        onChange={(e) => setNewCard({ ...newCard, expiry: e.target.value })}
+                        style={{ flex: 1, padding: "10px", borderRadius: "6px", border: "1px solid #ddd" }}
+                      />
+                      <input
+                        type="text"
+                        placeholder="CVV"
+                        value={newCard.cvv}
+                        onChange={(e) => setNewCard({ ...newCard, cvv: e.target.value })}
+                        style={{ flex: 1, padding: "10px", borderRadius: "6px", border: "1px solid #ddd" }}
+                      />
+                    </div>
+
+                    <button
+                      onClick={() => {
+                        if (newCard.number) {
+                          setCardList([...cardList, { id: Date.now(), ...newCard }]);
+                          setNewCard({ number: "", holder: "", expiry: "", cvv: "" });
+                          setShowAddCardForm(false);
+                        }
+                      }}
+                      style={{
+                        background: "#667eea",
+                        color: "#fff",
+                        border: "none",
+                        padding: "8px 16px",
+                        borderRadius: "6px",
+                        cursor: "pointer"
+                      }}
+                    >
+                      Save Card
+                    </button>
+                  </div>
+                )}
+
+                {/* Card List */}
+                {cardList.length > 0 ? (
+                  <div style={{ marginBottom: "30px" }}>
+                    {cardList.map(item => (
+                      <div key={item.id} style={{
+                        padding: "15px",
+                        borderBottom: "1px solid #eee",
+                        display: "flex",
+                        justifyContent: "space-between",
+                        alignItems: "center"
+                      }}>
+                        <div>
+                          <div style={{ fontSize: "16px", fontFamily: "momo trust display", fontWeight: "bold" }}>**** **** **** {item.number.slice(-4)}</div>
+                          <div style={{ fontSize: "14px", color: "#666" }}>{item.holder}</div>
+                        </div>
+                        <button
+                          onClick={() => setCardList(cardList.filter(c => c.id !== item.id))}
+                          style={{
+                            color: "red",
+                            background: "none",
+                            border: "none",
+                            cursor: "pointer",
+                            fontSize: "14px"
+                          }}
+                        >
+                          Delete
+                        </button>
+                      </div>
+                    ))}
+                  </div>
+                ) : (
+                  <p style={{ textAlign: "center", color: "#666", marginBottom: "30px" }}>No saved cards yet.</p>
+                )}
+
+
+                {/* Card FAQs */}
+                <div style={{ marginTop: "40px" }}>
+                  <h4 style={{ fontSize: "1.2rem", color: "#184872", marginBottom: "15px", fontFamily: "momo trust display" }}>FAQs</h4>
+                  <div style={{ marginBottom: "15px" }}>
+                    <p style={{ fontWeight: "bold", marginBottom: "5px" }}>Why is my card being tokenised?</p>
+                    <p style={{ fontSize: "14px", color: "#555", lineHeight: "1.5" }}>As per the new RBI guidelines to make card data more secure, merchants like Barter Portal cannot store the card details of users. As an alternative, RBI has authorised card networks and card issuers to offer card tokenisation services, which means the replacement of actual credit and debit card details with an alternate code called "token". The user can either choose to tokenise their card by giving consent for future transactions or choose to continue without tokenisation.</p>
+                  </div>
+                  <div style={{ marginBottom: "15px" }}>
+                    <p style={{ fontWeight: "bold", marginBottom: "5px" }}>What is a token?</p>
+                    <p style={{ fontSize: "14px", color: "#555", lineHeight: "1.5" }}>A token is generated when a user gives consent to Barter Portal to tokenise their card. A token is a unique value for a combination of card, token requestor (Barter Portal is a token requestor & accepts request from the customer for tokenisation of a card and passes it onto the card network to issue a corresponding token) and device. The token does not contain any personal information linked to your card and is generated only when a customer uses a new card for a successful transaction on Barter Portal.</p>
+                  </div>
+                  <div style={{ marginBottom: "15px" }}>
+                    <p style={{ fontWeight: "bold", marginBottom: "5px" }}>Is it safe to tokenise my card?</p>
+                    <p style={{ fontSize: "14px", color: "#555", lineHeight: "1.5" }}>Yes. A tokenised card transaction is considered safer as the actual card details are not shared with the Barter Portal during transaction processing . Card information is stored with the authorised card networks or card issuers only and Flipkart does not store your 16-digit card number.</p>
+                  </div>
+                  <div style={{ marginBottom: "15px" }}>
+                    <p style={{ fontWeight: "bold", marginBottom: "5px" }}>Is tokenisation of card mandatory?</p>
+                    <p style={{ fontSize: "14px", color: "#555", lineHeight: "1.5" }}>No, customer can choose whether or not to tokenise their card.</p>
+                  </div>
+                  <div>
+                    <p style={{ fontWeight: "bold", marginBottom: "5px" }}>What happens if I don't give consent to secure my card?</p>
+                    <p style={{ fontSize: "14px", color: "#555", lineHeight: "1.5" }}>If you don't give consent to tokenise your card, you need to enter your card details for every transaction as stipulated under the RBI guidelines.</p>
+                  </div>
+                </div>
+              </div>
+            )}
+
+
           </div>
         </main>
 
         <Footer />
       </div>
+
+
+      {/* Logout Confirmation Modal */}
+      {
+        showLogoutConfirm && (
+          <div style={{
+            position: "fixed",
+            top: 0,
+            left: 0,
+            width: "100%",
+            height: "100%",
+            background: "rgba(0, 0, 0, 0.5)",
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            zIndex: 1000
+          }}>
+            <div style={{
+              background: "#fff",
+              padding: "30px",
+              borderRadius: "12px",
+              textAlign: "center",
+              boxShadow: "0 8px 32px rgba(0, 0, 0, 0.2)",
+              maxWidth: "400px",
+              width: "90%"
+            }}>
+              <h3 style={{
+                fontSize: "1.2rem",
+                color: "#333",
+                marginBottom: "20px",
+                fontFamily: "momo trust display"
+              }}>
+                Are you sure you want to logout?
+              </h3>
+              <div style={{ display: "flex", justifyContent: "center", gap: "20px" }}>
+                <button
+                  onClick={() => {
+                    // Clear user session
+                    localStorage.clear();
+                    // Navigate to Home
+                    navigate("/");
+                  }}
+                  style={{
+                    background: "#dc3545",
+                    color: "#fff",
+                    border: "none",
+                    padding: "10px 25px",
+                    borderRadius: "8px",
+                    fontSize: "16px",
+                    fontWeight: "bold",
+                    cursor: "pointer",
+                    fontFamily: "momo trust display"
+                  }}
+                >
+                  Logout
+                </button>
+                <button
+                  onClick={() => setShowLogoutConfirm(false)}
+                  style={{
+                    background: "#6c757d",
+                    color: "#fff",
+                    border: "none",
+                    padding: "10px 25px",
+                    borderRadius: "8px",
+                    fontSize: "16px",
+                    fontWeight: "bold",
+                    cursor: "pointer",
+                    fontFamily: "momo trust display"
+                  }}
+                >
+                  Cancel
+                </button>
+              </div>
+            </div>
+          </div>
+        )
+      }
     </div>
   );
 }
