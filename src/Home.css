@@ -79,3 +79,39 @@ body {
 .sign-out-btn:hover {
     background-color: #c82333;
 }
+
+/* Dashboard Responsive Styles */
+.dashboard-grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 30px;
+    align-items: start;
+}
+
+.recommended-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+}
+
+/* Tablet and below */
+@media (max-width: 1024px) {
+    .dashboard-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .recommended-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+/* Mobile */
+@media (max-width: 640px) {
+    .recommended-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .home-content {
+        padding: 0 10px !important;
+    }
+}

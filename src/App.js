@@ -8,31 +8,31 @@ import Books from './Books';
 import Contact from './Contact';
 import Collectables from './Collectables';
 import Electronics from './Electronics';
-import Others from './Others';
+
 import Cart from './Cart';
 import MyProfile from './MyProfile';
 import Error from "./Error";
 import Login from "./Login";
 
-function App(){
-    return(
-            <Router>
-                <Routes>
-                    <Route path="/" element={<Login />} />
-                    <Route path="/home" element={<Home />} />
-                    <Route path="/buy" element={<Buy />} />
-                    <Route path="/sell" element={<Sell />} />
-                    <Route path="/about" element={<About />} />
-                    <Route path="/books" element={<Books />} />
-                    <Route path="/contact" element={<Contact />} />
-                    <Route path="/collectables" element={<Collectables />} />
-                    <Route path="/electronics" element={<Electronics />} />
-                    <Route path="/others" element={<Others />} />
-                    <Route path="/cart" element={<Cart />} />
-                    <Route path="/myprofile" element={<MyProfile />} />
-                    <Route path="*" element={<Error />} />
-                </Routes>
-            </Router>   
+function App() {
+    return (
+        <Router>
+            <Routes>
+                <Route path="/" element={<Login />} />
+                <Route path="/home" element={<Home />} />
+                <Route path="/buy" element={<Buy />} />
+                <Route path="/sell" element={<Sell />} />
+                <Route path="/about" element={<About />} />
+                <Route path="/books" element={<Books />} />
+                <Route path="/contact" element={<Contact />} />
+                <Route path="/collectables" element={<Collectables />} />
+                <Route path="/electronics" element={<Electronics />} />
+
+                <Route path="/cart" element={<Cart />} />
+                <Route path="/myprofile" element={<MyProfile />} />
+                <Route path="*" element={<Error />} />
+            </Routes>
+        </Router>
     );
 }
 

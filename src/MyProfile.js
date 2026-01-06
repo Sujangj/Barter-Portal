@@ -155,8 +155,7 @@ function MyProfile() {
           style={{
             flex: "1",
             display: "flex",
-            minHeight: "calc(100vh - 60px)",
-            paddingTop: "60px"
+            minHeight: "calc(100vh - 60px)"
           }}
         >
           {/* Left Sidebar */}
@@ -823,7 +822,7 @@ function MyProfile() {
 
                 <div style={{ textAlign: "center", marginBottom: "20px" }}>
                   <a
-                    href="#"
+                    href="javascript:void(0)"
                     onClick={(e) => {
                       e.preventDefault();
                       alert("Terms and conditions popup would open here.");
