@@ -1,8 +1,10 @@
 import React, { useRef, useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import SignUpFormPopup from "./SignUpFormPopup"; // Import SignUpFormPopup
-import LoginFormPopup from "./LoginFormPopup"; // Import LoginFormPopup
-import { LOGO_URL, HOME_BG_URL } from "./constants";
+import SignUpFormPopup from "./SignUpFormPopup";
+import LoginFormPopup from "./LoginFormPopup";
+import Header from "./Header";
+import Footer from "./Footer";
+import { SHARED_BG_URL } from "./constants";
 import "./Home.css";
 
 // Social media icons as inline SVGs (fontawesome style, but inline for no dependency)
@@ -71,64 +73,21 @@ function SocialIcon({ type, url }) {
     );
 }
 
-// Peach orange: #FFDAB9 or rgba(255, 218, 185, .96) for nice opacity in header background
 function Home() {
     const navigate = useNavigate();
-    const [showProfileDropdown, setShowProfileDropdown] = useState(false);
-    const [isHoveringDropdown, setIsHoveringDropdown] = useState(false);
-    const [showSignOutConfirm, setShowSignOutConfirm] = useState(false);
     const [showSignUpPrompt, setShowSignUpPrompt] = useState(false);
-    const [showFullSignUpPopup, setShowFullSignUpPopup] = useState(false); // New state for full signup popup
-    const [showLoginFormPopup, setShowLoginFormPopup] = useState(false); // New state for login form popup
+    const [showFullSignUpPopup, setShowFullSignUpPopup] = useState(false);
+    const [showLoginFormPopup, setShowLoginFormPopup] = useState(false);
     const [isAuthenticated, setIsAuthenticated] = useState(() => {
         return localStorage.getItem("isAuthenticated") === "true";
     });
-    const profileDropdownRef = useRef(null); // Add useRef for profile dropdown
 
-    const menuItems = [
-        { text: "My Profile", icon: '<path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle>' },
-        { text: "Orders", icon: '<path d="M6 2L3 6v14c0 1.1.9 2 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path><line x1="3" y1="6" x2="21" y2="6"></line><path d="M16 10a4 4 0 0 1-8 0"></path>' },
-        { text: "Wishlist", icon: '<path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>' },
-        { text: "Rewards", icon: '<circle cx="12" cy="8" r="7"></circle><polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88"></polyline>' },
-        { text: "Refer & Earn", icon: '<path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M19 8v6"></path><path d="M22 11h-6"></path>' },
-    ];
-
-    // Show sign up prompt for unauthenticated users on component mount
     useEffect(() => {
         if (!isAuthenticated) {
             setShowSignUpPrompt(true);
         }
     }, [isAuthenticated]);
 
-    // Close profile dropdown when clicking outside
-    useEffect(() => {
-        function handleClickOutside(event) {
-            if (profileDropdownRef.current && !profileDropdownRef.current.contains(event.target)) {
-                setShowProfileDropdown(false);
-            }
-        }
-        document.addEventListener("mousedown", handleClickOutside);
-        return () => {
-            document.removeEventListener("mousedown", handleClickOutside);
-        };
-    }, [profileDropdownRef, setShowProfileDropdown]);
-
-
-
-
-    const profileDropdownStyle = {
-        position: "absolute",
-        top: "60px",
-        right: "0",
-        background: "white",
-        borderRadius: "8px",
-        boxShadow: "0 8px 32px rgba(0,0,0,0.15)",
-        border: "1px solid #e9ecef",
-        minWidth: "200px",
-        zIndex: 1000,
-        padding: "8px 0",
-        fontFamily: "momo trust display"
-    };
 
     return (
         <div
@@ -136,560 +95,17 @@ function Home() {
                 minHeight: "100vh",
                 height: "100dvh",
                 overflowY: "auto",
-                background: `url(${HOME_BG_URL}) center center / cover no-repeat fixed`,
-                position: "relative", // for stacking context for footer
+                background: `url(${SHARED_BG_URL}) center center / cover no-repeat fixed`,
+                position: "relative",
                 display: "flex",
                 flexDirection: "column"
             }}
         >
-            {/* Fixed header similar to Login page header */}
-            <header
-                style={{
-                    position: "fixed",
-                    top: 0,
-                    left: 0,
-                    width: "100%",
-                    height: "60px",
-                    background: "#FFFFFF", // Peach orange
-                    boxShadow: "0 3px 14px 0 rgba(143,148,251,0.10)",
-                    zIndex: 1201,
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "space-between",
-                    paddingLeft: "32px",
-                    paddingRight: "32px",
-                    fontFamily: "momo trust display", // ensure all header text uses this font
-                }}
-            >
-                {/* Left Side: logo and Barter Portal */}
-                <div
-                    style={{
-                        height: "100%",
-                        display: "flex",
-                        alignItems: "center",
-                    }}
-                >
-                    <img
-                        src={LOGO_URL}
-                        alt="Barter Portal Logo"
-                        style={{
-                            height: "46px",
-                            width: "46px",
-                            objectFit: "contain",
-                            marginRight: "17px",
-                            borderRadius: "12px",
-                            boxShadow: "0 3px 12px rgba(143,148,251,0.10)"
-                        }}
-                    />
-                    <span
-                        style={{
-                            fontWeight: "bold",
-                            fontSize: "2.5rem",
-                            color: "#184872",
-                            letterSpacing: "0.02em",
-                            fontFamily: "momo trust display", // <-- updated here
-                        }}
-                    >
-                        Barter Portal
-                    </span>
-                </div>
-                <div
-                    style={{
-                        display: "flex",
-                        justifyContent: "flex-end",
-                        alignItems: "center",
-                        gap: "22px",
-                        fontFamily: "momo trust display", // propagate to search bar and buttons
-                    }}
-                >
+            <Header
+                showSignOutButton={true}
+                showSingleLoginButton={true}
+            />
 
-
-                    {/* About and Contact Navigation */}
-                    <button
-                        onClick={() => navigate("/about")}
-                        style={{
-                            padding: "10px 20px",
-                            background: "transparent",
-                            color: "#184872",
-                            border: "none",
-                            borderRadius: "8px",
-                            cursor: "pointer",
-                            fontSize: "16px",
-                            fontWeight: "600",
-                            fontFamily: "momo trust display",
-                            transition: "all 0.3s ease"
-                        }}
-                        onMouseEnter={(e) => {
-                            e.target.style.background = "#f0f4f8";
-                            e.target.style.color = "#667eea";
-                        }}
-                        onMouseLeave={(e) => {
-                            e.target.style.background = "transparent";
-                            e.target.style.color = "#184872";
-                        }}
-                    >
-                        About
-                    </button>
-
-                    <button
-                        onClick={() => navigate("/contact")}
-                        style={{
-                            padding: "10px 20px",
-                            background: "transparent",
-                            color: "#184872",
-                            border: "none",
-                            borderRadius: "8px",
-                            cursor: "pointer",
-                            fontSize: "16px",
-                            fontWeight: "600",
-                            fontFamily: "momo trust display",
-                            transition: "all 0.3s ease"
-                        }}
-                        onMouseEnter={(e) => {
-                            e.target.style.background = "#f0f4f8";
-                            e.target.style.color = "#667eea";
-                        }}
-                        onMouseLeave={(e) => {
-                            e.target.style.background = "transparent";
-                            e.target.style.color = "#184872";
-                        }}
-                    >
-                        Contact
-                    </button>
-
-                    {/* Profile dropdown or Sign Up/Login buttons */}
-                    {!isAuthenticated ? (
-                        <div
-                            onMouseEnter={() => setShowProfileDropdown(true)}
-                            onMouseLeave={() => {
-                                // Only hide if not hovering over dropdown
-                                setTimeout(() => {
-                                    if (!isHoveringDropdown) {
-                                        setShowProfileDropdown(false);
-                                    }
-                                }, 100);
-                            }}
-                            style={{ position: "relative", zIndex: 1 }}
-                        >
-                            <button
-                                style={{
-                                    minWidth: "120px",
-                                    width: "120px",
-                                    padding: "10px 15px",
-                                    fontFamily: "'momo trust display', 'Segoe UI', 'Roboto', 'Arial', sans-serif",
-                                    fontWeight: "bold",
-                                    fontSize: "16px",
-                                    borderRadius: "8px",
-                                    background: "#667eea",
-                                    color: "white",
-                                    border: "none",
-                                    cursor: "pointer",
-                                    boxShadow: "0px 3px 8px rgba(40,116,240,0.28)",
-                                    textAlign: "center",
-                                    display: "flex",
-                                    alignItems: "center",
-                                    justifyContent: "space-around",
-                                    whiteSpace: "nowrap",
-                                    transition: "all 0.3s ease",
-                                    textTransform: "none",
-                                }}
-                                onMouseEnter={(e) => {
-                                    e.target.style.background = "linear-gradient(135deg, #667eea 0%, #764ba2 100%)";
-                                    e.target.style.color = "white";
-                                    const svgs = e.target.querySelectorAll('svg');
-                                    svgs.forEach(svg => svg.style.color = "white");
-                                }}
-                                onMouseLeave={(e) => {
-                                    e.target.style.background = "#667eea";
-                                    e.target.style.color = "white";
-                                    const svgs = e.target.querySelectorAll('svg');
-                                    svgs.forEach(svg => svg.style.color = "white");
-                                }}
-                                onClick={(e) => {
-                                    e.stopPropagation();
-                                    setShowLoginFormPopup(true);
-                                }}
-                            >
-                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ color: "white" }}>
-                                    <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
-                                    <circle cx="12" cy="7" r="4"></circle>
-                                </svg>
-                                Login
-                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ color: "white" }}>
-                                    <polyline points="6 9 12 15 18 9"></polyline>
-                                </svg>
-                            </button>
-                            {showProfileDropdown && (
-                                <div
-                                    ref={profileDropdownRef}
-                                    style={{
-                                        position: "absolute",
-                                        top: "calc(100% + 5px)",
-                                        right: "-20px",
-                                        background: "white",
-                                        borderRadius: "8px",
-                                        boxShadow: "0 8px 32px rgba(0,0,0,0.15)",
-                                        border: "1px solid #e9ecef",
-                                        minWidth: "240px",
-                                        zIndex: 1000,
-                                        padding: "0",
-                                        fontFamily: "momo trust display",
-                                        opacity: showProfileDropdown ? 1 : 0,
-                                        transform: showProfileDropdown ? "translateY(0)" : "translateY(-10px)",
-                                        transition: "opacity 0.2s ease-out, transform 0.2s ease-out",
-                                        pointerEvents: showProfileDropdown ? "auto" : "none",
-                                    }}
-                                    onMouseEnter={() => {
-                                        setIsHoveringDropdown(true);
-                                        setShowProfileDropdown(true);
-                                    }}
-                                    onMouseLeave={() => {
-                                        setIsHoveringDropdown(false);
-                                        // Hide menu after a short delay to allow mouse to move
-                                        setTimeout(() => {
-                                            setShowProfileDropdown(false);
-                                        }, 100);
-                                    }}
-                                >
-                                    <div style={{
-                                        display: "flex",
-                                        justifyContent: "space-between",
-                                        alignItems: "center",
-                                        padding: "16px 20px",
-                                        borderBottom: "1px solid #eee",
-                                        fontFamily: "momo trust display",
-                                    }}>
-                                        <span style={{ color: "#555", fontSize: "14px" }}>New customer?</span>
-                                        <button
-                                            style={{
-                                                background: "none",
-                                                border: "none",
-                                                color: "#2874f0",
-                                                fontWeight: "600",
-                                                cursor: "pointer",
-                                                fontSize: "15px",
-                                                fontFamily: "momo trust display",
-                                            }}
-                                            onClick={() => {
-                                                setShowProfileDropdown(false);
-                                                setShowFullSignUpPopup(true);
-                                            }}
-                                        >
-                                            Sign Up
-                                        </button>
-                                    </div>
-                                    {/* Profile menu items */}
-                                    {menuItems.map((item, index) => (
-                                        <button
-                                            key={index}
-                                            style={{ display: "flex", alignItems: "center", gap: "10px", width: "100%", padding: "12px 20px", background: "none", border: "none", textAlign: "left", cursor: "pointer", fontSize: "14px", fontWeight: "500", color: "#333", transition: "all 0.2s ease" }}
-                                            onMouseEnter={(e) => e.target.style.background = "#f8f9fa"}
-                                            onMouseLeave={(e) => e.target.style.background = "transparent"}
-                                            onClick={() => {
-                                                if (item.text === "My Profile") {
-                                                    if (isAuthenticated) {
-                                                        navigate("/myprofile");
-                                                    } else {
-                                                        setShowLoginFormPopup(true);
-                                                    }
-                                                } else {
-                                                    alert(`Clicked ${item.text}`); // Placeholder for other menu items
-                                                }
-                                            }}
-                                        >
-                                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" dangerouslySetInnerHTML={{ __html: item.icon }} />
-                                            {item.text}
-                                        </button>
-                                    ))}
-                                </div>
-                            )}
-                        </div>
-                    ) : (
-                        // Authenticated user - show profile dropdown
-                        <div style={{ position: "relative" }}>
-                            <button
-                                style={{
-                                    width: "50px",
-                                    height: "50px",
-                                    borderRadius: "50%",
-                                    background: "#667eea",
-                                    border: "none",
-                                    cursor: "pointer",
-                                    display: "flex",
-                                    alignItems: "center",
-                                    justifyContent: "center",
-                                    boxShadow: "0 2px 6px rgba(102,126,234,0.2)",
-                                    transition: "all 0.3s ease",
-                                    fontFamily: "momo trust display"
-                                }}
-                                onClick={(event) => {
-                                    event.stopPropagation();
-                                    setShowProfileDropdown(true);
-                                }}
-                                title="Profile Menu"
-                            >
-                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                                    <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
-                                    <circle cx="12" cy="7" r="4"></circle>
-                                </svg>
-                            </button>
-
-                            {/* Profile dropdown menu */}
-                            {showProfileDropdown && (
-                                <div
-                                    ref={profileDropdownRef} // Attach the ref here
-                                    style={{
-                                        ...profileDropdownStyle,
-                                        opacity: showProfileDropdown ? 1 : 0,
-                                        transform: showProfileDropdown ? "translateY(0)" : "translateY(-10px)",
-                                        pointerEvents: showProfileDropdown ? "auto" : "none",
-                                        transition: "opacity 0.2s ease-out, transform 0.2s ease-out",
-                                    }}
-                                >
-                                    {isAuthenticated ? (
-                                        // Authenticated user menu
-                                        <>
-                                            <button
-                                                style={{
-                                                    width: "100%",
-                                                    padding: "12px 20px",
-                                                    background: "none",
-                                                    border: "none",
-                                                    textAlign: "left",
-                                                    cursor: "pointer",
-                                                    fontSize: "14px",
-                                                    fontWeight: "500",
-                                                    color: "#333",
-                                                    transition: "all 0.2s ease",
-                                                    fontFamily: "momo trust display",
-                                                    display: "flex",
-                                                    alignItems: "center",
-                                                    gap: "10px"
-                                                }}
-                                                onMouseEnter={(e) => e.target.style.background = "#f8f9fa"}
-                                                onMouseLeave={(e) => e.target.style.background = "transparent"}
-                                                onClick={() => {
-                                                    if (isAuthenticated) {
-                                                        navigate("/myprofile");
-                                                    } else {
-                                                        setShowLoginFormPopup(true);
-                                                    }
-                                                    setShowProfileDropdown(false);
-                                                }}
-                                            >
-                                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                                                    <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
-                                                    <circle cx="12" cy="7" r="4"></circle>
-                                                </svg>
-                                                My Profile
-                                            </button>
-
-                                            <button
-                                                style={{
-                                                    width: "100%",
-                                                    padding: "12px 20px",
-                                                    background: "none",
-                                                    border: "none",
-                                                    textAlign: "left",
-                                                    cursor: "pointer",
-                                                    fontSize: "14px",
-                                                    fontWeight: "500",
-                                                    color: "#333",
-                                                    transition: "all 0.2s ease",
-                                                    fontFamily: "momo trust display",
-                                                    display: "flex",
-                                                    alignItems: "center",
-                                                    gap: "10px"
-                                                }}
-                                                onMouseEnter={(e) => e.target.style.background = "#f8f9fa"}
-                                                onMouseLeave={(e) => e.target.style.background = "transparent"}
-                                                onClick={() => {
-                                                    navigate("/my-orders");
-                                                    setShowProfileDropdown(false);
-                                                }}
-                                            >
-                                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                                                    <path d="M6 2L3 6v14c0 1.1.9 2 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path>
-                                                    <line x1="3" y1="6" x2="21" y2="6"></line>
-                                                    <path d="M16 10a4 4 0 0 1-8 0"></path>
-                                                </svg>
-                                                My Orders
-                                            </button>
-
-                                            <button
-                                                style={{
-                                                    width: "100%",
-                                                    padding: "12px 20px",
-                                                    background: "none",
-                                                    border: "none",
-                                                    textAlign: "left",
-                                                    cursor: "pointer",
-                                                    fontSize: "14px",
-                                                    fontWeight: "500",
-                                                    color: "#333",
-                                                    transition: "all 0.2s ease",
-                                                    fontFamily: "momo trust display",
-                                                    display: "flex",
-                                                    alignItems: "center",
-                                                    gap: "10px"
-                                                }}
-                                                onMouseEnter={(e) => e.target.style.background = "#f8f9fa"}
-                                                onMouseLeave={(e) => e.target.style.background = "transparent"}
-                                                onClick={() => {
-                                                    navigate("/wishlist");
-                                                    setShowProfileDropdown(false);
-                                                }}
-                                            >
-                                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                                                    <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
-                                                </svg>
-                                                Wishlist
-                                            </button>
-
-                                            <button
-                                                style={{
-                                                    width: "100%",
-                                                    padding: "12px 20px",
-                                                    background: "none",
-                                                    border: "none",
-                                                    textAlign: "left",
-                                                    cursor: "pointer",
-                                                    fontSize: "14px",
-                                                    fontWeight: "500",
-                                                    color: "#333",
-                                                    transition: "all 0.2s ease",
-                                                    fontFamily: "momo trust display",
-                                                    display: "flex",
-                                                    alignItems: "center",
-                                                    gap: "10px"
-                                                }}
-                                                onMouseEnter={(e) => e.target.style.background = "#f8f9fa"}
-                                                onMouseLeave={(e) => e.target.style.background = "transparent"}
-                                                onClick={() => {
-                                                    navigate("/rewards");
-                                                    setShowProfileDropdown(false);
-                                                }}
-                                            >
-                                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                                                    <circle cx="12" cy="8" r="7"></circle>
-                                                    <polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88"></polyline>
-                                                </svg>
-                                                Rewards
-                                            </button>
-
-                                            <button
-                                                style={{
-                                                    width: "100%",
-                                                    padding: "12px 20px",
-                                                    background: "none",
-                                                    border: "none",
-                                                    textAlign: "left",
-                                                    cursor: "pointer",
-                                                    fontSize: "14px",
-                                                    fontWeight: "500",
-                                                    color: "#333",
-                                                    transition: "all 0.2s ease",
-                                                    fontFamily: "momo trust display",
-                                                    display: "flex",
-                                                    alignItems: "center",
-                                                    gap: "10px"
-                                                }}
-                                                onMouseEnter={(e) => e.target.style.background = "#f8f9fa"}
-                                                onMouseLeave={(e) => e.target.style.background = "transparent"}
-                                                onClick={() => {
-                                                    navigate("/refer-win");
-                                                    setShowProfileDropdown(false);
-                                                }}
-                                            >
-                                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                                                    <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path>
-                                                    <circle cx="9" cy="7" r="4"></circle>
-                                                    <path d="M19 8v6"></path>
-                                                    <path d="M22 11h-6"></path>
-                                                </svg>
-                                                Refer & Win Prizes
-                                            </button>
-                                            <button
-                                                style={{
-                                                    width: "100%",
-                                                    padding: "12px 20px",
-                                                    background: "#dc3545", // Red background
-                                                    color: "white",
-                                                    border: "none",
-                                                    textAlign: "left",
-                                                    cursor: "pointer",
-                                                    fontSize: "14px",
-                                                    fontWeight: "600",
-                                                    fontFamily: "momo trust display",
-                                                    transition: "all 0.2s ease",
-                                                    display: "flex",
-                                                    alignItems: "center",
-                                                    gap: "10px",
-                                                    marginTop: "8px", // Add some spacing
-                                                    borderRadius: "6px", // Added rounded edges
-                                                }}
-                                                onMouseEnter={(e) => e.target.style.background = "#c82333"}
-                                                onMouseLeave={(e) => e.target.style.background = "#dc3545"}
-                                                onClick={() => setShowSignOutConfirm(true)}
-                                            >
-                                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                                                    <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
-                                                    <polyline points="16 17 21 12 16 7"></polyline>
-                                                    <line x1="21" y1="12" x2="9" y2="12"></line>
-                                                </svg>
-                                                Sign Out
-                                            </button>
-                                        </>
-                                    ) : (
-                                        // Unauthenticated user - show login prompt
-                                        <div style={{ padding: "20px", textAlign: "center" }}>
-                                            <div style={{ fontSize: "24px", marginBottom: "10px" }}>🔒</div>
-                                            <div style={{
-                                                fontSize: "16px",
-                                                fontWeight: "600",
-                                                color: "#333",
-                                                marginBottom: "15px",
-                                                fontFamily: "momo trust display"
-                                            }}>
-                                                Login Required
-                                            </div>
-                                            <div style={{
-                                                fontSize: "14px",
-                                                color: "#666",
-                                                marginBottom: "20px",
-                                                fontFamily: "momo trust display"
-                                            }}>
-                                                Please log in to access your profile and account features.
-                                            </div>
-                                            <button
-                                                style={{
-                                                    padding: "10px 20px",
-                                                    background: "#667eea",
-                                                    color: "#fff",
-                                                    border: "none",
-                                                    borderRadius: "6px",
-                                                    cursor: "pointer",
-                                                    fontSize: "14px",
-                                                    fontWeight: "600",
-                                                    fontFamily: "momo trust display",
-                                                    transition: "all 0.3s ease"
-                                                }}
-                                                onMouseEnter={(e) => e.target.style.background = "#5a67d8"}
-                                                onMouseLeave={(e) => e.target.style.background = "#667eea"}
-                                                onClick={() => navigate("/")}
-                                            >
-                                                Go to Login
-                                            </button>
-                                        </div>
-                                    )}
-                                </div>
-                            )}
-                        </div>
-                    )}
-
-                </div>
-            </header>
-            {/* Main Body Container */}
             <div className="home-outer-container" style={{
                 display: "flex",
                 justifyContent: "center",
@@ -697,15 +113,6 @@ function Home() {
                 flex: "1",
                 width: "100%"
             }}>
-                {/* PLACEHOLDER: Trending Categories
-                    Future implementation will include:
-                    - Books
-                    - Collectables
-                    - Electronics
-                    - Others
-                */}
-
-                {/* Main content area */}
                 <div style={{
                     flex: "1",
                     display: "flex",
@@ -723,7 +130,6 @@ function Home() {
                         gap: "30px"
                     }}>
 
-                        {/* Stats Row */}
                         <div style={{
                             display: "grid",
                             gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))",
@@ -736,29 +142,27 @@ function Home() {
                                 { label: "Total Earnings", value: "$1,240", color: "#fff8e1", textColor: "#ffa000" }
                             ].map((stat, index) => (
                                 <div key={index} style={{
-                                    background: "#fff",
+                                    background: "rgba(255, 255, 255, 0.95)",
                                     padding: "20px",
                                     borderRadius: "15px",
-                                    boxShadow: "0 4px 12px rgba(0,0,0,0.05)",
+                                    boxShadow: "0 4px 12px rgba(0,0,0,0.1)",
                                     display: "flex",
                                     flexDirection: "column",
                                     gap: "10px",
                                     borderLeft: `5px solid ${stat.textColor}`
                                 }}>
-                                    <span style={{ color: "#888", fontSize: "14px", fontFamily: "momo trust display" }}>{stat.label}</span>
+                                    <span style={{ color: "#666", fontSize: "14px", fontFamily: "momo trust display" }}>{stat.label}</span>
                                     <span style={{ fontSize: "2rem", fontWeight: "bold", color: "#333", fontFamily: "momo trust display" }}>{stat.value}</span>
                                 </div>
                             ))}
                         </div>
 
-                        {/* Dashboard Grid */}
                         <div className="dashboard-grid">
-                            {/* Recent Activity (Left Column) */}
                             <div style={{
-                                background: "#fff",
+                                background: "rgba(255, 255, 255, 0.95)",
                                 padding: "25px",
                                 borderRadius: "20px",
-                                boxShadow: "0 4px 20px rgba(0,0,0,0.05)",
+                                boxShadow: "0 4px 20px rgba(0,0,0,0.1)",
                                 minHeight: "500px"
                             }}>
                                 <div style={{ display: "flex", justifyContent: "space-between", marginBottom: "20px" }}>
@@ -797,9 +201,7 @@ function Home() {
                                 ))}
                             </div>
 
-                            {/* Quick Actions (Right Column) */}
                             <div style={{ display: "flex", flexDirection: "column", gap: "20px" }}>
-                                {/* Create Listing */}
                                 <div style={{
                                     background: "linear-gradient(135deg, #667eea 0%, #764ba2 100%)",
                                     padding: "25px",
@@ -811,14 +213,12 @@ function Home() {
                                 }}
                                     onMouseEnter={(e) => e.currentTarget.style.transform = "translateY(-5px)"}
                                     onMouseLeave={(e) => e.currentTarget.style.transform = "translateY(0)"}
-
                                 >
                                     <div style={{ fontSize: "24px", marginBottom: "10px" }}>+</div>
-                                    <h3 style={{ margin: 0, color: "Black", fontFamily: "momo trust display" }}>Create Listing</h3>
-                                    <p style={{ margin: "5px 0 0 0", color: "Black", fontSize: "14px", opacity: 0.9, fontFamily: "momo trust display" }}>Exchange your items</p>
+                                    <h3 style={{ margin: 0, color: "white", fontFamily: "momo trust display" }}>Create Listing</h3>
+                                    <p style={{ margin: "5px 0 0 0", color: "white", fontSize: "14px", opacity: 0.9, fontFamily: "momo trust display" }}>Exchange your items</p>
                                 </div>
 
-                                {/* Trending categories */}
                                 <div style={{
                                     background: "linear-gradient(135deg, #667eea 0%, #764ba2 100%)",
                                     padding: "25px",
@@ -830,10 +230,9 @@ function Home() {
                                     onMouseEnter={(e) => e.currentTarget.style.transform = "translateY(-5px)"}
                                     onMouseLeave={(e) => e.currentTarget.style.transform = "translateY(0)"}
                                 >
-                                    <h3 style={{ margin: 0, color: "Black", fontFamily: "momo trust display" }}>Trending categories</h3>
-                                    <p style={{ margin: "5px 0 0 0", color: "Black", fontSize: "14px", opacity: 0.9, fontFamily: "momo trust display" }}>Explore popular items</p>
+                                    <h3 style={{ margin: 0, color: "white", fontFamily: "momo trust display" }}>Trending categories</h3>
+                                    <p style={{ margin: "5px 0 0 0", color: "white", fontSize: "14px", opacity: 0.9, fontFamily: "momo trust display" }}>Explore popular items</p>
 
-                                    {/* Category buttons - always expanded */}
                                     <div style={{
                                         marginTop: "20px",
                                         display: "flex",
@@ -914,13 +313,12 @@ function Home() {
                             </div>
                         </div>
 
-                        {/* Recommended For You */}
                         <div style={{
                             marginTop: "20px",
-                            background: "#fff",
+                            background: "rgba(255, 255, 255, 0.95)",
                             padding: "25px",
                             borderRadius: "20px",
-                            boxShadow: "0 4px 20px rgba(0,0,0,0.05)"
+                            boxShadow: "0 4px 20px rgba(0,0,0,0.1)"
                         }}>
                             <div style={{ display: "flex", justifyContent: "space-between", marginBottom: "20px" }}>
                                 <h3 style={{ margin: 0, color: "#333", fontFamily: "momo trust display" }}>Recommended for You</h3>
@@ -947,333 +345,88 @@ function Home() {
                                 ))}
                             </div>
                         </div>
-
                     </div>
                 </div>
-
             </div>
-            {/* Footer */}
-            <footer
-                style={{
-                    background: "#111",
-                    color: "#fff",
-                    width: "100%",
-                    marginTop: "auto",
-                    padding: "30px 0 18px 0",
+
+            <Footer />
+
+
+            {showSignUpPrompt && (
+                <div style={{
+                    position: "fixed",
+                    top: 0,
+                    left: 0,
+                    right: 0,
+                    bottom: 0,
+                    background: "rgba(0, 0, 0, 0.7)",
                     display: "flex",
-                    flexDirection: "column",
                     alignItems: "center",
-                    fontFamily: "'Segoe UI', Arial, sans-serif",
-                    fontSize: "1rem",
-                    position: "relative" // Not fixed, sits naturally after content
-                }}
-            >
-                <div style={{ marginBottom: 12 }}>
-                    <SocialIcon type="twitter" url="https://twitter.com/" />
-                    <SocialIcon type="facebook" url="https://facebook.com/" />
-                    <SocialIcon type="instagram" url="https://instagram.com/" />
-                    <SocialIcon type="linkedin" url="https://www.linkedin.com/in/sujan-g-j-821382318/" />
-                </div>
-                <div style={{ display: "flex", alignItems: "center", opacity: 0.85 }}>
-                    <span
-                        style={{
-                            marginRight: 7,
-                            verticalAlign: "middle",
-                            fontSize: "1em",
-                            userSelect: "none",
-                        }}
-                        aria-label="Copyright"
-                        role="img"
-                    // usage of Unicode © character
-                    >
-                        &copy;
-                    </span>
-                    2025 Barterportal.com
-                </div>
-            </footer>
-
-            {/* Sign Out Confirmation Popup */}
-            {
-                showSignOutConfirm && (
+                    justifyContent: "center",
+                    zIndex: 3000
+                }}>
                     <div style={{
-                        position: "fixed",
-                        top: 0,
-                        left: 0,
-                        right: 0,
-                        bottom: 0,
-                        background: "rgba(0, 0, 0, 0.5)",
-                        display: "flex",
-                        alignItems: "center",
-                        justifyContent: "center",
-                        zIndex: 2000
+                        background: "white",
+                        borderRadius: "12px",
+                        padding: "30px",
+                        maxWidth: "450px",
+                        width: "90%",
+                        boxShadow: "0 15px 35px rgba(0,0,0,0.3)",
+                        textAlign: "center",
+                        fontFamily: "momo trust display",
+                        position: "relative"
                     }}>
-                        <div style={{
-                            background: "white",
-                            borderRadius: "12px",
-                            padding: "30px",
-                            maxWidth: "400px",
-                            width: "90%",
-                            boxShadow: "0 10px 30px rgba(0,0,0,0.3)",
-                            textAlign: "center",
-                            fontFamily: "momo trust display"
-                        }}>
-                            <div style={{
-                                fontSize: "48px",
-                                marginBottom: "20px",
-                                color: "#f39c12"
-                            }}>
-
-                            </div>
-
-                            <h3 style={{
-                                margin: "0 0 15px 0",
-                                color: "#333",
-                                fontSize: "20px",
-                                fontWeight: "600"
-                            }}>
-                                Confirm Sign Out
-                            </h3>
-
-                            <p style={{
-                                margin: "0 0 25px 0",
-                                color: "#666",
-                                fontSize: "16px",
-                                lineHeight: "1.5"
-                            }}>
-                                Are you sure you want to sign out?
-                            </p>
-
-                            <div style={{
-                                display: "flex",
-                                gap: "15px",
-                                justifyContent: "center"
-                            }}>
-                                <button
-                                    style={{
-                                        padding: "12px 24px",
-                                        background: "#dc3545",
-                                        color: "white",
-                                        border: "none",
-                                        borderRadius: "6px",
-                                        cursor: "pointer",
-                                        fontSize: "16px",
-                                        fontWeight: "600",
-                                        fontFamily: "momo trust display",
-                                        transition: "all 0.3s ease"
-                                    }}
-                                    onMouseEnter={(e) => e.target.style.background = "#c82333"}
-                                    onMouseLeave={(e) => e.target.style.background = "#dc3545"}
-                                    onClick={() => {
-                                        setShowSignOutConfirm(false);
-                                        // Clear authentication state
-                                        localStorage.setItem("isAuthenticated", "false");
-                                        navigate("/");
-                                    }}
-                                >
-                                    Leave
-                                </button>
-
-                                <button
-                                    style={{
-                                        padding: "12px 24px",
-                                        background: "#6c757d",
-                                        color: "white",
-                                        border: "none",
-                                        borderRadius: "6px",
-                                        cursor: "pointer",
-                                        fontSize: "16px",
-                                        fontWeight: "600",
-                                        fontFamily: "momo trust display",
-                                        transition: "all 0.3s ease"
-                                    }}
-                                    onMouseEnter={(e) => e.target.style.background = "#5a6268"}
-                                    onMouseLeave={(e) => e.target.style.background = "#6c757d"}
-                                    onClick={() => setShowSignOutConfirm(false)}
-                                >
-                                    Cancel
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                )
-            }
-
-            {/* Sign Up Prompt Popup for Unauthenticated Users */}
-            {
-                showSignUpPrompt && (
-                    <div style={{
-                        position: "fixed",
-                        top: 0,
-                        left: 0,
-                        right: 0,
-                        bottom: 0,
-                        background: "rgba(0, 0, 0, 0.7)",
-                        display: "flex",
-                        alignItems: "center",
-                        justifyContent: "center",
-                        zIndex: 3000
-                    }}>
-                        <div style={{
-                            background: "white",
-                            borderRadius: "12px",
-                            padding: "30px",
-                            maxWidth: "450px",
-                            width: "90%",
-                            boxShadow: "0 15px 35px rgba(0,0,0,0.3)",
-                            textAlign: "center",
-                            fontFamily: "momo trust display",
-                            position: "relative"
-                        }}>
-                            {/* Cancel Icon */}
+                        <button
+                            onClick={() => setShowSignUpPrompt(false)}
+                            style={{ position: "absolute", top: "15px", right: "15px", background: "none", border: "none", fontSize: "24px", cursor: "pointer", color: "#666" }}
+                        >
+                            ×
+                        </button>
+                        <div style={{ fontSize: "48px", marginBottom: "20px" }}>🚀</div>
+                        <h3 style={{ margin: "0 0 15px 0", color: "#333", fontSize: "24px", fontWeight: "600" }}>Join Barter Portal!</h3>
+                        <p style={{ margin: "0 0 25px 0", color: "#666", fontSize: "16px", lineHeight: "1.6" }}>Create an account to unlock all features including personalized recommendations and more!</p>
+                        <div style={{ display: "flex", gap: "15px", justifyContent: "center", flexWrap: "wrap" }}>
                             <button
-                                onClick={() => setShowSignUpPrompt(false)}
-                                style={{
-                                    position: "absolute",
-                                    top: "15px",
-                                    right: "15px",
-                                    background: "none",
-                                    border: "none",
-                                    fontSize: "24px",
-                                    cursor: "pointer",
-                                    color: "#666",
-                                    padding: "5px",
-                                    borderRadius: "50%",
-                                    transition: "all 0.3s ease"
-                                }}
-                                onMouseEnter={(e) => e.target.style.background = "#f0f0f0"}
-                                onMouseLeave={(e) => e.target.style.background = "transparent"}
-                                title="Close"
+                                style={{ padding: "14px 28px", background: "#667eea", color: "white", border: "none", borderRadius: "8px", cursor: "pointer", fontSize: "16px", fontWeight: "600", fontFamily: "momo trust display" }}
+                                onClick={() => { setShowSignUpPrompt(false); setShowFullSignUpPopup(true); }}
                             >
-                                ×
+                                Sign Up Now
                             </button>
-
-                            <div style={{
-                                fontSize: "48px",
-                                marginBottom: "20px",
-                                color: "#667eea"
-                            }}>
-                                🚀
-                            </div>
-
-                            <h3 style={{
-                                margin: "0 0 15px 0",
-                                color: "#333",
-                                fontSize: "24px",
-                                fontWeight: "600"
-                            }}>
-                                Join Barter Portal!
-                            </h3>
-
-                            <p style={{
-                                margin: "0 0 25px 0",
-                                color: "#666",
-                                fontSize: "16px",
-                                lineHeight: "1.6"
-                            }}>
-                                Create an account to unlock all features including personalized recommendations,
-                                order tracking, wishlist management, and exclusive rewards!
-                            </p>
-
-                            <div style={{
-                                display: "flex",
-                                gap: "15px",
-                                justifyContent: "center",
-                                flexWrap: "wrap"
-                            }}>
-                                <button
-                                    style={{
-                                        padding: "14px 28px",
-                                        background: "#667eea",
-                                        color: "white",
-                                        border: "none",
-                                        borderRadius: "8px",
-                                        cursor: "pointer",
-                                        fontSize: "16px",
-                                        fontWeight: "600",
-                                        fontFamily: "momo trust display",
-                                        transition: "all 0.3s ease",
-                                        minWidth: "140px"
-                                    }}
-                                    onMouseEnter={(e) => e.target.style.background = "#5a67d8"}
-                                    onMouseLeave={(e) => e.target.style.background = "#667eea"}
-                                    onClick={() => {
-                                        setShowSignUpPrompt(false); // Close the prompt
-                                        setShowFullSignUpPopup(true); // Open the full signup popup
-                                    }}
-                                >
-                                    Sign Up Now
-                                </button>
-
-                                <button
-                                    style={{
-                                        padding: "14px 28px",
-                                        background: "#f8f9fa",
-                                        color: "#666",
-                                        border: "2px solid #e9ecef",
-                                        borderRadius: "8px",
-                                        cursor: "pointer",
-                                        fontSize: "16px",
-                                        fontWeight: "600",
-                                        fontFamily: "momo trust display",
-                                        transition: "all 0.3s ease",
-                                        minWidth: "140px"
-                                    }}
-                                    onMouseEnter={(e) => {
-                                        e.target.style.background = "#e9ecef";
-                                        e.target.style.color = "#333";
-                                    }}
-                                    onMouseLeave={(e) => {
-                                        e.target.style.background = "#f8f9fa";
-                                        e.target.style.color = "#666";
-                                    }}
-                                    onClick={() => setShowSignUpPrompt(false)}
-                                >
-                                    Continue Browsing
-                                </button>
-                            </div>
-
-                            <p style={{
-                                margin: "20px 0 0 0",
-                                color: "#999",
-                                fontSize: "14px",
-                                fontStyle: "italic"
-                            }}>
-
-                            </p>
+                            <button
+                                style={{ padding: "14px 28px", background: "#f8f9fa", color: "#666", border: "2px solid #e9ecef", borderRadius: "8px", cursor: "pointer", fontSize: "16px", fontWeight: "600", fontFamily: "momo trust display" }}
+                                onClick={() => setShowSignUpPrompt(false)}
+                            >
+                                Continue Browsing
+                            </button>
                         </div>
                     </div>
-                )
-            }
+                </div>
+            )}
 
-            {
-                showFullSignUpPopup && (
-                    <SignUpFormPopup
-                        onClose={() => setShowFullSignUpPopup(false)}
-                        onSignUpSuccess={() => {
-                            localStorage.setItem("isAuthenticated", "true"); // Assume successful signup means authenticated
-                            setIsAuthenticated(true); // Update local state
-                            navigate("/home"); // Redirect to home after signup
-                            setShowFullSignUpPopup(false);
-                        }}
-                    />
-                )
-            }
+            {showFullSignUpPopup && (
+                <SignUpFormPopup
+                    onClose={() => setShowFullSignUpPopup(false)}
+                    onSignUpSuccess={() => {
+                        localStorage.setItem("isAuthenticated", "true");
+                        setIsAuthenticated(true);
+                        navigate("/home");
+                        setShowFullSignUpPopup(false);
+                    }}
+                />
+            )}
 
-            {
-                showLoginFormPopup && (
-                    <LoginFormPopup
-                        onClose={() => setShowLoginFormPopup(false)}
-                        onLoginSuccess={() => {
-                            localStorage.setItem("isAuthenticated", "true");
-                            setIsAuthenticated(true);
-                            navigate("/home"); // Redirect to home after login
-                            setShowLoginFormPopup(false);
-                        }}
-                    />
-                )
-            }
-        </div >
-
+            {showLoginFormPopup && (
+                <LoginFormPopup
+                    onClose={() => setShowLoginFormPopup(false)}
+                    onLoginSuccess={() => {
+                        localStorage.setItem("isAuthenticated", "true");
+                        setIsAuthenticated(true);
+                        navigate("/home");
+                        setShowLoginFormPopup(false);
+                    }}
+                />
+            )}
+        </div>
     );
 }
 

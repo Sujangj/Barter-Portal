@@ -1,11 +1,29 @@
 import React, { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import Header from "./Header";
 import Footer from "./Footer";
-import { PROFILE_BG } from "./constants";
+import { SHARED_BG_URL as PROFILE_BG } from "./constants";
 
 function MyProfile() {
   const navigate = useNavigate();
+  const location = useLocation();
+  const source = location.state?.source;
+  const hideHeaderNavigation = source === 'buy' || source === 'sell';
+
+  useEffect(() => {
+    // Check if user came from Buy page, Home page, or Sell page
+    const referrer = document.referrer;
+    const currentUrl = window.location.href;
+    const isFromAllowedPage = referrer.includes('/buy') || referrer.includes('buy') ||
+      referrer.includes('/home') || referrer.includes('home') ||
+      referrer.includes('/sell') || referrer.includes('sell');
+
+    // If not from Buy, Home, or Sell page and not a direct navigation, redirect to home
+    if (!isFromAllowedPage && referrer !== '' && !currentUrl.includes('#')) {
+      navigate('/home');
+    }
+  }, [navigate]);
+
   const [showPersonalInfo, setShowPersonalInfo] = useState(true);
   const [showManageAddresses, setShowManageAddresses] = useState(false);
   const [gender, setGender] = useState("male");
@@ -66,19 +84,7 @@ function MyProfile() {
   const [showAddAddressForm, setShowAddAddressForm] = useState(false);
   const [editingAddress, setEditingAddress] = useState(null);
 
-  useEffect(() => {
-    // Check if user came from Buy page, Home page, or Sell page
-    const referrer = document.referrer;
-    const currentUrl = window.location.href;
-    const isFromAllowedPage = referrer.includes('/buy') || referrer.includes('buy') ||
-      referrer.includes('/home') || referrer.includes('home') ||
-      referrer.includes('/sell') || referrer.includes('sell');
 
-    // If not from Buy, Home, or Sell page and not a direct navigation, redirect to home
-    if (!isFromAllowedPage && referrer !== '' && !currentUrl.includes('#')) {
-      navigate('/home');
-    }
-  }, [navigate]);
 
   const handleSave = () => {
     // Here you would typically save to backend
@@ -141,7 +147,7 @@ function MyProfile() {
         flexDirection: "column"
       }}
     >
-      <Header />
+      <Header showSignOutButton={true} hideNavigation={hideHeaderNavigation} />
       <div
         style={{
           flex: "1",
@@ -1485,9 +1491,9 @@ function MyProfile() {
 
           </div>
         </main>
-
-        <Footer />
       </div>
+
+      <Footer />
 
 
       {/* Logout Confirmation Modal */}
@@ -1525,10 +1531,14 @@ function MyProfile() {
               <div style={{ display: "flex", justifyContent: "center", gap: "20px" }}>
                 <button
                   onClick={() => {
-                    // Clear user session
-                    localStorage.clear();
-                    // Navigate to Home
-                    navigate("/");
+                    // Clear user session comprehensively
+                    localStorage.setItem("isAuthenticated", "false");
+                    localStorage.removeItem("userAddresses");
+                    localStorage.removeItem("userName");
+                    localStorage.removeItem("userEmail");
+                    localStorage.removeItem("userPhone");
+                    // Navigate to Home and reload
+                    window.location.href = "/";
                   }}
                   style={{
                     background: "#dc3545",

@@ -8,11 +8,15 @@ import Books from './Books';
 import Contact from './Contact';
 import Collectables from './Collectables';
 import Electronics from './Electronics';
+import Browse from './Browse';
 
 import Cart from './Cart';
 import MyProfile from './MyProfile';
 import Error from "./Error";
 import Login from "./Login";
+import MyOrders from "./MyOrders";
+import ComMyProfile from "./ComMyProfile";
+
 
 function App() {
     return (
@@ -27,9 +31,13 @@ function App() {
                 <Route path="/contact" element={<Contact />} />
                 <Route path="/collectables" element={<Collectables />} />
                 <Route path="/electronics" element={<Electronics />} />
+                <Route path="/browse" element={<Browse />} />
 
                 <Route path="/cart" element={<Cart />} />
+                <Route path="/myorders" element={<MyOrders />} />
                 <Route path="/myprofile" element={<MyProfile />} />
+                <Route path="/commyprofile" element={<ComMyProfile />} />
+
                 <Route path="*" element={<Error />} />
             </Routes>
         </Router>
