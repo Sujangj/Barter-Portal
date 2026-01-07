@@ -556,7 +556,7 @@ function Buy() {
                         </div>
                     ) : (
                         // Authenticated user - show profile dropdown
-                        <div style={{ position: "relative" }}>
+                        <div style={{ position: "relative" }} ref={profileDropdownRef}>
                             <button
                                 style={{
                                     width: "50px",
@@ -574,7 +574,7 @@ function Buy() {
                                 }}
                                 onClick={(event) => {
                                     event.stopPropagation();
-                                    setShowProfileDropdown(true);
+                                    setShowProfileDropdown(!showProfileDropdown);
                                 }}
                                 title="Profile Menu"
                             >
@@ -587,7 +587,6 @@ function Buy() {
                             {/* Profile dropdown menu */}
                             {showProfileDropdown && (
                                 <div
-                                    ref={profileDropdownRef} // Attach the ref here
                                     style={{
                                         ...profileDropdownStyle,
                                         opacity: showProfileDropdown ? 1 : 0,
@@ -599,28 +598,31 @@ function Buy() {
                                     {isAuthenticated ? (
                                         // Authenticated user menu
                                         <>
-                                            {menuItems.map((item, index) => (
-                                                <button
-                                                    key={index}
-                                                    style={{ width: "100%", padding: "12px 20px", background: "none", border: "none", textAlign: "left", cursor: "pointer", fontSize: "14px", fontWeight: "500", color: "#333", transition: "all 0.2s ease", fontFamily: "momo trust display", display: "flex", alignItems: "center", gap: "10px" }}
-                                                    onMouseEnter={(e) => e.target.style.background = "#f8f9fa"}
-                                                    onMouseLeave={(e) => e.target.style.background = "transparent"}
-                                                    onClick={() => {
-                                                        if (item.text === "My Profile") {
-                                                            if (isAuthenticated) {
-                                                                navigate("/commyprofile");
+                                            <div style={{ padding: "0" }}>
+                                                {menuItems.map((item, index) => (
+                                                    <button
+                                                        key={index}
+                                                        style={{ width: "100%", padding: "12px 20px", background: "none", border: "none", textAlign: "left", cursor: "pointer", fontSize: "14px", fontWeight: "500", color: "#333", transition: "all 0.2s ease", fontFamily: "momo trust display", display: "flex", alignItems: "center", gap: "10px" }}
+                                                        onMouseEnter={(e) => e.target.style.background = "#f8f9fa"}
+                                                        onMouseLeave={(e) => e.target.style.background = "transparent"}
+                                                        onClick={() => {
+                                                            setShowProfileDropdown(false);
+                                                            if (item.text === "My Profile") {
+                                                                if (isAuthenticated) {
+                                                                    navigate("/commyprofile");
+                                                                } else {
+                                                                    setShowLoginFormPopup(true);
+                                                                }
                                                             } else {
-                                                                setShowLoginFormPopup(true);
+                                                                alert(`Clicked ${item.text}`); // Placeholder for other menu items
                                                             }
-                                                        } else {
-                                                            alert(`Clicked ${item.text}`); // Placeholder for other menu items
-                                                        }
-                                                    }}
-                                                >
-                                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" dangerouslySetInnerHTML={{ __html: item.icon }} />
-                                                    {item.text}
-                                                </button>
-                                            ))}
+                                                        }}
+                                                    >
+                                                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" dangerouslySetInnerHTML={{ __html: item.icon }} />
+                                                        {item.text}
+                                                    </button>
+                                                ))}
+                                            </div>
                                             <button
                                                 style={{
                                                     width: "100%",

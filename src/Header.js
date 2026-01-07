@@ -164,12 +164,12 @@ function Header({ showSignOutButton, onSignOut, showSingleLoginButton, hideNavig
                 {!isCartPage && !hideNavigation && (
                     <>
                         {isAuthenticated ? (
-                            <div style={{ position: "relative" }}>
+                            <div style={{ position: "relative" }} ref={profileDropdownRef}>
                                 <div
                                     style={{ display: 'flex', alignItems: 'center', gap: '8px', color: location.pathname === '/myprofile' ? '#3b82f6' : '#64748b', cursor: 'pointer', fontFamily: 'momo trust display' }}
                                     onClick={(event) => {
                                         event.stopPropagation();
-                                        setShowProfileDropdown(true);
+                                        setShowProfileDropdown(!showProfileDropdown);
                                     }}
                                 >
                                     <div style={{
@@ -192,7 +192,6 @@ function Header({ showSignOutButton, onSignOut, showSingleLoginButton, hideNavig
 
                                 {showProfileDropdown && (
                                     <div
-                                        ref={profileDropdownRef}
                                         style={{
                                             ...profileDropdownStyle,
                                             opacity: showProfileDropdown ? 1 : 0,
@@ -206,7 +205,7 @@ function Header({ showSignOutButton, onSignOut, showSingleLoginButton, hideNavig
                                             onMouseEnter={(e) => e.target.style.background = "#f8f9fa"}
                                             onMouseLeave={(e) => e.target.style.background = "transparent"}
                                             onClick={() => {
-                                                navigate("/myprofile", { state: { source: 'home' } });
+                                                navigate("/commyprofile", { state: { source: 'home' } });
                                                 setShowProfileDropdown(false);
                                             }}
                                         >

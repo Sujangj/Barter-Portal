@@ -522,7 +522,7 @@ function Sell() {
                         </div>
                     ) : (
                         // Authenticated user - show profile dropdown
-                        <div style={{ position: "relative" }}>
+                        <div style={{ position: "relative" }} ref={profileDropdownRef}>
                             <button
                                 style={{
                                     width: "50px",
@@ -540,7 +540,7 @@ function Sell() {
                                 }}
                                 onClick={(event) => {
                                     event.stopPropagation();
-                                    setShowProfileDropdown(true);
+                                    setShowProfileDropdown(!showProfileDropdown);
                                 }}
                                 title="Profile Menu"
                             >
@@ -553,7 +553,6 @@ function Sell() {
                             {/* Profile dropdown menu */}
                             {showProfileDropdown && (
                                 <div
-                                    ref={profileDropdownRef} // Attach the ref here
                                     style={{
                                         ...profileDropdownStyle,
                                         opacity: showProfileDropdown ? 1 : 0,
@@ -585,12 +584,12 @@ function Sell() {
                                                 onMouseEnter={(e) => e.target.style.background = "#f8f9fa"}
                                                 onMouseLeave={(e) => e.target.style.background = "transparent"}
                                                 onClick={() => {
+                                                    setShowProfileDropdown(false);
                                                     if (isAuthenticated) {
                                                         navigate("/commyprofile");
                                                     } else {
                                                         setShowLoginFormPopup(true);
                                                     }
-                                                    setShowProfileDropdown(false);
                                                 }}
                                             >
                                                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
