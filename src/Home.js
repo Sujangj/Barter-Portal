@@ -81,6 +81,8 @@ function Home() {
     const [isAuthenticated, setIsAuthenticated] = useState(() => {
         return localStorage.getItem("isAuthenticated") === "true";
     });
+    const [selectedActivity, setSelectedActivity] = useState(null);
+    const [showAllActivities, setShowAllActivities] = useState(false);
 
     useEffect(() => {
         if (!isAuthenticated) {
@@ -139,7 +141,7 @@ function Home() {
                                 { label: "Active Listings", value: "12", color: "#e3f2fd", textColor: "#1976d2" },
                                 { label: "Pending Orders", value: "5", color: "#fff3e0", textColor: "#f57c00" },
                                 { label: "Completed Orders", value: "48", color: "#e8f5e9", textColor: "#388e3c" },
-                                { label: "Total Earnings", value: "$1,240", color: "#fff8e1", textColor: "#ffa000" }
+                                { label: "Total Earnings", value: "₹1,240", color: "#fff8e1", textColor: "#ffa000" }
                             ].map((stat, index) => (
                                 <div key={index} style={{
                                     background: "rgba(255, 255, 255, 0.95)",
@@ -159,46 +161,88 @@ function Home() {
 
                         <div className="dashboard-grid">
                             <div style={{
-                                background: "rgba(255, 255, 255, 0.95)",
+                                background: "linear-gradient(135deg, #667eea 0%, #764ba2 100%)",
                                 padding: "25px",
                                 borderRadius: "20px",
-                                boxShadow: "0 4px 20px rgba(0,0,0,0.1)",
-                                minHeight: "500px"
+                                boxShadow: "0 8px 32px rgba(118, 75, 162, 0.4)",
+                                minHeight: "500px",
+                                display: "flex",
+                                flexDirection: "column"
                             }}>
                                 <div style={{ display: "flex", justifyContent: "space-between", marginBottom: "20px" }}>
-                                    <h3 style={{ color: "#333", fontFamily: "momo trust display" }}>Recent Activity</h3>
-                                    <a href="#" style={{ color: "#667eea", textDecoration: "none", fontSize: "14px", fontFamily: "momo trust display" }}>See all</a>
+                                    <h3 style={{ color: "white", fontFamily: "momo trust display", margin: 0 }}>Recent Activity</h3>
+                                    <button
+                                        onClick={() => setShowAllActivities(true)}
+                                        style={{
+                                            background: "none",
+                                            border: "none",
+                                            color: "rgba(255, 255, 255, 0.8)",
+                                            textDecoration: "underline",
+                                            fontSize: "14px",
+                                            fontFamily: "momo trust display",
+                                            cursor: "pointer"
+                                        }}
+                                    >
+                                        See all
+                                    </button>
                                 </div>
 
-                                {[
-                                    { title: "New Message", desc: "You received a message from Sarah regarding 'Blue Jeans'", time: "2m ago", icon: "💬" },
-                                    { title: "Order Shipped", desc: "Your order #12345 has been shipped", time: "1h ago", icon: "📦" },
-                                    { title: "New Listing", desc: "Your 'Vintage Camera' is live", time: "3h ago", icon: "✨" },
-                                    { title: "Offer Received", desc: "John offered $50 for 'Headphones'", time: "5h ago", icon: "🏷️" }
-                                ].map((item, i) => (
-                                    <div key={i} style={{
-                                        display: "flex",
-                                        gap: "15px",
-                                        padding: "15px 0",
-                                        borderBottom: i < 3 ? "1px solid #f0f0f0" : "none"
-                                    }}>
-                                        <div style={{
-                                            width: "40px",
-                                            height: "40px",
-                                            borderRadius: "50%",
-                                            background: "#f0f4f8",
-                                            display: "flex",
-                                            alignItems: "center",
-                                            justifyContent: "center",
-                                            fontSize: "20px"
-                                        }}>{item.icon}</div>
-                                        <div>
-                                            <h4 style={{ margin: "0 0 5px 0", fontSize: "16px", color: "#333", fontFamily: "momo trust display" }}>{item.title}</h4>
-                                            <p style={{ margin: 0, fontSize: "14px", color: "#666", lineHeight: "1.4", fontFamily: "momo trust display" }}>{item.desc}</p>
-                                            <span style={{ fontSize: "12px", color: "#999", fontFamily: "momo trust display" }}>{item.time}</span>
+                                <div style={{
+                                    flex: 1,
+                                    overflowY: "auto",
+                                    paddingRight: "5px",
+                                    maxHeight: "400px"
+                                }} className="custom-scrollbar">
+                                    {[
+                                        { title: "New Message", desc: "You received a message from Sarah regarding 'Blue Jeans'", time: "2m ago", icon: "💬" },
+                                        { title: "Order Shipped", desc: "Your order #12345 has been shipped", time: "1h ago", icon: "📦" },
+                                        { title: "New Listing", desc: "Your 'Vintage Camera' is live", time: "3h ago", icon: "✨" },
+                                        { title: "Offer Received", desc: "John offered ₹50 for 'Headphones'", time: "5h ago", icon: "🏷️" },
+                                        { title: "Review Left", desc: "Alice left a 5-star review for you", time: "1d ago", icon: "⭐" },
+                                        { title: "SoldCount", desc: "You sold 3 items this week!", time: "2d ago", icon: "📈" }
+                                    ].map((item, i, arr) => (
+                                        <div
+                                            key={i}
+                                            onClick={() => setSelectedActivity(item)}
+                                            style={{
+                                                display: "flex",
+                                                gap: "15px",
+                                                padding: "15px",
+                                                marginBottom: "10px",
+                                                background: "rgba(255, 255, 255, 0.2)",
+                                                border: "1px solid rgba(255, 255, 255, 0.3)",
+                                                cursor: "pointer",
+                                                transition: "all 0.2s ease",
+                                                borderRadius: "15px"
+                                            }}
+                                            onMouseEnter={(e) => {
+                                                e.currentTarget.style.transform = "translateX(5px)";
+                                                e.currentTarget.style.background = "rgba(255, 255, 255, 0.3)";
+                                            }}
+                                            onMouseLeave={(e) => {
+                                                e.currentTarget.style.transform = "translateX(0)";
+                                                e.currentTarget.style.background = "rgba(255, 255, 255, 0.2)";
+                                            }}
+                                        >
+                                            <div style={{
+                                                width: "40px",
+                                                height: "40px",
+                                                borderRadius: "50%",
+                                                background: "rgba(255, 255, 255, 0.2)",
+                                                display: "flex",
+                                                alignItems: "center",
+                                                justifyContent: "center",
+                                                fontSize: "20px",
+                                                flexShrink: 0
+                                            }}>{item.icon}</div>
+                                            <div style={{ flex: 1 }}>
+                                                <h4 style={{ margin: "0 0 5px 0", fontSize: "16px", color: "#fff", fontFamily: "momo trust display" }}>{item.title}</h4>
+                                                <p style={{ margin: 0, fontSize: "14px", color: "rgba(255, 255, 255, 0.8)", lineHeight: "1.4", fontFamily: "momo trust display" }}>{item.desc}</p>
+                                                <span style={{ fontSize: "12px", color: "rgba(255, 255, 255, 0.6)", fontFamily: "momo trust display" }}>{item.time}</span>
+                                            </div>
                                         </div>
-                                    </div>
-                                ))}
+                                    ))}
+                                </div>
                             </div>
 
                             <div style={{ display: "flex", flexDirection: "column", gap: "20px" }}>
@@ -315,32 +359,110 @@ function Home() {
 
                         <div style={{
                             marginTop: "20px",
-                            background: "rgba(255, 255, 255, 0.95)",
+                            background: "linear-gradient(135deg, #667eea 0%, #764ba2 100%)",
                             padding: "25px",
                             borderRadius: "20px",
-                            boxShadow: "0 4px 20px rgba(0,0,0,0.1)"
+                            boxShadow: "0 8px 32px rgba(118, 75, 162, 0.4)"
                         }}>
                             <div style={{ display: "flex", justifyContent: "space-between", marginBottom: "20px" }}>
-                                <h3 style={{ margin: 0, color: "#333", fontFamily: "momo trust display" }}>Recommended for You</h3>
-                                <a href="javascript:void(0)" style={{ color: "#667eea", textDecoration: "none", fontSize: "14px", fontFamily: "momo trust display" }}>See more</a>
+                                <h3 style={{ margin: 0, color: "white", fontFamily: "momo trust display" }}>Recommended for You</h3>
+                                <a href="javascript:void(0)" style={{ color: "rgba(255, 255, 255, 0.8)", textDecoration: "underline", fontSize: "14px", fontFamily: "momo trust display" }}>See more</a>
                             </div>
                             <div className="recommended-grid">
-                                {[1, 2, 3, 4].map((item) => (
-                                    <div key={item} style={{
-                                        border: "1px solid #f0f0f0",
-                                        borderRadius: "12px",
-                                        padding: "15px",
-                                        cursor: "pointer",
-                                        transition: "all 0.2s"
-                                    }}>
+                                {[
+                                    {
+                                        name: "Vintage Camera",
+                                        price: "4,500",
+                                        image: "https://images.unsplash.com/photo-1606983340126-99ab4feaa64a?fm=jpg&q=60&w=3000&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8GNhbWVyYXxlbnwwfHwwfHw%3D",
+                                        category: "Electronics"
+                                    },
+                                    {
+                                        name: "Blue Jeans",
+                                        price: "1,200",
+                                        image: "https://images.unsplash.com/photo-1542272604-787c3835535d?fm=jpg&q=60&w=3000&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8amVhbnN8ZW58MHx8MHx8fA%3D%3D",
+                                        category: "Fashion"
+                                    },
+                                    {
+                                        name: "Headphones",
+                                        price: "2,500",
+                                        image: "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?fm=jpg&q=60&w=3000&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8GhlhZHBob25lc3xlbnwwfHwwfHw%3D",
+                                        category: "Electronics"
+                                    },
+                                    {
+                                        name: "Gaming Console",
+                                        price: "25,000",
+                                        image: "https://images.unsplash.com/photo-1606813907291-d86efa9b94db?fm=jpg&q=60&w=3000&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8Z2FtaW5nJTIwY29uc29sZXxlbnwwfHwwfHw%3D",
+                                        category: "Electronics"
+                                    }
+                                ].map((item, index) => (
+                                    <div key={index}
+                                        onClick={() => setSelectedActivity({
+                                            title: item.name,
+                                            desc: `Price: ₹${item.price}. This ${item.category} item is highly recommended based on your browsing history. Click to view details and make an offer!`,
+                                            time: "Featured",
+                                            icon: "🛍️"
+                                        })}
+                                        style={{
+                                            background: "rgba(255, 255, 255, 0.2)",
+                                            border: "1px solid rgba(255, 255, 255, 0.3)",
+                                            borderRadius: "15px",
+                                            padding: "15px",
+                                            cursor: "pointer",
+                                            transition: "all 0.3s ease",
+                                            textAlign: "center",
+                                            overflow: "hidden"
+                                        }}
+                                        onMouseEnter={(e) => {
+                                            e.currentTarget.style.transform = "translateY(-8px) scale(1.02)";
+                                            e.currentTarget.style.background = "rgba(255, 255, 255, 0.35)";
+                                            e.currentTarget.style.boxShadow = "0 10px 25px rgba(0,0,0,0.2)";
+                                        }}
+                                        onMouseLeave={(e) => {
+                                            e.currentTarget.style.transform = "translateY(0) scale(1)";
+                                            e.currentTarget.style.background = "rgba(255, 255, 255, 0.2)";
+                                            e.currentTarget.style.boxShadow = "none";
+                                        }}
+                                    >
                                         <div style={{
-                                            height: "150px",
-                                            background: "#f8f9fa",
-                                            borderRadius: "8px",
-                                            marginBottom: "10px"
-                                        }}></div>
-                                        <h4 style={{ margin: "0 0 5px 0", fontSize: "16px", color: "#333", fontFamily: "momo trust display" }}>Product Name</h4>
-                                        <p style={{ margin: 0, color: "#667eea", fontWeight: "bold", fontFamily: "momo trust display" }}>$99.00</p>
+                                            height: "120px",
+                                            borderRadius: "10px",
+                                            marginBottom: "12px",
+                                            overflow: "hidden",
+                                            background: "#f8f9fa"
+                                        }}>
+                                            <img
+                                                src={item.image}
+                                                alt={item.name}
+                                                style={{
+                                                    width: "100%",
+                                                    height: "100%",
+                                                    objectFit: "cover",
+                                                    transition: "transform 0.3s ease"
+                                                }}
+                                                onMouseEnter={(e) => e.target.style.transform = "scale(1.1)"}
+                                                onMouseLeave={(e) => e.target.style.transform = "scale(1)"}
+                                            />
+                                        </div>
+                                        <h4 style={{
+                                            margin: "0 0 6px 0",
+                                            fontSize: "15px",
+                                            color: "white",
+                                            fontFamily: "momo trust display",
+                                            fontWeight: "600"
+                                        }}>{item.name}</h4>
+                                        <p style={{
+                                            margin: "0 0 4px 0",
+                                            color: "rgba(255, 255, 255, 0.8)",
+                                            fontSize: "12px",
+                                            fontFamily: "momo trust display"
+                                        }}>{item.category}</p>
+                                        <p style={{
+                                            margin: 0,
+                                            color: "white",
+                                            fontWeight: "bold",
+                                            fontSize: "16px",
+                                            fontFamily: "momo trust display"
+                                        }}>₹{item.price}</p>
                                     </div>
                                 ))}
                             </div>
@@ -425,6 +547,97 @@ function Home() {
                         setShowLoginFormPopup(false);
                     }}
                 />
+            )}
+
+            {(selectedActivity || showAllActivities) && (
+                <div style={{
+                    position: "fixed",
+                    top: 0,
+                    left: 0,
+                    right: 0,
+                    bottom: 0,
+                    background: "rgba(0, 0, 0, 0.7)",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    zIndex: 4000,
+                    backdropFilter: "blur(5px)"
+                }} onClick={() => {
+                    setSelectedActivity(null);
+                    setShowAllActivities(false);
+                }}>
+                    <div style={{
+                        background: "white",
+                        borderRadius: "20px",
+                        padding: "30px",
+                        maxWidth: "500px",
+                        width: "90%",
+                        boxShadow: "0 20px 50px rgba(0,0,0,0.3)",
+                        position: "relative",
+                        animation: "modalFadeIn 0.3s ease"
+                    }} onClick={(e) => e.stopPropagation()}>
+                        <button
+                            onClick={() => {
+                                setSelectedActivity(null);
+                                setShowAllActivities(false);
+                            }}
+                            style={{ position: "absolute", top: "20px", right: "20px", background: "none", border: "none", fontSize: "24px", cursor: "pointer", color: "#666" }}
+                        >
+                            ×
+                        </button>
+
+                        {selectedActivity && (
+                            <div style={{ textAlign: "center" }}>
+                                <div style={{ fontSize: "60px", marginBottom: "20px" }}>{selectedActivity.icon}</div>
+                                <h3 style={{ fontSize: "24px", color: "#333", marginBottom: "10px", fontFamily: "momo trust display" }}>{selectedActivity.title}</h3>
+                                <p style={{ fontSize: "16px", color: "#666", lineHeight: "1.6", marginBottom: "20px", fontFamily: "momo trust display" }}>{selectedActivity.desc}</p>
+                                <span style={{ fontSize: "14px", color: "#999", fontFamily: "momo trust display" }}>{selectedActivity.time}</span>
+                            </div>
+                        )}
+
+                        {showAllActivities && (
+                            <div>
+                                <h3 style={{ fontSize: "24px", color: "#333", marginBottom: "20px", fontFamily: "momo trust display" }}>All Activities</h3>
+                                <div style={{ maxHeight: "60vh", overflowY: "auto", paddingRight: "10px" }} className="custom-scrollbar-dark">
+                                    {[
+                                        { title: "New Message", desc: "You received a message from Sarah regarding 'Blue Jeans'", time: "2m ago", icon: "💬" },
+                                        { title: "Order Shipped", desc: "Your order #12345 has been shipped", time: "1h ago", icon: "📦" },
+                                        { title: "New Listing", desc: "Your 'Vintage Camera' is live", time: "3h ago", icon: "✨" },
+                                        { title: "Offer Received", desc: "John offered ₹50 for 'Headphones'", time: "5h ago", icon: "🏷️" },
+                                        { title: "Review Left", desc: "Alice left a 5-star review for you", time: "1d ago", icon: "⭐" },
+                                        { title: "SoldCount", desc: "You sold 3 items this week!", time: "2d ago", icon: "📈" },
+                                        { title: "System Update", desc: "Platfrom updated to version 2.1", time: "3d ago", icon: "🛠️" },
+                                        { title: "New Feature", desc: "Dark mode is now available in settings", time: "4d ago", icon: "🌙" }
+                                    ].map((item, i, arr) => (
+                                        <div key={i} style={{
+                                            display: "flex",
+                                            gap: "15px",
+                                            padding: "15px 0",
+                                            borderBottom: i < arr.length - 1 ? "1px solid #f0f0f0" : "none"
+                                        }}>
+                                            <div style={{
+                                                width: "40px",
+                                                height: "40px",
+                                                borderRadius: "50%",
+                                                background: "#f8f9fa",
+                                                display: "flex",
+                                                alignItems: "center",
+                                                justifyContent: "center",
+                                                fontSize: "20px",
+                                                flexShrink: 0
+                                            }}>{item.icon}</div>
+                                            <div>
+                                                <h4 style={{ margin: "0 0 5px 0", fontSize: "16px", color: "#333", fontFamily: "momo trust display" }}>{item.title}</h4>
+                                                <p style={{ margin: 0, fontSize: "14px", color: "#666", lineHeight: "1.4", fontFamily: "momo trust display" }}>{item.desc}</p>
+                                                <span style={{ fontSize: "12px", color: "#999", fontFamily: "momo trust display" }}>{item.time}</span>
+                                            </div>
+                                        </div>
+                                    ))}
+                                </div>
+                            </div>
+                        )}
+                    </div>
+                </div>
             )}
         </div>
     );

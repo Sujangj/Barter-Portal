@@ -14,12 +14,12 @@ const CATEGORY_IMAGES = {
 };
 
 const ORDER_DATA = [
-    { id: "AORD-2026-001", product: "Vintage Leather", type: "Buy", status: "delivered", date: "01/02/2026", amount: "$140.39" },
-    { id: "AORD-2026-002", product: "Wireless Bluetooth", type: "Exchange", status: "pending", date: "01/03/2026", amount: "$89.99" },
-    { id: "AORD-2026-003", product: "Handmade Ceramic", type: "Sell", status: "confirmed", date: "01/04/2026", amount: "$45.00" },
-    { id: "AORD-2026-004", product: "Smart Fitness", type: "Buy", status: "shipped", date: "01/14/2026", amount: "$199.99" },
-    { id: "AORD-2026-005", product: "Organic Cotton T", type: "Buy", status: "cancelled", date: "12/28/2025", amount: "$25.00" },
-    { id: "AORD-2026-006", product: "Professional Camera", type: "Exchange", status: "confirmed", date: "01/01/2026", amount: "$299.99" }
+    { id: "AORD-2026-001", product: "Vintage Leather", type: "Buy", status: "delivered", date: "01/02/2026", amount: "₹140.39" },
+    { id: "AORD-2026-002", product: "Wireless Bluetooth", type: "Exchange", status: "pending", date: "01/03/2026", amount: "₹89.99" },
+    { id: "AORD-2026-003", product: "Handmade Ceramic", type: "Sell", status: "confirmed", date: "01/04/2026", amount: "₹45.00" },
+    { id: "AORD-2026-004", product: "Smart Fitness", type: "Buy", status: "shipped", date: "01/14/2026", amount: "₹199.99" },
+    { id: "AORD-2026-005", product: "Organic Cotton T", type: "Buy", status: "cancelled", date: "12/28/2025", amount: "₹25.00" },
+    { id: "AORD-2026-006", product: "Professional Camera", type: "Exchange", status: "confirmed", date: "01/01/2026", amount: "₹299.99" }
 ];
 
 function MyOrders() {
@@ -71,7 +71,7 @@ function MyOrders() {
                                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#f97316" strokeWidth="2"><line x1="12" y1="1" x2="12" y2="23" /><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6" /></svg>
                             </div>
                         </div>
-                        <span className="card-value">$859.96</span>
+                        <span className="card-value">₹859.96</span>
                     </div>
                 </div>
 
@@ -124,11 +124,11 @@ function MyOrders() {
                                 </select>
                             </div>
                             <div className="filter-group">
-                                <label>Min Amount ($)</label>
-                                <input type="number" className="filter-input" placeholder="0.00" />
+                                <label>Min Amount (₹)</label>
+                                <input type="number" className="filter-input" placeholder="0" />
                             </div>
                             <div className="filter-group">
-                                <label>Max Amount ($)</label>
+                                <label>Max Amount (₹)</label>
                                 <input type="number" className="filter-input" placeholder="1000.00" />
                             </div>
                             <div className="filter-actions">

@@ -14,12 +14,11 @@ const Browse = () => {
     });
 
 
-    // Sample product data based on screenshot
     const products = [
         {
             id: 1,
             title: "Professional DSLR Camera",
-            price: "$1,299.99",
+            price: "₹1,299.99",
             condition: "Like New",
             category: "Electronics",
             type: "buy",
@@ -31,7 +30,7 @@ const Browse = () => {
         {
             id: 2,
             title: "Vintage Leather Sofa",
-            price: "$850.00",
+            price: "₹850.00",
             condition: "Good",
             category: "Furniture",
             type: "exchange",
@@ -43,7 +42,7 @@ const Browse = () => {
         {
             id: 3,
             title: "Mountain Bike - 21 Speed",
-            price: "$425.00",
+            price: "₹425.00",
             condition: "Good",
             category: "Sports",
             type: "sell",
@@ -55,7 +54,7 @@ const Browse = () => {
         {
             id: 4,
             title: "Gaming Laptop - RTX",
-            price: "$1,599.99",
+            price: "₹1,599.99",
             condition: "New",
             category: "Electronics",
             type: "buy",
@@ -67,7 +66,7 @@ const Browse = () => {
         {
             id: 5,
             title: "Antique Oak Dining Table",
-            price: "$1,200.00",
+            price: "₹1,200.00",
             condition: "Fair",
             category: "Furniture",
             type: "exchange",
@@ -79,7 +78,7 @@ const Browse = () => {
         {
             id: 6,
             title: "Designer Handbag",
-            price: "$350.00",
+            price: "₹350.00",
             condition: "Like New",
             category: "Fashion",
             type: "sell",
