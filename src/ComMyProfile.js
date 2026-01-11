@@ -123,7 +123,7 @@ function ComMyProfile() {
             minHeight: "100vh",
             height: "100dvh",
             overflowY: "auto",
-            background: `url(${PROFILE_BG}) center center / cover no-repeat fixed`,
+            backgroundColor: "#000",
             position: "relative",
             display: "flex",
             flexDirection: "column"

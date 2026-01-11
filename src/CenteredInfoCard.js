@@ -15,7 +15,7 @@ function CenteredInfoCard({ text, onClick, backgroundImage }) {
         fontSize: "2.5em",
         textAlign: "center",
         padding: "50px 0",
-        backgroundImage: backgroundImage ? `url(${backgroundImage})` : undefined,
+        backgroundImage: backgroundImage ? `url(${backgroundImage})` : "linear-gradient(135deg, #667eea 0%, #764ba2 100%)",
         backgroundSize: "cover",
         backgroundPosition: "center",
         backgroundRepeat: "no-repeat",
@@ -47,7 +47,7 @@ function CenteredInfoCard({ text, onClick, backgroundImage }) {
         style={{
           position: "absolute",
           inset: 0,
-          background: backgroundImage ? "rgba(0, 0, 0, 0.4)" : "rgba(255, 255, 255, 0.9)",
+          background: backgroundImage ? "rgba(0, 0, 0, 0.4)" : "#000",
           display: "flex",
           alignItems: "center",
           justifyContent: "center",

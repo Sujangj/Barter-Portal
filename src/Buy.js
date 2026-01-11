@@ -2,11 +2,8 @@ import React, { useRef, useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import SignUpFormPopup from "./SignUpFormPopup"; // Import SignUpFormPopup
 import LoginFormPopup from "./LoginFormPopup"; // Import LoginFormPopup
-import { LOGO_URL, SHARED_BG_URL } from "./constants";
+import { LOGO_URL } from "./constants";
 import "./Buy.css";
-
-// Buy page background image
-const BUY_BG_URL = SHARED_BG_URL;
 
 // Social media icons as inline SVGs (fontawesome style, but inline for no dependency)
 function SocialIcon({ type, url }) {
@@ -271,7 +268,7 @@ function Buy() {
                 minHeight: "100vh",
                 height: "100dvh",
                 overflowY: "auto",
-                background: `url(${BUY_BG_URL}) center center / cover no-repeat fixed`,
+                backgroundColor: "#000",
                 position: "relative", // for stacking context for footer
                 display: "flex",
                 flexDirection: "column"

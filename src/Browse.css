@@ -39,7 +39,7 @@
     border: none;
     outline: none;
     font-size: 16px;
-    color: #333;
+    color: #fff;
 }
 
 .search-btn {
@@ -67,13 +67,13 @@
 
 .results-count {
     font-size: 14px;
-    color: #64748b;
+    color: #fff;
     margin-bottom: 20px;
     font-weight: 500;
 }
 
 .filter-section {
-    background: #fff;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
     border-radius: 16px;
     padding: 25px;
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.02);
@@ -92,7 +92,7 @@
 .filter-group h4 {
     font-size: 15px;
     font-weight: 700;
-    color: #1e293b;
+    color: #fff;
     margin-bottom: 15px;
 }
 
@@ -100,9 +100,9 @@
     width: 100%;
     padding: 12px;
     border-radius: 8px;
-    border: 1px solid #e2e8f0;
-    background: #f8fafc;
-    color: #475569;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    background: rgba(255, 255, 255, 0.1);
+    color: #fff;
     font-weight: 500;
     cursor: pointer;
     font-family: inherit;
@@ -117,10 +117,12 @@
 .price-inputs input {
     width: 100%;
     padding: 10px;
-    border: 1px solid #e2e8f0;
+    border: 1px solid rgba(255, 255, 255, 0.3);
     border-radius: 8px;
     font-size: 14px;
     text-align: center;
+    color: #fff;
+    background: rgba(255, 255, 255, 0.1);
 }
 
 .condition-list,
@@ -135,7 +137,7 @@
     align-items: center;
     gap: 12px;
     font-size: 14px;
-    color: #475569;
+    color: #fff;
     cursor: pointer;
     font-weight: 500;
 }
@@ -150,10 +152,10 @@
 .clear-filters-btn {
     width: 100%;
     padding: 12px;
-    background: #f1f5f9;
-    border: none;
+    background: rgba(255, 255, 255, 0.2);
+    border: 1px solid rgba(255, 255, 255, 0.3);
     border-radius: 8px;
-    color: #475569;
+    color: #fff;
     font-weight: 600;
     cursor: pointer;
     transition: all 0.2s;
@@ -161,7 +163,7 @@
 }
 
 .clear-filters-btn:hover {
-    background: #e2e8f0;
+    background: rgb(254, 253, 253);
 }
 
 /* Main Display Area */
@@ -174,7 +176,7 @@
     align-items: center;
     gap: 15px;
     margin-bottom: 25px;
-    background: #fff;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
     padding: 8px 20px;
     border-radius: 12px;
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.02);
@@ -184,7 +186,7 @@
 
 .sort-label {
     font-size: 13px;
-    color: #64748b;
+    color: #fff;
     font-weight: 600;
     white-space: nowrap;
 }
@@ -197,18 +199,18 @@
     cursor: pointer;
     white-space: nowrap;
     transition: all 0.2s;
-    color: #475569;
-    background: #f8fafc;
-    border: 1px solid transparent;
+    color: #fff;
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
 }
 
 .sort-option.active {
-    background: #3b82f6;
-    color: white;
+    background: rgba(255, 255, 255, 0.3);
+    color: #fff;
 }
 
 .sort-option:hover:not(.active) {
-    background: #f1f5f9;
+    background: rgba(255, 255, 255, 0.2);
 }
 
 /* Product Grid */
@@ -220,12 +222,12 @@
 }
 
 .product-card {
-    background: #fff;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
     border-radius: 20px;
     overflow: hidden;
     position: relative;
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.03);
-    border: 1px solid #eef0f7;
+    border: 1px solid rgba(255, 255, 255, 0.2);
     transition: all 0.3s ease;
 }
 
@@ -282,7 +284,7 @@
     align-items: center;
     justify-content: center;
     cursor: pointer;
-    color: #64748b;
+    color: #fff;
     transition: all 0.2s;
 }
 
@@ -297,7 +299,7 @@
 .card-title {
     font-size: 18px;
     font-weight: 700;
-    color: #1e293b;
+    color: #fff;
     margin-bottom: 8px;
     line-height: 1.4;
 }
@@ -305,7 +307,7 @@
 .card-price {
     font-size: 22px;
     font-weight: 800;
-    color: #3b82f6;
+    color: #fff;
     margin-bottom: 12px;
 }
 
@@ -314,7 +316,7 @@
     justify-content: space-between;
     margin-bottom: 20px;
     font-size: 13px;
-    color: #64748b;
+    color: #fff;
 }
 
 .card-meta {
@@ -322,14 +324,14 @@
     align-items: center;
     gap: 15px;
     padding: 15px 0;
-    border-top: 1px solid #f1f5f9;
+    border-top: 1px solid rgba(255, 255, 255, 0.3);
 }
 
 .seller-avatar {
     width: 32px;
     height: 32px;
     border-radius: 50%;
-    background: #e2e8f0;
+    background: rgba(255, 255, 255, 0.3);
 }
 
 .seller-details {
@@ -339,21 +341,21 @@
 .seller-name {
     font-size: 13px;
     font-weight: 600;
-    color: #475569;
+    color: #fff;
 }
 
 .seller-rating {
     font-size: 11px;
-    color: #94a3b8;
+    color: rgba(255, 255, 255, 0.8);
 }
 
 .message-btn {
     width: 100%;
     padding: 12px;
-    background: #f8fafc;
-    border: 1px solid #eef0f7;
+    background: rgba(255, 255, 255, 0.2);
+    border: 1px solid rgba(255, 255, 255, 0.3);
     border-radius: 12px;
-    color: #475569;
+    color: #fff;
     font-weight: 600;
     font-size: 14px;
     cursor: pointer;
@@ -365,8 +367,8 @@
 }
 
 .message-btn:hover {
-    background: #f1f5f9;
-    border-color: #cbd5e1;
+    background: rgba(255, 255, 255, 0.3);
+    border-color: rgba(255, 255, 255, 0.5);
 }
 
 .load-more-container {

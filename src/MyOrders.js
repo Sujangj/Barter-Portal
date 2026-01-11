@@ -27,7 +27,7 @@ function MyOrders() {
 
     return (
         <div className="myorders-container" style={{
-            background: `url(${SHARED_BG_URL}) center center / cover no-repeat fixed`
+            backgroundColor: "#000"
         }}>
             <Header showSignOutButton={true} />
 

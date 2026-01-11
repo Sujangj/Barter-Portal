@@ -4,7 +4,6 @@ import SignUpFormPopup from "./SignUpFormPopup";
 import LoginFormPopup from "./LoginFormPopup";
 import Header from "./Header";
 import Footer from "./Footer";
-import { SHARED_BG_URL } from "./constants";
 import "./Home.css";
 
 // Social media icons as inline SVGs (fontawesome style, but inline for no dependency)
@@ -97,7 +96,7 @@ function Home() {
                 minHeight: "100vh",
                 height: "100dvh",
                 overflowY: "auto",
-                background: `url(${SHARED_BG_URL}) center center / cover no-repeat fixed`,
+                backgroundColor: "#000",
                 position: "relative",
                 display: "flex",
                 flexDirection: "column"
@@ -213,13 +212,26 @@ function Home() {
                                                 border: "1px solid rgba(255, 255, 255, 0.3)",
                                                 cursor: "pointer",
                                                 transition: "all 0.2s ease",
-                                                borderRadius: "15px"
+                                                borderRadius: "15px",
+                                                userSelect: "none",
+                                                WebkitUserSelect: "none",
+                                                MozUserSelect: "none",
+                                                msUserSelect: "none"
                                             }}
                                             onMouseEnter={(e) => {
-                                                e.currentTarget.style.transform = "translateX(5px)";
-                                                e.currentTarget.style.background = "rgba(255, 255, 255, 0.3)";
+                                                if (!e.buttons) { // Only apply hover effect if no mouse buttons are pressed
+                                                    e.currentTarget.style.transform = "translateX(5px)";
+                                                    e.currentTarget.style.background = "rgba(255, 255, 255, 0.3)";
+                                                }
                                             }}
                                             onMouseLeave={(e) => {
+                                                if (!e.buttons) { // Only apply leave effect if no mouse buttons are pressed
+                                                    e.currentTarget.style.transform = "translateX(0)";
+                                                    e.currentTarget.style.background = "rgba(255, 255, 255, 0.2)";
+                                                }
+                                            }}
+                                            onMouseDown={(e) => {
+                                                // Prevent hover effects during drag
                                                 e.currentTarget.style.transform = "translateX(0)";
                                                 e.currentTarget.style.background = "rgba(255, 255, 255, 0.2)";
                                             }}
@@ -235,10 +247,43 @@ function Home() {
                                                 fontSize: "20px",
                                                 flexShrink: 0
                                             }}>{item.icon}</div>
-                                            <div style={{ flex: 1 }}>
-                                                <h4 style={{ margin: "0 0 5px 0", fontSize: "16px", color: "#fff", fontFamily: "momo trust display" }}>{item.title}</h4>
-                                                <p style={{ margin: 0, fontSize: "14px", color: "rgba(255, 255, 255, 0.8)", lineHeight: "1.4", fontFamily: "momo trust display" }}>{item.desc}</p>
-                                                <span style={{ fontSize: "12px", color: "rgba(255, 255, 255, 0.6)", fontFamily: "momo trust display" }}>{item.time}</span>
+                                            <div style={{
+                                                flex: 1,
+                                                userSelect: "none",
+                                                WebkitUserSelect: "none",
+                                                MozUserSelect: "none",
+                                                msUserSelect: "none"
+                                            }}>
+                                                <h4 style={{
+                                                    margin: "0 0 5px 0",
+                                                    fontSize: "16px",
+                                                    color: "#fff",
+                                                    fontFamily: "momo trust display",
+                                                    userSelect: "none",
+                                                    WebkitUserSelect: "none",
+                                                    MozUserSelect: "none",
+                                                    msUserSelect: "none"
+                                                }}>{item.title}</h4>
+                                                <p style={{
+                                                    margin: 0,
+                                                    fontSize: "14px",
+                                                    color: "rgba(255, 255, 255, 0.8)",
+                                                    lineHeight: "1.4",
+                                                    fontFamily: "momo trust display",
+                                                    userSelect: "none",
+                                                    WebkitUserSelect: "none",
+                                                    MozUserSelect: "none",
+                                                    msUserSelect: "none"
+                                                }}>{item.desc}</p>
+                                                <span style={{
+                                                    fontSize: "12px",
+                                                    color: "rgba(255, 255, 255, 0.6)",
+                                                    fontFamily: "momo trust display",
+                                                    userSelect: "none",
+                                                    WebkitUserSelect: "none",
+                                                    MozUserSelect: "none",
+                                                    msUserSelect: "none"
+                                                }}>{item.time}</span>
                                             </div>
                                         </div>
                                     ))}

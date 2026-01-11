@@ -3,12 +3,11 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Home from './Home';
 import Buy from './Buy';
 import Sell from './Sell';
-import About from './About';
+
+import Browse from './Browse';
 import Books from './Books';
-import Contact from './Contact';
 import Collectables from './Collectables';
 import Electronics from './Electronics';
-import Browse from './Browse';
 
 import Cart from './Cart';
 import Error from "./Error";
@@ -25,12 +24,10 @@ function App() {
                 <Route path="/home" element={<Home />} />
                 <Route path="/buy" element={<Buy />} />
                 <Route path="/sell" element={<Sell />} />
-                <Route path="/about" element={<About />} />
+                <Route path="/browse" element={<Browse />} />
                 <Route path="/books" element={<Books />} />
-                <Route path="/contact" element={<Contact />} />
                 <Route path="/collectables" element={<Collectables />} />
                 <Route path="/electronics" element={<Electronics />} />
-                <Route path="/browse" element={<Browse />} />
 
                 <Route path="/cart" element={<Cart />} />
                 <Route path="/myorders" element={<MyOrders />} />

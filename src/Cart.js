@@ -4,9 +4,6 @@ import Header from "./Header";
 import Footer from "./Footer";
 import LoginFormPopup from "./LoginFormPopup";
 
-const CART_BG =
-  "https://images.unsplash.com/photo-1610209455607-89e8b3e0e393?fm=jpg&q=60&w=3000&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OHx8cHVycGxlJTIwZ2FsYXh5fGVufDB8fDB8fHww";
-
 function Cart() {
   const navigate = useNavigate();
   const [showLoginFormPopup, setShowLoginFormPopup] = useState(false);
@@ -19,12 +16,7 @@ function Cart() {
         minHeight: "100vh",
         height: "100dvh",
         overflowY: "auto",
-        backgroundImage: `url('${CART_BG}')`,
-        backgroundColor: "#fff",
-        backgroundPosition: "center center",
-        backgroundRepeat: "no-repeat",
-        backgroundSize: "cover",
-        backgroundAttachment: "fixed",
+        backgroundColor: "#000",
         position: "relative",
         display: "flex",
         flexDirection: "column"

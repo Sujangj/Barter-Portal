@@ -5,9 +5,6 @@ import "./Contact.css";
 const LOGO_URL =
   "https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcRcsGEl_k_ju03oX1HX_A9lK-VvqKCm0WVdABkw4Y3k6uvo4zw45lzrgevt2B4CDWJNAOpAV8D8";
 
-// Contact page background image
-const CONTACT_BG_URL =
-  "https://images.unsplash.com/photo-1610209455607-89e8b3e0e393?fm=jpg&q=60&w=3000&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OHx8cHVycGxlJTIwZ2FsYXh5fGVufDB8fDB8fHww";
 
 // Social media icons as inline SVGs (fontawesome style, but inline for no dependency)
 function SocialIcon({ type, url }) {
@@ -84,7 +81,7 @@ function Contact() {
                 minHeight: "100vh",
                 height: "100dvh",
                 overflowY: "auto",
-                background: `url(${CONTACT_BG_URL}) center center / cover no-repeat fixed`,
+                backgroundColor: "#000",
                 position: "relative", // for stacking context for footer
                 display: "flex",
                 flexDirection: "column"

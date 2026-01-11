@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Header from './Header';
 import Footer from './Footer';
-import { SHARED_BG_URL } from './constants';
 import './Browse.css';
 
 const Browse = () => {
@@ -93,7 +92,7 @@ const Browse = () => {
 
     return (
         <div className="browse-container" style={{
-            background: `url(${SHARED_BG_URL}) center center / cover no-repeat fixed`
+            backgroundColor: "#000"
         }}>
             <Header
                 showSignOutButton={true}
@@ -134,7 +133,7 @@ const Browse = () => {
                             <h4>Price Range</h4>
                             <div className="price-inputs">
                                 <input type="text" placeholder="Min" defaultValue="0" />
-                                <span style={{ color: '#94a3b8' }}>to</span>
+                                <span style={{ color: '#fff' }}>to</span>
                                 <input type="text" placeholder="Max" defaultValue="2000" />
                             </div>
                             <input type="range" min="0" max="2000" style={{ width: '100%', marginTop: '15px' }} />

@@ -2,11 +2,8 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Header from "./Header";
 import Footer from "./Footer";
-import { LOGIN_HEADER_BG } from "./constants";
 import "./Login.css";
 
-const BOOKS_BG =
-  "https://images.unsplash.com/photo-1610209455607-89e8b3e0e393?fm=jpg&q=60&w=3000&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OHx8cHVycGxlJTIwZ2FsYXh5fGVufDB8fDB8fHww";
 
 // Extracted the CenteredInfoCard as a separate component to resolve hooks error inside .map
 function CenteredInfoCard({ text, onClick }) {
@@ -21,7 +18,7 @@ function CenteredInfoCard({ text, onClick }) {
         fontSize: "2.5em",
         textAlign: "center",
         padding: "50px 0",
-        background: LOGIN_HEADER_BG, // Same gradient as login button
+        background: "linear-gradient(135deg, #667eea 0%, #764ba2 100%)", // Reverted to original gradient
         borderRadius: "8px", // Match button border radius
         boxShadow: "0px 3px 8px rgba(140,148,251,0.09)", // Match button shadow
         minWidth: 320,
@@ -156,12 +153,7 @@ function Login() {
                 minHeight: "100vh",
                 height: "100dvh",
                 overflowY: "auto",
-                backgroundImage: `url('${BOOKS_BG}')`,
-                backgroundColor: "#fff",
-                backgroundPosition: "center center",
-                backgroundRepeat: "no-repeat",
-                backgroundSize: "cover",
-                backgroundAttachment: "fixed",
+                backgroundColor: "#000",
                 position: "relative", // for stacking context for footer
                 display: "flex",
                 flexDirection: "column"

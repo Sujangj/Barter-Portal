@@ -3,10 +3,6 @@ import Header from "./Header";
 import Footer from "./Footer";
 import CenteredInfoCard from "./CenteredInfoCard";
 
-const BOOKS_BG =
-  "https://images.unsplash.com/photo-1610209455607-89e8b3e0e393?fm=jpg&q=60&w=3000&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OHx8cHVycGxlJTIwZ2FsYXh5fGVufDB8fDB8fHww";
-
-
 function Books() {
   return (
     <div
@@ -14,12 +10,7 @@ function Books() {
         minHeight: "100vh",
         height: "100dvh",
         overflowY: "auto",
-        backgroundImage: `url('${BOOKS_BG}')`,
-        backgroundColor: "#fff",
-        backgroundPosition: "center center",
-        backgroundRepeat: "no-repeat",
-        backgroundSize: "cover",
-        backgroundAttachment: "fixed",
+        backgroundColor: "#000",
         position: "relative", // for stacking context for footer
         display: "flex",
         flexDirection: "column"
@@ -60,18 +51,18 @@ function Books() {
             {[
               {
                 text: "Study",
-                backgroundImage: "https://images.unsplash.com/photo-1635070041078-e363dbe005cb?auto=format&fit=crop&w=900&q=80",
-                onClick: () => alert("Study clicked")
+                onClick: () => alert("Study clicked"),
+                backgroundImage: "https://images.unsplash.com/photo-1635070041078-e363dbe005cb?auto=format&fit=crop&w=900&q=80"
               },
               {
                 text: "Novel",
-                backgroundImage: "https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?auto=format&fit=crop&w=1200&q=80",
-                onClick: () => alert("Novel clicked")
+                onClick: () => alert("Novel clicked"),
+                backgroundImage: "https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?auto=format&fit=crop&w=1200&q=80"
               },
               {
                 text: "Other",
-                backgroundImage: "https://images.unsplash.com/photo-1524995997946-a1c2e315a42f?auto=format&fit=crop&w=1200&q=80",
-                onClick: () => alert("Other clicked")
+                onClick: () => alert("Other clicked"),
+                backgroundImage: "https://images.unsplash.com/photo-1524995997946-a1c2e315a42f?auto=format&fit=crop&w=1200&q=80"
               }
             ].map((item, idx) => (
               <CenteredInfoCard text={item.text} onClick={item.onClick} backgroundImage={item.backgroundImage} key={idx} />

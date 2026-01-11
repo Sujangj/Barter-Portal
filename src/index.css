@@ -20,8 +20,7 @@ html {
   /* So 1rem = 16px, standard base size */
   font-size: 16px;
   font-family: 'Momo Trust Display', 'Segoe UI', 'Roboto', 'Arial', sans-serif;
-  background: url('https://images.unsplash.com/photo-1610209455607-89e8b3e0e393?fm=jpg&q=60&w=3000&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OHx8cHVycGxlJTIwZ2FsYXh5fGVufDB8fDB8fHww') no-repeat center center fixed;
-  background-size: cover;
+  background-color: #000;
   min-height: 100vh;
 }
 

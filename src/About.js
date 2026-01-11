@@ -4,9 +4,6 @@ import Footer from "./Footer";
 import "./About.css";
 
 // About page background image
-const ABOUT_BG_URL =
-  "https://images.unsplash.com/photo-1610209455607-89e8b3e0e393?fm=jpg&q=60&w=3000&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OHx8cHVycGxlJTIwZ2FsYXh5fGVufDB8fDB8fHww";
-
 // About page component
 function About() {
 
@@ -16,7 +13,7 @@ function About() {
                 minHeight: "100vh",
                 height: "100dvh",
                 overflowY: "auto",
-                background: `url(${ABOUT_BG_URL}) center center / cover no-repeat fixed`,
+                backgroundColor: "#000",
                 position: "relative", // for stacking context for footer
                 display: "flex",
                 flexDirection: "column"
