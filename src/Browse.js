@@ -133,7 +133,7 @@ const Browse = () => {
                             <h4>Price Range</h4>
                             <div className="price-inputs">
                                 <input type="text" placeholder="Min" defaultValue="0" />
-                                <span style={{ color: '#fff' }}>to</span>
+                                <span style={{ color: '#94a3b8' }}>to</span>
                                 <input type="text" placeholder="Max" defaultValue="2000" />
                             </div>
                             <input type="range" min="0" max="2000" style={{ width: '100%', marginTop: '15px' }} />

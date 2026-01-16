@@ -73,7 +73,7 @@
 }
 
 .filter-section {
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    background: #fff;
     border-radius: 16px;
     padding: 25px;
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.02);
@@ -92,7 +92,7 @@
 .filter-group h4 {
     font-size: 15px;
     font-weight: 700;
-    color: #fff;
+    color: #1e293b;
     margin-bottom: 15px;
 }
 
@@ -100,9 +100,9 @@
     width: 100%;
     padding: 12px;
     border-radius: 8px;
-    border: 1px solid rgba(255, 255, 255, 0.3);
-    background: rgba(255, 255, 255, 0.1);
-    color: #fff;
+    border: 1px solid #e2e8f0;
+    background: #f8fafc;
+    color: #475569;
     font-weight: 500;
     cursor: pointer;
     font-family: inherit;
@@ -117,12 +117,10 @@
 .price-inputs input {
     width: 100%;
     padding: 10px;
-    border: 1px solid rgba(255, 255, 255, 0.3);
+    border: 1px solid #e2e8f0;
     border-radius: 8px;
     font-size: 14px;
     text-align: center;
-    color: #fff;
-    background: rgba(255, 255, 255, 0.1);
 }
 
 .condition-list,
@@ -137,7 +135,7 @@
     align-items: center;
     gap: 12px;
     font-size: 14px;
-    color: #fff;
+    color: #475569;
     cursor: pointer;
     font-weight: 500;
 }
@@ -146,16 +144,16 @@
     width: 18px;
     height: 18px;
     border-radius: 4px;
-    accent-color: #3b82f6;
+    accent-color: #fff;
 }
 
 .clear-filters-btn {
     width: 100%;
     padding: 12px;
-    background: rgba(255, 255, 255, 0.2);
-    border: 1px solid rgba(255, 255, 255, 0.3);
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
     border-radius: 8px;
-    color: #fff;
+    color: #64748b;
     font-weight: 600;
     cursor: pointer;
     transition: all 0.2s;
@@ -163,7 +161,7 @@
 }
 
 .clear-filters-btn:hover {
-    background: rgb(254, 253, 253);
+    background: #f1f5f9;
 }
 
 /* Main Display Area */
@@ -176,7 +174,7 @@
     align-items: center;
     gap: 15px;
     margin-bottom: 25px;
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    background: #fff;
     padding: 8px 20px;
     border-radius: 12px;
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.02);
@@ -186,7 +184,7 @@
 
 .sort-label {
     font-size: 13px;
-    color: #fff;
+    color: #64748b;
     font-weight: 600;
     white-space: nowrap;
 }
@@ -199,18 +197,19 @@
     cursor: pointer;
     white-space: nowrap;
     transition: all 0.2s;
-    color: #fff;
-    background: rgba(255, 255, 255, 0.1);
-    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: #475569;
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
 }
 
 .sort-option.active {
-    background: rgba(255, 255, 255, 0.3);
+    background: #3b82f6;
     color: #fff;
 }
 
 .sort-option:hover:not(.active) {
-    background: rgba(255, 255, 255, 0.2);
+    background: #f1f5f9;
+    border-color: #cbd5e1;
 }
 
 /* Product Grid */

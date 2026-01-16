@@ -7,23 +7,23 @@ import "./Buy.css";
 
 // Social media icons as inline SVGs (fontawesome style, but inline for no dependency)
 function SocialIcon({ type, url }) {
-    let icon;
-    if (type === "twitter") {
-        icon = (
-            <svg height="24" width="24" fill="#fff" viewBox="0 0 24 24" aria-label="X (Twitter)">
+  let icon;
+  if (type === "twitter") {
+    icon = (
+      <svg height="24" width="24" fill="#fff" viewBox="0 0 24 24" aria-label="X (Twitter)">
                 <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
-            </svg>
-        );
-    } else if (type === "facebook") {
-        icon = (
-            <svg height="24" width="24" fill="#fff" viewBox="0 0 24 24" aria-label="Facebook">
+      </svg>
+    );
+  } else if (type === "facebook") {
+    icon = (
+      <svg height="24" width="24" fill="#fff" viewBox="0 0 24 24" aria-label="Facebook">
                 <path d="M22.675 0h-21.35C.6 0 0 .6 0 1.326v21.348C0 23.4.6 24 1.326 24h11.48v-9.294H9.692V11.01h3.114V8.41c0-3.1 1.893-4.788 4.659-4.788 1.325 0 2.463.099 2.797.143v3.24l-1.92.001c-1.504 0-1.797.715-1.797 1.763v2.314h3.587l-.467 3.696h-3.12V24h6.116c.726 0 1.326-.6 1.326-1.326V1.326C24 .6 23.4 0 22.675 0" />
-            </svg>
-        );
-    } else if (type === "instagram") {
-        icon = (
-            <svg height="24" width="24" fill="#fff" viewBox="0 0 24 24" aria-label="Instagram">
-                <path d="M12,2.163c3.204,0,3.584,0.012,4.85,0.07c1.366,0.062,2.633,0.342,3.608,1.316c0.974,0.974,1.254,2.242,1.316,3.608
+      </svg>
+    );
+  } else if (type === "instagram") {
+    icon = (
+      <svg height="24" width="24" fill="#fff" viewBox="0 0 24 24" aria-label="Instagram">
+        <path d="M12,2.163c3.204,0,3.584,0.012,4.85,0.07c1.366,0.062,2.633,0.342,3.608,1.316c0.974,0.974,1.254,2.242,1.316,3.608
           c0.058,1.266,0.069,1.646,0.069,4.85s-0.012,3.584-0.069,4.85c-0.062,1.366-0.342,2.633-1.316,3.608
           c-0.974,0.974-2.242,1.254-3.608,1.316c-1.266,0.058-1.646,0.069-4.85,0.069s-3.584-0.012-4.85-0.069
           c-1.366-0.062-2.633-0.342-3.608-1.316c-0.974-0.974-1.254-2.242-1.316-3.608c-0.058-1.266-0.069-1.646-0.069-4.85
@@ -34,41 +34,41 @@ function SocialIcon({ type, url }) {
           s3.667-0.013,4.948-0.072c1.286-0.059,2.381-0.353,3.374-1.346c0.993-0.993,1.287-2.088,1.346-3.374
           c0.059-1.281,0.072-1.69,0.072-4.948s-0.013-3.667-0.072-4.948c-0.059-1.286-0.353-2.381-1.346-3.374
           c-0.993-0.993-2.088-1.287-3.374-1.346C15.667,0.013,15.259,0,12,0L12,0z"/>
-                <path d="M12,5.838c-3.403,0-6.162,2.76-6.162,6.162c0,3.403,2.76,6.162,6.162,6.162
+        <path d="M12,5.838c-3.403,0-6.162,2.76-6.162,6.162c0,3.403,2.76,6.162,6.162,6.162
           c3.403,0,6.162-2.76,6.162-6.162C18.162,8.598,15.403,5.838,12,5.838z M12,15.6c-1.989,0-3.6-1.611-3.6-3.6
           c0-1.989,1.611-3.6,3.6-3.6c1.989,0,3.6,1.611,3.6,3.6C15.6,13.989,13.989,15.6,12,15.6z"/>
                 <circle cx="18.406" cy="5.594" r="1.44" />
-            </svg>
-        );
-    } else if (type === "linkedin") {
-        icon = (
-            <svg height="24" width="24" fill="#fff" viewBox="0 0 24 24" aria-label="LinkedIn">
-                <path d="M22.23 0H1.77C.792 0 0 .774 0 1.729v20.542C0 23.226.792 24 1.77 24h20.459
+      </svg>
+    );
+  } else if (type === "linkedin") {
+    icon = (
+      <svg height="24" width="24" fill="#fff" viewBox="0 0 24 24" aria-label="LinkedIn">
+        <path d="M22.23 0H1.77C.792 0 0 .774 0 1.729v20.542C0 23.226.792 24 1.77 24h20.459
         C23.208 24 24 23.226 24 22.271V1.729C24 .774 23.208 0 22.23 0zM7.083 20.452H3.56V9.034h3.523v11.418zM5.322 7.704a2.042
         2.042 0 1 1 0-4.084 2.042 2.042 0 0 1 0 4.084zm15.13 12.748h-3.523v-5.569c0-1.328-.025-3.037-1.85-3.037-1.851 0-2.133
         1.445-2.133 2.939v5.667H9.423V9.034h3.384v1.561h.048c.473-.896 1.632-1.85 3.359-1.85 3.595 0 4.256 2.366 4.256
         5.444v6.263z"/>
-            </svg>
-        );
-    } else {
-        icon = null;
-    }
-    return (
-        <a
-            href={url}
-            target="_blank"
-            rel="noopener noreferrer"
-            style={{
-                margin: "0 8px",
-                display: "inline-block",
-                color: "inherit",
-                verticalAlign: "middle"
-            }}
-            aria-label={type}
-        >
-            {icon}
-        </a>
+      </svg>
     );
+  } else {
+    icon = null;
+  }
+  return (
+    <a
+      href={url}
+      target="_blank"
+      rel="noopener noreferrer"
+      style={{
+        margin: "0 8px",
+        display: "inline-block",
+        color: "inherit",
+        verticalAlign: "middle"
+      }}
+      aria-label={type}
+    >
+      {icon}
+    </a>
+  );
 }
 
 // Buy page component
@@ -373,21 +373,21 @@ function Buy() {
                     </div>
 
                     {/* Cart button */}
-                    <button
-                        style={{
-                            width: "50px",
+                            <button
+                                style={{
+                                    width: "50px",
                             height: "36px",
                             borderRadius: "8px",
-                            background: "#667eea",
-                            border: "none",
-                            cursor: "pointer",
+                                    background: "#667eea",
+                                    border: "none",
+                                    cursor: "pointer",
                             boxShadow: "0px 3px 8px rgba(40,116,240,0.28)",
-                            display: "flex",
-                            alignItems: "center",
-                            justifyContent: "center",
-                            transition: "all 0.3s ease",
-                            fontFamily: "momo trust display"
-                        }}
+                                    display: "flex",
+                                    alignItems: "center",
+                                    justifyContent: "center",
+                                    transition: "all 0.3s ease",
+                                    fontFamily: "momo trust display"
+                                }}
                         onMouseEnter={(e) => {
                             e.target.style.background = "linear-gradient(135deg, #667eea 0%, #764ba2 100%)";
                         }}
@@ -397,7 +397,7 @@ function Buy() {
                         onClick={() => navigate("/cart")}
                         aria-label="Shopping Cart"
                         title="Go to Cart"
-                    >
+                            >
                         <svg
                             width="24"
                             height="24"
@@ -412,12 +412,12 @@ function Buy() {
                             <circle cx="9" cy="21" r="1"></circle>
                             <circle cx="20" cy="21" r="1"></circle>
                             <path d="M1 1h4l2.68 13.39c.12.63.71 1.11 1.35 1.11h11.66c.63 0 1.21-.48 1.35-1.11L23 6H6"></path>
-                        </svg>
-                    </button>
+                                </svg>
+                            </button>
 
                     {/* Profile dropdown or Sign Up/Login buttons */}
                     {!isAuthenticated ? (
-                        <div
+                                <div
                             onMouseEnter={() => setShowProfileDropdown(true)}
                             onMouseLeave={() => {
                                 // Only hide if not hovering over dropdown
@@ -429,8 +429,8 @@ function Buy() {
                             }}
                             style={{ position: "relative", zIndex: 1 }}
                         >
-                            <button
-                                style={{
+                                            <button
+                                                style={{
                                     minWidth: "120px",
                                     width: "120px",
                                     padding: "10px 15px",
@@ -440,17 +440,17 @@ function Buy() {
                                     borderRadius: "8px",
                                     background: "#667eea",
                                     color: "white",
-                                    border: "none",
-                                    cursor: "pointer",
+                                                    border: "none",
+                                                    cursor: "pointer",
                                     boxShadow: "0px 3px 8px rgba(40,116,240,0.28)",
                                     textAlign: "center",
-                                    display: "flex",
-                                    alignItems: "center",
+                                                    display: "flex",
+                                                    alignItems: "center",
                                     justifyContent: "space-around",
                                     whiteSpace: "nowrap",
                                     transition: "all 0.3s ease",
                                     textTransform: "none",
-                                }}
+                                                }}
                                 onMouseEnter={(e) => {
                                     e.target.style.background = "linear-gradient(135deg, #667eea 0%, #764ba2 100%)";
                                     e.target.style.color = "white";
@@ -467,25 +467,25 @@ function Buy() {
                                     e.stopPropagation();
                                     setShowLoginFormPopup(true);
                                 }}
-                            >
+                                            >
                                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ color: "white" }}>
-                                    <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
-                                    <circle cx="12" cy="7" r="4"></circle>
-                                </svg>
+                                                    <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                                                    <circle cx="12" cy="7" r="4"></circle>
+                                                </svg>
                                 Login
                                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ color: "white" }}>
                                     <polyline points="6 9 12 15 18 9"></polyline>
                                 </svg>
-                            </button>
+                                            </button>
                             {showProfileDropdown && (
                                 <div
                                     ref={profileDropdownRef}
-                                    style={{
+                                                style={{
                                         ...profileDropdownStyle,
                                         right: "-20px", // Adjust position as needed
                                         minWidth: "240px",
                                         padding: "0", // Remove padding to allow custom item padding
-                                    }}
+                                                }}
                                     onMouseEnter={() => {
                                         setIsHoveringDropdown(true);
                                         setShowProfileDropdown(true);
@@ -507,15 +507,15 @@ function Buy() {
                                         fontFamily: "momo trust display",
                                     }}>
                                         <span style={{ color: "#555", fontSize: "14px" }}>New customer?</span>
-                                        <button
-                                            style={{
-                                                background: "none",
-                                                border: "none",
+                                            <button
+                                                style={{
+                                                    background: "none",
+                                                    border: "none",
                                                 color: "#2874f0",
                                                 fontWeight: "600",
-                                                cursor: "pointer",
+                                                    cursor: "pointer",
                                                 fontSize: "15px",
-                                                fontFamily: "momo trust display",
+                                                    fontFamily: "momo trust display",
                                             }}
                                             onClick={() => {
                                                 setShowProfileDropdown(false);
@@ -530,8 +530,8 @@ function Buy() {
                                         <button
                                             key={index}
                                             style={{ display: "flex", alignItems: "center", gap: "10px", width: "100%", padding: "12px 20px", background: "none", border: "none", textAlign: "left", cursor: "pointer", fontSize: "14px", fontWeight: "500", color: "#333", transition: "all 0.2s ease" }}
-                                            onMouseEnter={(e) => e.target.style.background = "#f8f9fa"}
-                                            onMouseLeave={(e) => e.target.style.background = "transparent"}
+                                                onMouseEnter={(e) => e.target.style.background = "#f8f9fa"}
+                                                onMouseLeave={(e) => e.target.style.background = "transparent"}
                                             onClick={() => {
                                                 if (item.text === "My Profile") {
                                                     if (isAuthenticated) {
@@ -543,10 +543,10 @@ function Buy() {
                                                     alert(`Clicked ${item.text}`); // Placeholder for other menu items
                                                 }
                                             }}
-                                        >
+                                            >
                                             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" dangerouslySetInnerHTML={{ __html: item.icon }} />
                                             {item.text}
-                                        </button>
+                                            </button>
                                     ))}
                                 </div>
                             )}
@@ -554,16 +554,16 @@ function Buy() {
                     ) : (
                         // Authenticated user - show profile dropdown
                         <div style={{ position: "relative" }} ref={profileDropdownRef}>
-                            <button
-                                style={{
+                                            <button
+                                                style={{
                                     width: "50px",
                                     height: "50px",
                                     borderRadius: "50%",
                                     background: "#667eea",
-                                    border: "none",
-                                    cursor: "pointer",
-                                    display: "flex",
-                                    alignItems: "center",
+                                                    border: "none",
+                                                    cursor: "pointer",
+                                                    display: "flex",
+                                                    alignItems: "center",
                                     justifyContent: "center",
                                     boxShadow: "0 2px 6px rgba(102,126,234,0.2)",
                                     transition: "all 0.3s ease",
@@ -574,17 +574,17 @@ function Buy() {
                                     setShowProfileDropdown(!showProfileDropdown);
                                 }}
                                 title="Profile Menu"
-                            >
+                                            >
                                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                                     <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
                                     <circle cx="12" cy="7" r="4"></circle>
-                                </svg>
-                            </button>
+                                                </svg>
+                                            </button>
 
                             {/* Profile dropdown menu */}
                             {showProfileDropdown && (
                                 <div
-                                    style={{
+                                                style={{
                                         ...profileDropdownStyle,
                                         opacity: showProfileDropdown ? 1 : 0,
                                         transform: showProfileDropdown ? "translateY(0)" : "translateY(-10px)",
@@ -600,8 +600,8 @@ function Buy() {
                                                     <button
                                                         key={index}
                                                         style={{ width: "100%", padding: "12px 20px", background: "none", border: "none", textAlign: "left", cursor: "pointer", fontSize: "14px", fontWeight: "500", color: "#333", transition: "all 0.2s ease", fontFamily: "momo trust display", display: "flex", alignItems: "center", gap: "10px" }}
-                                                        onMouseEnter={(e) => e.target.style.background = "#f8f9fa"}
-                                                        onMouseLeave={(e) => e.target.style.background = "transparent"}
+                                                onMouseEnter={(e) => e.target.style.background = "#f8f9fa"}
+                                                onMouseLeave={(e) => e.target.style.background = "transparent"}
                                                         onClick={() => {
                                                             setShowProfileDropdown(false);
                                                             if (item.text === "My Profile") {
@@ -614,10 +614,10 @@ function Buy() {
                                                                 alert(`Clicked ${item.text}`); // Placeholder for other menu items
                                                             }
                                                         }}
-                                                    >
+                                            >
                                                         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" dangerouslySetInnerHTML={{ __html: item.icon }} />
                                                         {item.text}
-                                                    </button>
+                                            </button>
                                                 ))}
                                             </div>
                                             <button
@@ -715,78 +715,78 @@ function Buy() {
                     minHeight: "0", // Allow shrinking
                     padding: "80px 20px 0 20px" // Account for fixed header, no bottom padding
                 }}>
-                    <div className="buy-container" style={{
-                        maxWidth: "400px",
-                        width: "100%",
-                        marginTop: "75px",
-                        padding: "38px 30px 35px 30px",
-                        background: "rgba(255, 255, 255, 0.97)",
-                        borderRadius: "15px",
-                        boxShadow: "0 8px 32px rgba(143, 148, 251, 0.13)",
-                        backdropFilter: "blur(10px)",
-                        border: "1px solid rgba(255,255,255,0.13)",
-                        display: "flex",
-                        flexDirection: "column",
-                        alignItems: "center"
+                <div className="buy-container" style={{
+                    maxWidth: "400px",
+                    width: "100%",
+                    marginTop: "75px",
+                    padding: "38px 30px 35px 30px",
+                    background: "rgba(255, 255, 255, 0.97)",
+                    borderRadius: "15px",
+                    boxShadow: "0 8px 32px rgba(143, 148, 251, 0.13)",
+                    backdropFilter: "blur(10px)",
+                    border: "1px solid rgba(255,255,255,0.13)",
+                    display: "flex",
+                    flexDirection: "column",
+                    alignItems: "center"
+                }}>
+                    <h2 style={{
+                        textAlign: "center",
+                        marginBottom: "21px",
+                        color: "#184872",
+                        fontSize: "2em",
+                        fontWeight: 600
                     }}>
-                        <h2 style={{
-                            textAlign: "center",
-                            marginBottom: "21px",
-                            color: "#184872",
-                            fontSize: "2em",
-                            fontWeight: 600
-                        }}>
-                            Welcome to Buy Section!
-                        </h2>
-                        <p style={{ color: "#4e5688", fontSize: "1.10em", textAlign: "center", marginBottom: "10px" }}>
-                            Browse and purchase items from our marketplace.
-                        </p>
-                        <div style={{
-                            marginTop: "20px",
-                            marginBottom: "0",
-                            width: "100%",
-                            textAlign: "center"
-                        }}>
-                        </div>
+                        Welcome to Buy Section!
+                    </h2>
+                    <p style={{ color: "#4e5688", fontSize: "1.10em", textAlign: "center", marginBottom: "10px" }}>
+                        Browse and purchase items from our marketplace.
+                    </p>
+                    <div style={{
+                        marginTop: "20px",
+                        marginBottom: "0",
+                        width: "100%",
+                        textAlign: "center"
+                    }}>
                     </div>
+                </div>
                 </div>
 
                 {/* Footer attached directly to content */}
                 <footer
                     style={{
-                        background: "#111",
-                        color: "#fff",
-                        width: "100%",
-                        padding: "30px 0 18px 0",
-                        display: "flex",
-                        flexDirection: "column",
-                        alignItems: "center",
-                        fontFamily: "'Segoe UI', Arial, sans-serif",
-                        fontSize: "1rem"
+                      background: "#111",
+                      color: "#fff",
+                      width: "100%",
+                      padding: "30px 0 18px 0",
+                      display: "flex",
+                      flexDirection: "column",
+                      alignItems: "center",
+                      fontFamily: "'Segoe UI', Arial, sans-serif",
+                      fontSize: "1rem"
                     }}
                 >
-                    <div style={{ marginBottom: 12 }}>
-                        <SocialIcon type="twitter" url="https://twitter.com/" />
-                        <SocialIcon type="facebook" url="https://facebook.com/" />
-                        <SocialIcon type="instagram" url="https://instagram.com/" />
-                        <SocialIcon type="linkedin" url="https://www.linkedin.com/in/sujan-g-j-821382318/" />
-                    </div>
-                    <div style={{ display: "flex", alignItems: "center", opacity: 0.85 }}>
-                        <span
-                            style={{
-                                marginRight: 7,
-                                verticalAlign: "middle",
-                                fontSize: "1em",
-                                userSelect: "none",
-                            }}
-                            aria-label="Copyright"
-                            role="img"
-                        // usage of Unicode © character
-                        >
-                            &copy;
-                        </span>
-                        2025 Barterportal.com
-                    </div>
+                  <div style={{ marginBottom: 12 }}>
+                    <SocialIcon type="twitter" url="https://twitter.com/" />
+                    <SocialIcon type="facebook" url="https://facebook.com/" />
+                    <SocialIcon type="instagram" url="https://instagram.com/" />
+                    <SocialIcon type="linkedin" url="https://www.linkedin.com/in/sujan-g-j-821382318/" />
+                  </div>
+                  <div style={{ display: "flex", alignItems: "center", opacity: 0.85 }}>
+                    <span
+                      style={{
+                        marginRight: 7,
+                        verticalAlign: "middle",
+                        fontSize: "1em",
+                        userSelect: "none",
+                      }}
+                      aria-label="Copyright"
+                      role="img"
+                      // usage of Unicode © character
+                    >
+                      &copy;
+                    </span>
+                    2025 Barterportal.com
+                  </div>
                 </footer>
             </div>
 
@@ -819,7 +819,7 @@ function Buy() {
                             marginBottom: "20px",
                             color: "#f39c12"
                         }}>
-
+                            
                         </div>
 
                         <h3 style={{
@@ -1038,7 +1038,7 @@ function Buy() {
                             fontSize: "14px",
                             fontStyle: "italic"
                         }}>
-
+                            
                         </p>
                     </div>
                 </div>

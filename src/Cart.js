@@ -130,7 +130,7 @@ function Cart() {
             localStorage.setItem("isAuthenticated", "true");
             setIsAuthenticated(true);
             setShowLoginFormPopup(false);
-            navigate("/home");
+            // Stay on cart page instead of redirecting to home
           }}
         />
       )}

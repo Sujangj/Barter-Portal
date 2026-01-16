@@ -519,8 +519,8 @@ function Login() {
                     right: 0,
                     bottom: 0,
                     background: "rgba(0, 0, 0, 0.5)",
-                    display: "flex",
-                    alignItems: "center",
+                      display: "flex",
+                      alignItems: "center",
                     justifyContent: "center",
                     zIndex: 2000
                 }}>
@@ -591,7 +591,7 @@ function Login() {
                             </button>
 
                             <button
-                                style={{
+                      style={{
                                     padding: "12px 24px",
                                     background: "#6c757d",
                                     color: "white",
@@ -611,7 +611,7 @@ function Login() {
                             </button>
                         </div>
                     </div>
-                </div>
+                  </div>
             )}
             </div>
             <Footer />
