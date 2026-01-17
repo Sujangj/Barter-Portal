@@ -322,7 +322,7 @@ function Buy() {
                             fontFamily: "momo trust display", // <-- updated here
                         }}
                     >
-                        Barter Portal
+                        Barterportal
                     </span>
                 </div>
                 <div
