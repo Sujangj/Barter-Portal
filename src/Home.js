@@ -82,6 +82,19 @@ function Home() {
     });
     const [selectedActivity, setSelectedActivity] = useState(null);
     const [showAllActivities, setShowAllActivities] = useState(false);
+    const [showCreateListingModal, setShowCreateListingModal] = useState(false);
+    const [selectedImage, setSelectedImage] = useState(null);
+    const [uploadedListings, setUploadedListings] = useState(() => {
+        const saved = localStorage.getItem('userListings');
+        return saved ? JSON.parse(saved) : [];
+    });
+    const [newListing, setNewListing] = useState({
+        name: '',
+        description: '',
+        category: '',
+        price: '',
+        condition: 'new'
+    });
 
     useEffect(() => {
         if (!isAuthenticated) {
@@ -303,6 +316,7 @@ function Home() {
                                     transition: "transform 0.2s",
                                     boxShadow: "0 8px 20px rgba(68, 129, 235, 0.3)"
                                 }}
+                                    onClick={() => setShowCreateListingModal(true)}
                                     onMouseEnter={(e) => e.currentTarget.style.transform = "translateY(-5px)"}
                                     onMouseLeave={(e) => e.currentTarget.style.transform = "translateY(0)"}
                                 >
@@ -515,6 +529,146 @@ function Home() {
                                 ))}
                             </div>
                         </div>
+
+                        {/* User Listings Section */}
+                        {uploadedListings.length > 0 && (
+                            <div style={{
+                                marginTop: "20px",
+                                background: "linear-gradient(135deg, #667eea 0%, #764ba2 100%)",
+                                padding: "25px",
+                                borderRadius: "20px",
+                                boxShadow: "0 8px 32px rgba(118, 75, 162, 0.4)"
+                            }}>
+                                <div style={{ display: "flex", justifyContent: "space-between", marginBottom: "20px" }}>
+                                    <h3 style={{ margin: 0, color: "white", fontFamily: "momo trust display" }}>Community Listings</h3>
+                                    <span style={{ color: "rgba(255, 255, 255, 0.8)", fontSize: "14px", fontFamily: "momo trust display" }}>
+                                        {uploadedListings.length} active listing{uploadedListings.length !== 1 ? 's' : ''}
+                                    </span>
+                                </div>
+                                <div className="recommended-grid">
+                                    {uploadedListings.map((listing) => (
+                                        <div key={listing.id}
+                                            onClick={() => setSelectedActivity({
+                                                title: listing.name,
+                                                desc: `${listing.description}\n\nCategory: ${listing.category}\nCondition: ${listing.condition}\nListed on: ${listing.dateListed}`,
+                                                time: "Community Listing",
+                                                icon: "🛍️"
+                                            })}
+                                            style={{
+                                                background: "rgba(255, 255, 255, 0.2)",
+                                                border: "1px solid rgba(255, 255, 255, 0.3)",
+                                                borderRadius: "15px",
+                                                padding: "15px",
+                                                cursor: "pointer",
+                                                transition: "all 0.3s ease",
+                                                textAlign: "center",
+                                                overflow: "hidden"
+                                            }}
+                                            onMouseEnter={(e) => {
+                                                e.currentTarget.style.transform = "translateY(-8px) scale(1.02)";
+                                                e.currentTarget.style.background = "rgba(255, 255, 255, 0.35)";
+                                                e.currentTarget.style.boxShadow = "0 10px 25px rgba(0,0,0,0.2)";
+                                            }}
+                                            onMouseLeave={(e) => {
+                                                e.currentTarget.style.transform = "translateY(0) scale(1)";
+                                                e.currentTarget.style.background = "rgba(255, 255, 255, 0.2)";
+                                                e.currentTarget.style.boxShadow = "none";
+                                            }}
+                                        >
+                                            <div style={{
+                                                height: "120px",
+                                                borderRadius: "10px",
+                                                marginBottom: "12px",
+                                                overflow: "hidden",
+                                                background: "#f8f9fa"
+                                            }}>
+                                                <img
+                                                    src={listing.image}
+                                                    alt={listing.name}
+                                                    style={{
+                                                        width: "100%",
+                                                        height: "100%",
+                                                        objectFit: "cover",
+                                                        transition: "transform 0.3s ease"
+                                                    }}
+                                                    onMouseEnter={(e) => e.target.style.transform = "scale(1.1)"}
+                                                    onMouseLeave={(e) => e.target.style.transform = "scale(1)"}
+                                                />
+                                            </div>
+                                            <h4 style={{
+                                                margin: "0 0 6px 0",
+                                                fontSize: "15px",
+                                                color: "white",
+                                                fontFamily: "momo trust display",
+                                                fontWeight: "600"
+                                            }}>{listing.name}</h4>
+                                            <p style={{
+                                                margin: "0 0 4px 0",
+                                                color: "rgba(255, 255, 255, 0.8)",
+                                                fontSize: "12px",
+                                                fontFamily: "momo trust display"
+                                            }}>{listing.category}</p>
+                                            <p style={{
+                                                margin: 0,
+                                                color: "white",
+                                                fontWeight: "bold",
+                                                fontSize: "16px",
+                                                fontFamily: "momo trust display"
+                                            }}>₹{listing.price || 'Contact for price'}</p>
+                                            <div style={{
+                                                marginTop: "8px",
+                                                display: "flex",
+                                                justifyContent: "center",
+                                                gap: "5px"
+                                            }}>
+                                                <button
+                                                    onClick={(e) => {
+                                                        e.stopPropagation();
+                                                        alert(`Interested in exchanging for "${listing.name}"? Contact feature coming soon!`);
+                                                    }}
+                                                    style={{
+                                                        padding: "6px 12px",
+                                                        background: "rgba(255, 255, 255, 0.2)",
+                                                        color: "white",
+                                                        border: "1px solid rgba(255, 255, 255, 0.3)",
+                                                        borderRadius: "6px",
+                                                        cursor: "pointer",
+                                                        fontSize: "12px",
+                                                        fontFamily: "momo trust display",
+                                                        transition: "all 0.2s ease"
+                                                    }}
+                                                    onMouseEnter={(e) => e.currentTarget.style.background = "rgba(255, 255, 255, 0.3)"}
+                                                    onMouseLeave={(e) => e.currentTarget.style.background = "rgba(255, 255, 255, 0.2)"}
+                                                >
+                                                    Exchange
+                                                </button>
+                                                <button
+                                                    onClick={(e) => {
+                                                        e.stopPropagation();
+                                                        alert(`Want to buy "${listing.name}"? Purchase feature coming soon!`);
+                                                    }}
+                                                    style={{
+                                                        padding: "6px 12px",
+                                                        background: "rgba(255, 255, 255, 0.2)",
+                                                        color: "white",
+                                                        border: "1px solid rgba(255, 255, 255, 0.3)",
+                                                        borderRadius: "6px",
+                                                        cursor: "pointer",
+                                                        fontSize: "12px",
+                                                        fontFamily: "momo trust display",
+                                                        transition: "all 0.2s ease"
+                                                    }}
+                                                    onMouseEnter={(e) => e.currentTarget.style.background = "rgba(255, 255, 255, 0.3)"}
+                                                    onMouseLeave={(e) => e.currentTarget.style.background = "rgba(255, 255, 255, 0.2)"}
+                                                >
+                                                    Buy
+                                                </button>
+                                            </div>
+                                        </div>
+                                    ))}
+                                </div>
+                            </div>
+                        )}
                     </div>
                 </div>
             </div>
@@ -684,6 +838,399 @@ function Home() {
                                 </div>
                             </div>
                         )}
+                    </div>
+                </div>
+            )}
+
+            {showCreateListingModal && (
+                <div style={{
+                    position: "fixed",
+                    top: 0,
+                    left: 0,
+                    right: 0,
+                    bottom: 0,
+                    background: "rgba(0, 0, 0, 0.7)",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    zIndex: 5000,
+                    backdropFilter: "blur(5px)"
+                }} onClick={() => setShowCreateListingModal(false)}>
+                    <div style={{
+                        background: "white",
+                        borderRadius: "20px",
+                        padding: "30px",
+                        maxWidth: "600px",
+                        width: "90%",
+                        maxHeight: "90vh",
+                        overflowY: "auto",
+                        boxShadow: "0 20px 50px rgba(0,0,0,0.3)",
+                        position: "relative",
+                        animation: "modalFadeIn 0.3s ease"
+                    }} onClick={(e) => e.stopPropagation()}>
+                        <button
+                            onClick={() => setShowCreateListingModal(false)}
+                            style={{
+                                position: "absolute",
+                                top: "20px",
+                                right: "20px",
+                                background: "none",
+                                border: "none",
+                                fontSize: "24px",
+                                cursor: "pointer",
+                                color: "#666"
+                            }}
+                        >
+                            ×
+                        </button>
+
+                        <h2 style={{
+                            margin: "0 0 25px 0",
+                            color: "#333",
+                            fontSize: "28px",
+                            fontWeight: "600",
+                            fontFamily: "momo trust display",
+                            textAlign: "center"
+                        }}>
+                            Create New Listing
+                        </h2>
+
+                        <div style={{ display: "flex", flexDirection: "column", gap: "20px" }}>
+                            {/* Image Upload Section */}
+                            <div>
+                                <label style={{
+                                    display: "block",
+                                    marginBottom: "10px",
+                                    fontWeight: "600",
+                                    color: "#333",
+                                    fontFamily: "momo trust display"
+                                }}>
+                                    Product Image *
+                                </label>
+                                <div style={{
+                                    border: "2px dashed #ddd",
+                                    borderRadius: "10px",
+                                    padding: "20px",
+                                    textAlign: "center",
+                                    cursor: "pointer",
+                                    background: selectedImage ? "transparent" : "#f8f9fa",
+                                    transition: "all 0.3s ease"
+                                }}
+                                onClick={() => document.getElementById('imageInput').click()}
+                                onMouseEnter={(e) => e.currentTarget.style.borderColor = "#667eea"}
+                                onMouseLeave={(e) => e.currentTarget.style.borderColor = "#ddd"}
+                                >
+                                    {selectedImage ? (
+                                        <div style={{ position: "relative" }}>
+                                            <img
+                                                src={selectedImage}
+                                                alt="Preview"
+                                                style={{
+                                                    maxWidth: "100%",
+                                                    maxHeight: "200px",
+                                                    borderRadius: "8px",
+                                                    objectFit: "cover"
+                                                }}
+                                            />
+                                            <button
+                                                onClick={(e) => {
+                                                    e.stopPropagation();
+                                                    setSelectedImage(null);
+                                                }}
+                                                style={{
+                                                    position: "absolute",
+                                                    top: "5px",
+                                                    right: "5px",
+                                                    background: "rgba(220, 53, 69, 0.8)",
+                                                    color: "white",
+                                                    border: "none",
+                                                    borderRadius: "50%",
+                                                    width: "25px",
+                                                    height: "25px",
+                                                    cursor: "pointer",
+                                                    display: "flex",
+                                                    alignItems: "center",
+                                                    justifyContent: "center",
+                                                    fontSize: "14px"
+                                                }}
+                                            >
+                                                ×
+                                            </button>
+                                        </div>
+                                    ) : (
+                                        <div>
+                                            <div style={{ fontSize: "48px", marginBottom: "10px", color: "#ccc" }}>📷</div>
+                                            <p style={{ margin: "0", color: "#666", fontFamily: "momo trust display" }}>
+                                                Click to upload product image
+                                            </p>
+                                            <p style={{ margin: "5px 0 0 0", fontSize: "12px", color: "#999", fontFamily: "momo trust display" }}>
+                                                JPG, PNG, GIF up to 10MB
+                                            </p>
+                                        </div>
+                                    )}
+                                </div>
+                                <input
+                                    id="imageInput"
+                                    type="file"
+                                    accept="image/*"
+                                    onChange={(e) => {
+                                        const file = e.target.files[0];
+                                        if (file) {
+                                            const reader = new FileReader();
+                                            reader.onload = (e) => setSelectedImage(e.target.result);
+                                            reader.readAsDataURL(file);
+                                        }
+                                    }}
+                                    style={{ display: "none" }}
+                                />
+                            </div>
+
+                            {/* Form Fields */}
+                            <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "15px" }}>
+                                <div>
+                                    <label style={{
+                                        display: "block",
+                                        marginBottom: "5px",
+                                        fontWeight: "600",
+                                        color: "#333",
+                                        fontSize: "14px",
+                                        fontFamily: "momo trust display"
+                                    }}>
+                                        Product Name *
+                                    </label>
+                                    <input
+                                        type="text"
+                                        value={newListing.name}
+                                        onChange={(e) => setNewListing({...newListing, name: e.target.value})}
+                                        placeholder="Enter product name"
+                                        style={{
+                                            width: "100%",
+                                            padding: "12px",
+                                            border: "1px solid #ddd",
+                                            borderRadius: "8px",
+                                            fontSize: "14px",
+                                            fontFamily: "momo trust display",
+                                            outline: "none"
+                                        }}
+                                    />
+                                </div>
+
+                                <div>
+                                    <label style={{
+                                        display: "block",
+                                        marginBottom: "5px",
+                                        fontWeight: "600",
+                                        color: "#333",
+                                        fontSize: "14px",
+                                        fontFamily: "momo trust display"
+                                    }}>
+                                        Category *
+                                    </label>
+                                    <select
+                                        value={newListing.category}
+                                        onChange={(e) => setNewListing({...newListing, category: e.target.value})}
+                                        style={{
+                                            width: "100%",
+                                            padding: "12px",
+                                            border: "1px solid #ddd",
+                                            borderRadius: "8px",
+                                            fontSize: "14px",
+                                            fontFamily: "momo trust display",
+                                            outline: "none"
+                                        }}
+                                    >
+                                        <option value="">Select category</option>
+                                        <option value="Electronics">Electronics</option>
+                                        <option value="Books">Books</option>
+                                        <option value="Collectables">Collectables</option>
+                                        <option value="Fashion">Fashion</option>
+                                        <option value="Home & Garden">Home & Garden</option>
+                                        <option value="Sports">Sports</option>
+                                        <option value="Other">Other</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div>
+                                <label style={{
+                                    display: "block",
+                                    marginBottom: "5px",
+                                    fontWeight: "600",
+                                    color: "#333",
+                                    fontSize: "14px",
+                                    fontFamily: "momo trust display"
+                                }}>
+                                    Description *
+                                </label>
+                                <textarea
+                                    value={newListing.description}
+                                    onChange={(e) => setNewListing({...newListing, description: e.target.value})}
+                                    placeholder="Describe your product..."
+                                    rows={4}
+                                    style={{
+                                        width: "100%",
+                                        padding: "12px",
+                                        border: "1px solid #ddd",
+                                        borderRadius: "8px",
+                                        fontSize: "14px",
+                                        fontFamily: "momo trust display",
+                                        outline: "none",
+                                        resize: "vertical"
+                                    }}
+                                />
+                            </div>
+
+                            <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "15px" }}>
+                                <div>
+                                    <label style={{
+                                        display: "block",
+                                        marginBottom: "5px",
+                                        fontWeight: "600",
+                                        color: "#333",
+                                        fontSize: "14px",
+                                        fontFamily: "momo trust display"
+                                    }}>
+                                        Price (₹)
+                                    </label>
+                                    <input
+                                        type="number"
+                                        value={newListing.price}
+                                        onChange={(e) => setNewListing({...newListing, price: e.target.value})}
+                                        placeholder="Enter price"
+                                        style={{
+                                            width: "100%",
+                                            padding: "12px",
+                                            border: "1px solid #ddd",
+                                            borderRadius: "8px",
+                                            fontSize: "14px",
+                                            fontFamily: "momo trust display",
+                                            outline: "none"
+                                        }}
+                                    />
+                                </div>
+
+                                <div>
+                                    <label style={{
+                                        display: "block",
+                                        marginBottom: "5px",
+                                        fontWeight: "600",
+                                        color: "#333",
+                                        fontSize: "14px",
+                                        fontFamily: "momo trust display"
+                                    }}>
+                                        Condition
+                                    </label>
+                                    <select
+                                        value={newListing.condition}
+                                        onChange={(e) => setNewListing({...newListing, condition: e.target.value})}
+                                        style={{
+                                            width: "100%",
+                                            padding: "12px",
+                                            border: "1px solid #ddd",
+                                            borderRadius: "8px",
+                                            fontSize: "14px",
+                                            fontFamily: "momo trust display",
+                                            outline: "none"
+                                        }}
+                                    >
+                                        <option value="new">New</option>
+                                        <option value="like-new">Like New</option>
+                                        <option value="good">Good</option>
+                                        <option value="fair">Fair</option>
+                                        <option value="poor">Poor</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            {/* Action Buttons */}
+                            <div style={{
+                                display: "flex",
+                                gap: "15px",
+                                justifyContent: "flex-end",
+                                marginTop: "20px"
+                            }}>
+                                <button
+                                    onClick={() => {
+                                        setShowCreateListingModal(false);
+                                        setSelectedImage(null);
+                                        setNewListing({
+                                            name: '',
+                                            description: '',
+                                            category: '',
+                                            price: '',
+                                            condition: 'new'
+                                        });
+                                    }}
+                                    style={{
+                                        padding: "12px 24px",
+                                        background: "#f8f9fa",
+                                        color: "#666",
+                                        border: "2px solid #e9ecef",
+                                        borderRadius: "8px",
+                                        cursor: "pointer",
+                                        fontSize: "16px",
+                                        fontWeight: "600",
+                                        fontFamily: "momo trust display",
+                                        transition: "all 0.2s ease"
+                                    }}
+                                >
+                                    Cancel
+                                </button>
+                                <button
+                                    onClick={() => {
+                                        if (!selectedImage || !newListing.name || !newListing.description || !newListing.category) {
+                                            alert('Please fill in all required fields and upload an image.');
+                                            return;
+                                        }
+
+                                        const listing = {
+                                            id: Date.now(),
+                                            image: selectedImage,
+                                            name: newListing.name,
+                                            description: newListing.description,
+                                            category: newListing.category,
+                                            price: newListing.price,
+                                            condition: newListing.condition,
+                                            dateListed: new Date().toLocaleDateString(),
+                                            status: 'active'
+                                        };
+
+                                        const updatedListings = [...uploadedListings, listing];
+                                        setUploadedListings(updatedListings);
+                                        localStorage.setItem('userListings', JSON.stringify(updatedListings));
+
+                                        // Reset form
+                                        setSelectedImage(null);
+                                        setNewListing({
+                                            name: '',
+                                            description: '',
+                                            category: '',
+                                            price: '',
+                                            condition: 'new'
+                                        });
+                                        setShowCreateListingModal(false);
+
+                                        alert('Listing created successfully!');
+                                    }}
+                                    style={{
+                                        padding: "12px 24px",
+                                        background: "#667eea",
+                                        color: "white",
+                                        border: "none",
+                                        borderRadius: "8px",
+                                        cursor: "pointer",
+                                        fontSize: "16px",
+                                        fontWeight: "600",
+                                        fontFamily: "momo trust display",
+                                        transition: "all 0.2s ease"
+                                    }}
+                                    onMouseEnter={(e) => e.currentTarget.style.background = "#5a67d8"}
+                                    onMouseLeave={(e) => e.currentTarget.style.background = "#667eea"}
+                                >
+                                    Create Listing
+                                </button>
+                            </div>
+                        </div>
                     </div>
                 </div>
             )}
