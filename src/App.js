@@ -15,6 +15,7 @@ import Error from "./Error";
 import Login from "./Login";
 import MyOrders from "./MyOrders";
 import ComMyProfile from "./ComMyProfile";
+import MyListings from "./MyListings";
 
 
 function App() {
@@ -35,6 +36,7 @@ function App() {
                 <Route path="/cart" element={<Cart />} />
                 <Route path="/myorders" element={<MyOrders />} />
                 <Route path="/commyprofile" element={<ComMyProfile />} />
+                <Route path="/mylistings" element={<MyListings />} />
 
                 <Route path="*" element={<Error />} />
             </Routes>

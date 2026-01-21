@@ -84,10 +84,6 @@ function Home() {
     const [showAllActivities, setShowAllActivities] = useState(false);
     const [showCreateListingModal, setShowCreateListingModal] = useState(false);
     const [selectedImage, setSelectedImage] = useState(null);
-    const [uploadedListings, setUploadedListings] = useState(() => {
-        const saved = localStorage.getItem('userListings');
-        return saved ? JSON.parse(saved) : [];
-    });
     const [newListing, setNewListing] = useState({
         name: '',
         description: '',
@@ -608,145 +604,6 @@ function Home() {
                             </div>
                         </div>
 
-                        {/* User Listings Section */}
-                        {uploadedListings.length > 0 && (
-                            <div style={{
-                                marginTop: "20px",
-                                background: "linear-gradient(135deg, #667eea 0%, #764ba2 100%)",
-                                padding: "25px",
-                                borderRadius: "20px",
-                                boxShadow: "0 8px 32px rgba(118, 75, 162, 0.4)"
-                            }}>
-                                <div style={{ display: "flex", justifyContent: "space-between", marginBottom: "20px" }}>
-                                    <h3 style={{ margin: 0, color: "white", fontFamily: "momo trust display" }}>Community Listings</h3>
-                                    <span style={{ color: "rgba(255, 255, 255, 0.8)", fontSize: "14px", fontFamily: "momo trust display" }}>
-                                        {uploadedListings.length} active listing{uploadedListings.length !== 1 ? 's' : ''}
-                                    </span>
-                                </div>
-                                <div className="recommended-grid">
-                                    {uploadedListings.map((listing) => (
-                                        <div key={listing.id}
-                                            onClick={() => setSelectedActivity({
-                                                title: listing.name,
-                                                desc: `${listing.description}\n\nCategory: ${listing.category}\nCondition: ${listing.condition}\nListed on: ${listing.dateListed}`,
-                                                time: "Community Listing",
-                                                icon: "🛍️"
-                                            })}
-                                            style={{
-                                                background: "rgba(255, 255, 255, 0.2)",
-                                                border: "1px solid rgba(255, 255, 255, 0.3)",
-                                                borderRadius: "15px",
-                                                padding: "15px",
-                                                cursor: "pointer",
-                                                transition: "all 0.3s ease",
-                                                textAlign: "center",
-                                                overflow: "hidden"
-                                            }}
-                                            onMouseEnter={(e) => {
-                                                e.currentTarget.style.transform = "translateY(-8px) scale(1.02)";
-                                                e.currentTarget.style.background = "rgba(255, 255, 255, 0.35)";
-                                                e.currentTarget.style.boxShadow = "0 10px 25px rgba(0,0,0,0.2)";
-                                            }}
-                                            onMouseLeave={(e) => {
-                                                e.currentTarget.style.transform = "translateY(0) scale(1)";
-                                                e.currentTarget.style.background = "rgba(255, 255, 255, 0.2)";
-                                                e.currentTarget.style.boxShadow = "none";
-                                            }}
-                                        >
-                                            <div style={{
-                                                height: "120px",
-                                                borderRadius: "10px",
-                                                marginBottom: "12px",
-                                                overflow: "hidden",
-                                                background: "#f8f9fa"
-                                            }}>
-                                                <img
-                                                    src={listing.image}
-                                                    alt={listing.name}
-                                                    style={{
-                                                        width: "100%",
-                                                        height: "100%",
-                                                        objectFit: "cover",
-                                                        transition: "transform 0.3s ease"
-                                                    }}
-                                                    onMouseEnter={(e) => e.target.style.transform = "scale(1.1)"}
-                                                    onMouseLeave={(e) => e.target.style.transform = "scale(1)"}
-                                                />
-                                            </div>
-                                            <h4 style={{
-                                                margin: "0 0 6px 0",
-                                                fontSize: "15px",
-                                                color: "white",
-                                                fontFamily: "momo trust display",
-                                                fontWeight: "600"
-                                            }}>{listing.name}</h4>
-                                            <p style={{
-                                                margin: "0 0 4px 0",
-                                                color: "rgba(255, 255, 255, 0.8)",
-                                                fontSize: "12px",
-                                                fontFamily: "momo trust display"
-                                            }}>{listing.category}</p>
-                                            <p style={{
-                                                margin: 0,
-                                                color: "white",
-                                                fontWeight: "bold",
-                                                fontSize: "16px",
-                                                fontFamily: "momo trust display"
-                                            }}>₹{listing.price || 'Contact for price'}</p>
-                                            <div style={{
-                                                marginTop: "8px",
-                                                display: "flex",
-                                                justifyContent: "center",
-                                                gap: "5px"
-                                            }}>
-                                                <button
-                                                    onClick={(e) => {
-                                                        e.stopPropagation();
-                                                        alert(`Interested in exchanging for "${listing.name}"? Contact feature coming soon!`);
-                                                    }}
-                                                    style={{
-                                                        padding: "6px 12px",
-                                                        background: "rgba(255, 255, 255, 0.2)",
-                                                        color: "white",
-                                                        border: "1px solid rgba(255, 255, 255, 0.3)",
-                                                        borderRadius: "6px",
-                                                        cursor: "pointer",
-                                                        fontSize: "12px",
-                                                        fontFamily: "momo trust display",
-                                                        transition: "all 0.2s ease"
-                                                    }}
-                                                    onMouseEnter={(e) => e.currentTarget.style.background = "rgba(255, 255, 255, 0.3)"}
-                                                    onMouseLeave={(e) => e.currentTarget.style.background = "rgba(255, 255, 255, 0.2)"}
-                                                >
-                                                    Exchange
-                                                </button>
-                                                <button
-                                                    onClick={(e) => {
-                                                        e.stopPropagation();
-                                                        alert(`Want to buy "${listing.name}"? Purchase feature coming soon!`);
-                                                    }}
-                                                    style={{
-                                                        padding: "6px 12px",
-                                                        background: "rgba(255, 255, 255, 0.2)",
-                                                        color: "white",
-                                                        border: "1px solid rgba(255, 255, 255, 0.3)",
-                                                        borderRadius: "6px",
-                                                        cursor: "pointer",
-                                                        fontSize: "12px",
-                                                        fontFamily: "momo trust display",
-                                                        transition: "all 0.2s ease"
-                                                    }}
-                                                    onMouseEnter={(e) => e.currentTarget.style.background = "rgba(255, 255, 255, 0.3)"}
-                                                    onMouseLeave={(e) => e.currentTarget.style.background = "rgba(255, 255, 255, 0.2)"}
-                                                >
-                                                    Buy
-                                                </button>
-                                            </div>
-                                        </div>
-                                    ))}
-                                </div>
-                            </div>
-                        )}
                     </div>
                 </div>
             </div>
@@ -1592,8 +1449,9 @@ function Home() {
                                             status: 'active'
                                         };
 
-                                        const updatedListings = [...uploadedListings, listing];
-                                        setUploadedListings(updatedListings);
+                                        // Get existing listings from localStorage and add new listing
+                                        const existingListings = JSON.parse(localStorage.getItem('userListings') || '[]');
+                                        const updatedListings = [...existingListings, listing];
                                         localStorage.setItem('userListings', JSON.stringify(updatedListings));
 
                                         // Consume 1 credit

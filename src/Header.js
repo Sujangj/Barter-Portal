@@ -215,6 +215,20 @@ function Header({ showSignOutButton, onSignOut, showSingleLoginButton, hideNavig
                                             </svg>
                                             My Profile
                                         </button>
+                                        <button
+                                            style={{ display: "flex", alignItems: "center", gap: "10px", width: "100%", padding: "12px 20px", background: "none", border: "none", textAlign: "left", cursor: "pointer", fontSize: "14px", fontWeight: "500", color: "#333", transition: "all 0.2s ease", fontFamily: "momo trust display" }}
+                                            onMouseEnter={(e) => e.target.style.background = "#f8f9fa"}
+                                            onMouseLeave={(e) => e.target.style.background = "transparent"}
+                                            onClick={() => {
+                                                navigate("/mylistings");
+                                                setShowProfileDropdown(false);
+                                            }}
+                                        >
+                                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                                                <path d="M9 12h6m-6 4h6m2 5H7a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5.586a1 1 0 0 1 .707.293l5.414 5.414a1 1 0 0 1 .293.707V19a2 2 0 0 1-2 2z" />
+                                            </svg>
+                                            My Listings
+                                        </button>
                                         {showSignOutButton && (
                                             <button
                                                 style={{ display: "flex", alignItems: "center", gap: "10px", width: "100%", padding: "12px 20px", background: "#dc3545", border: "none", textAlign: "left", cursor: "pointer", fontSize: "14px", fontWeight: "600", color: "white", transition: "all 0.2s ease", fontFamily: "momo trust display", marginTop: '5px' }}
