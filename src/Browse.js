@@ -1,16 +1,11 @@
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import React from 'react';
 import Header from './Header';
 import Footer from './Footer';
 import './Browse.css';
 
 const Browse = () => {
-    const navigate = useNavigate();
     const [searchTerm, setSearchTerm] = useState('');
     const [activeSort, setActiveSort] = useState('Relevance');
-    const [isAuthenticated, setIsAuthenticated] = useState(() => {
-        return localStorage.getItem("isAuthenticated") === "true";
-    });
 
 
     const products = [

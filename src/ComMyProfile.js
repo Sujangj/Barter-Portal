@@ -1,15 +1,13 @@
 import React, { useState, useEffect } from "react";
-import { useNavigate, useLocation } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import Header from "./Header";
 import Footer from "./Footer";
-import { SHARED_BG_URL as PROFILE_BG } from "./constants";
 
 function ComMyProfile() {
     const navigate = useNavigate();
-    const location = useLocation();
 
     // Persist authentication state
-    const [isAuthenticated, setIsAuthenticated] = useState(() => {
+    const [isAuthenticated] = useState(() => {
         return localStorage.getItem("isAuthenticated") === "true";
     });
 
@@ -1243,7 +1241,7 @@ function ComMyProfile() {
                                         localStorage.removeItem("userEmail");
                                         localStorage.removeItem("userPhone");
                                         // Navigate to Home and reload
-                                        window.location.href = "/";
+                                        navigate("/");
                                     }}
                                     style={{
                                         background: "#dc3545",

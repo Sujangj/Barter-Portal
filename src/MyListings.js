@@ -10,7 +10,7 @@ function MyListings() {
         const saved = localStorage.getItem('userListings');
         return saved ? JSON.parse(saved) : [];
     });
-    const [isAuthenticated, setIsAuthenticated] = useState(() => {
+    const [isAuthenticated] = useState(() => {
         return localStorage.getItem("isAuthenticated") === "true";
     });
 

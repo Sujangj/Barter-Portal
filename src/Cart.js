@@ -1,11 +1,9 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
 import Header from "./Header";
 import Footer from "./Footer";
 import LoginFormPopup from "./LoginFormPopup";
 
 function Cart() {
-  const navigate = useNavigate();
   const [showLoginFormPopup, setShowLoginFormPopup] = useState(false);
   const [isAuthenticated, setIsAuthenticated] = useState(() => {
     return localStorage.getItem("isAuthenticated") === "true";

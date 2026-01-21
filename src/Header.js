@@ -2,7 +2,7 @@ import React, { useState, useRef, useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import LoginFormPopup from "./LoginFormPopup";
 import SignUpFormPopup from "./SignUpFormPopup";
-import { LOGO_URL, LOGIN_HEADER_BG } from "./constants";
+import { LOGO_URL } from "./constants";
 
 function Header({ showSignOutButton, onSignOut, showSingleLoginButton, hideNavigation }) {
     const navigate = useNavigate();
@@ -10,7 +10,6 @@ function Header({ showSignOutButton, onSignOut, showSingleLoginButton, hideNavig
     const [showLoginFormPopup, setShowLoginFormPopup] = useState(false);
     const [showFullSignUpPopup, setShowFullSignUpPopup] = useState(false);
     const [showProfileDropdown, setShowProfileDropdown] = useState(false);
-    const [isHoveringDropdown, setIsHoveringDropdown] = useState(false);
     const [showLogoutConfirm, setShowLogoutConfirm] = useState(false);
     const profileDropdownRef = useRef(null);
     const dropdownTimeoutRef = useRef(null);
@@ -318,7 +317,10 @@ function Header({ showSignOutButton, onSignOut, showSingleLoginButton, hideNavig
                     onLoginSuccess={() => {
                         localStorage.setItem("isAuthenticated", "true");
                         setShowLoginFormPopup(false);
-                        navigate("/home");
+                        // Only navigate to home if not already there
+                        if (location.pathname !== '/home') {
+                            navigate("/home");
+                        }
                     }}
                 />
             )}

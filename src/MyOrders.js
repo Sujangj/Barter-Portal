@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import Header from "./Header";
 import Footer from "./Footer";
-import { SHARED_BG_URL } from "./constants";
 import "./MyOrders.css";
 
 const CATEGORY_IMAGES = {
