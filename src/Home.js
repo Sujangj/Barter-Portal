@@ -141,17 +141,17 @@ function Home() {
             }}>
                 <div style={{
                     flex: "1",
-                    display: "flex",
+                                                    display: "flex",
                     justifyContent: "center",
                     alignItems: "flex-start",
                     padding: "20px"
                 }}>
                     <div className="home-content" style={{
                         maxWidth: "1200px",
-                        width: "100%",
+                                                    width: "100%",
                         marginTop: "30px",
                         padding: "0 20px",
-                        display: "flex",
+                                                    display: "flex",
                         flexDirection: "column",
                         gap: "30px"
                     }}>
@@ -686,7 +686,7 @@ function Home() {
                             gap: "25px",
                             marginBottom: "30px"
                         }}>
-                            {/* Beginner Pack */}
+                            {/* Beginner */}
                             <div style={{
                                 background: "linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%)",
                     borderRadius: "15px",
@@ -713,7 +713,7 @@ function Home() {
                                     fontWeight: "600",
                                     fontFamily: "momo trust display"
                                 }}>
-                                    Beginner Pack
+                                    Beginner
                                 </h3>
                                 <div style={{
                                     fontSize: "36px",
@@ -734,7 +734,7 @@ function Home() {
             </div>
                                 <button
                                     onClick={() => {
-                                        alert('Payment integration coming soon! Beginner Pack selected.');
+                                        alert('Payment integration coming soon! Beginner selected.');
                                         setShowSubscriptionModal(false);
                                     }}
                 style={{
@@ -757,7 +757,7 @@ function Home() {
                                 </button>
               </div>
 
-                            {/* Special Pack */}
+                            {/* Special */}
                 <div style={{
                                 background: "linear-gradient(135deg, #fff3e0 0%, #ffcc02 100%)",
                                 borderRadius: "15px",
@@ -799,7 +799,7 @@ function Home() {
                                     fontWeight: "600",
                                     fontFamily: "momo trust display"
                                 }}>
-                                    Special Pack
+                                    Special
                         </h3>
                                 <div style={{
                                     fontSize: "36px",
@@ -820,7 +820,7 @@ function Home() {
                                 </div>
                             <button
                                     onClick={() => {
-                                        alert('Payment integration coming soon! Special Pack selected.');
+                                        alert('Payment integration coming soon! Special selected.');
                                         setShowSubscriptionModal(false);
                                     }}
                                 style={{
@@ -843,7 +843,7 @@ function Home() {
                             </button>
                             </div>
 
-                            {/* Deluxe Pack */}
+                            {/* Deluxe */}
                             <div style={{
                                 background: "linear-gradient(135deg, #f3e5f5 0%, #ce93d8 100%)",
                                 borderRadius: "15px",
@@ -870,7 +870,7 @@ function Home() {
                                     fontWeight: "600",
                                     fontFamily: "momo trust display"
                                 }}>
-                                    Deluxe Pack
+                                    Deluxe
                                 </h3>
                                 <div style={{
                                     fontSize: "36px",
@@ -891,7 +891,7 @@ function Home() {
                                 </div>
                             <button
                                     onClick={() => {
-                                        alert('Payment integration coming soon! Deluxe Pack selected.');
+                                        alert('Payment integration coming soon! Deluxe selected.');
                                         setShowSubscriptionModal(false);
                                     }}
                                 style={{
