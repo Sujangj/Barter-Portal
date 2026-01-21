@@ -95,12 +95,33 @@ function Home() {
         price: '',
         condition: 'new'
     });
+    const [showSubscriptionModal, setShowSubscriptionModal] = useState(false);
+    const [userCredits, setUserCredits] = useState(() => {
+        const saved = localStorage.getItem('userCredits');
+        const hasWelcomeCredits = localStorage.getItem('hasWelcomeCredits');
+        if (saved) {
+            return parseInt(saved);
+        } else if (isAuthenticated && !hasWelcomeCredits) {
+            // Give welcome credits to new authenticated users
+            localStorage.setItem('hasWelcomeCredits', 'true');
+            localStorage.setItem('userCredits', '5');
+            return 5;
+        }
+        return 0;
+    });
 
     useEffect(() => {
         if (!isAuthenticated) {
             setShowSignUpPrompt(true);
         }
     }, [isAuthenticated]);
+
+    // Update credits in localStorage whenever userCredits changes
+    useEffect(() => {
+        if (isAuthenticated) {
+            localStorage.setItem('userCredits', userCredits.toString());
+        }
+    }, [userCredits, isAuthenticated]);
 
 
     return (
@@ -143,6 +164,63 @@ function Home() {
                         flexDirection: "column",
                         gap: "30px"
                     }}>
+
+                        {/* Subscribe Button and Credits Display */}
+                        <div style={{
+                            display: "flex",
+                            justifyContent: "flex-end",
+                            alignItems: "center",
+                            marginBottom: "20px",
+                            gap: "15px"
+                        }}>
+                            {/* Credits Display */}
+                            <div style={{
+                                background: "rgba(255, 255, 255, 0.95)",
+                                padding: "12px 20px",
+                                borderRadius: "25px",
+                                boxShadow: "0 4px 12px rgba(0,0,0,0.1)",
+                                display: "flex",
+                                alignItems: "center",
+                                gap: "8px",
+                                fontFamily: "momo trust display"
+                            }}>
+                                <span style={{ fontSize: "18px" }}>💎</span>
+                                <span style={{ fontWeight: "bold", color: "#333", fontSize: "16px" }}>
+                                    {userCredits} Credits
+                                </span>
+                            </div>
+
+                            {/* Subscribe Button */}
+                            <button
+                                onClick={() => setShowSubscriptionModal(true)}
+                                style={{
+                                    background: "linear-gradient(135deg, #667eea 0%, #764ba2 100%)",
+                                    color: "white",
+                                    border: "none",
+                                    padding: "12px 24px",
+                                    borderRadius: "25px",
+                                    cursor: "pointer",
+                                    fontSize: "16px",
+                                    fontWeight: "600",
+                                    fontFamily: "momo trust display",
+                                    boxShadow: "0 4px 15px rgba(102, 126, 234, 0.3)",
+                                    transition: "all 0.2s ease",
+                                    display: "flex",
+                                    alignItems: "center",
+                                    gap: "8px"
+                                }}
+                                onMouseEnter={(e) => {
+                                    e.currentTarget.style.transform = "translateY(-2px)";
+                                    e.currentTarget.style.boxShadow = "0 6px 20px rgba(102, 126, 234, 0.4)";
+                                }}
+                                onMouseLeave={(e) => {
+                                    e.currentTarget.style.transform = "translateY(0)";
+                                    e.currentTarget.style.boxShadow = "0 4px 15px rgba(102, 126, 234, 0.3)";
+                                }}
+                            >
+                                Subscribe
+                            </button>
+                        </div>
 
                         <div style={{
                             display: "grid",
@@ -675,6 +753,311 @@ function Home() {
 
             <Footer />
 
+            {showSubscriptionModal && (
+                <div style={{
+                    position: "fixed",
+                    top: 0,
+                    left: 0,
+                    right: 0,
+                    bottom: 0,
+                    background: "rgba(0, 0, 0, 0.7)",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    zIndex: 6000,
+                    backdropFilter: "blur(5px)"
+                }} onClick={() => setShowSubscriptionModal(false)}>
+                    <div style={{
+                        background: "white",
+                        borderRadius: "20px",
+                        padding: "30px",
+                        maxWidth: "900px",
+                        width: "90%",
+                        maxHeight: "90vh",
+                        overflowY: "auto",
+                        boxShadow: "0 20px 50px rgba(0,0,0,0.3)",
+                        position: "relative",
+                        animation: "modalFadeIn 0.3s ease"
+                    }} onClick={(e) => e.stopPropagation()}>
+                        <button
+                            onClick={() => setShowSubscriptionModal(false)}
+                            style={{
+                                position: "absolute",
+                                top: "20px",
+                                right: "20px",
+                                background: "none",
+                                border: "none",
+                                fontSize: "24px",
+                                cursor: "pointer",
+                                color: "#666"
+                            }}
+                        >
+                            ×
+                        </button>
+
+                        <h2 style={{
+                            margin: "0 0 30px 0",
+                            color: "#333",
+                            fontSize: "32px",
+                            fontWeight: "600",
+                            fontFamily: "momo trust display",
+                            textAlign: "center"
+                        }}>
+                            Choose Your Subscription Pack
+                        </h2>
+
+                        <div style={{
+                            display: "grid",
+                            gridTemplateColumns: "repeat(auto-fit, minmax(250px, 1fr))",
+                            gap: "25px",
+                            marginBottom: "30px"
+                        }}>
+                            {/* Beginner Pack */}
+                            <div style={{
+                                background: "linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%)",
+                                borderRadius: "15px",
+                                padding: "25px",
+                                textAlign: "center",
+                                border: "2px solid #2196f3",
+                                boxShadow: "0 8px 25px rgba(33, 150, 243, 0.2)",
+                                transition: "all 0.3s ease"
+                            }}
+                            onMouseEnter={(e) => e.currentTarget.style.transform = "translateY(-5px)"}
+                            onMouseLeave={(e) => e.currentTarget.style.transform = "translateY(0)"}
+                            >
+                                <div style={{
+                                    fontSize: "48px",
+                                    marginBottom: "15px",
+                                    color: "#1976d2"
+                                }}>
+                                    🏆
+                                </div>
+                                <h3 style={{
+                                    margin: "0 0 10px 0",
+                                    color: "#1976d2",
+                                    fontSize: "24px",
+                                    fontWeight: "600",
+                                    fontFamily: "momo trust display"
+                                }}>
+                                    Beginner Pack
+                                </h3>
+                                <div style={{
+                                    fontSize: "36px",
+                                    fontWeight: "bold",
+                                    color: "#1976d2",
+                                    marginBottom: "10px",
+                                    fontFamily: "momo trust display"
+                                }}>
+                                    ₹299
+                                </div>
+                                <div style={{
+                                    fontSize: "18px",
+                                    color: "#424242",
+                                    marginBottom: "20px",
+                                    fontFamily: "momo trust display"
+                                }}>
+                                    30 Credits
+                                </div>
+                                <button
+                                    onClick={() => {
+                                        alert('Payment integration coming soon! Beginner Pack selected.');
+                                        setShowSubscriptionModal(false);
+                                    }}
+                                    style={{
+                                        background: "#1976d2",
+                                        color: "white",
+                                        border: "none",
+                                        padding: "12px 24px",
+                                        borderRadius: "25px",
+                                        cursor: "pointer",
+                                        fontSize: "16px",
+                                        fontWeight: "600",
+                                        fontFamily: "momo trust display",
+                                        width: "100%",
+                                        transition: "all 0.2s ease"
+                                    }}
+                                    onMouseEnter={(e) => e.currentTarget.style.background = "#1565c0"}
+                                    onMouseLeave={(e) => e.currentTarget.style.background = "#1976d2"}
+                                >
+                                    Subscribe Now
+                                </button>
+                            </div>
+
+                            {/* Special Pack */}
+                            <div style={{
+                                background: "linear-gradient(135deg, #fff3e0 0%, #ffcc02 100%)",
+                                borderRadius: "15px",
+                                padding: "25px",
+                                textAlign: "center",
+                                border: "2px solid #ff9800",
+                                boxShadow: "0 8px 25px rgba(255, 152, 0, 0.2)",
+                                transition: "all 0.3s ease",
+                                position: "relative"
+                            }}
+                            onMouseEnter={(e) => e.currentTarget.style.transform = "translateY(-5px)"}
+                            onMouseLeave={(e) => e.currentTarget.style.transform = "translateY(0)"}
+                            >
+                                <div style={{
+                                    position: "absolute",
+                                    top: "-10px",
+                                    right: "20px",
+                                    background: "#ff5722",
+                                    color: "white",
+                                    padding: "5px 12px",
+                                    borderRadius: "15px",
+                                    fontSize: "12px",
+                                    fontWeight: "bold",
+                                    fontFamily: "momo trust display"
+                                }}>
+                                    MOST POPULAR
+                                </div>
+                                <div style={{
+                                    fontSize: "48px",
+                                    marginBottom: "15px",
+                                    color: "#f57c00"
+                                }}>
+                                    ⭐
+                                </div>
+                                <h3 style={{
+                                    margin: "0 0 10px 0",
+                                    color: "#f57c00",
+                                    fontSize: "24px",
+                                    fontWeight: "600",
+                                    fontFamily: "momo trust display"
+                                }}>
+                                    Special Pack
+                                </h3>
+                                <div style={{
+                                    fontSize: "36px",
+                                    fontWeight: "bold",
+                                    color: "#f57c00",
+                                    marginBottom: "10px",
+                                    fontFamily: "momo trust display"
+                                }}>
+                                    ₹499
+                                </div>
+                                <div style={{
+                                    fontSize: "18px",
+                                    color: "#424242",
+                                    marginBottom: "20px",
+                                    fontFamily: "momo trust display"
+                                }}>
+                                    70 Credits
+                                </div>
+                                <button
+                                    onClick={() => {
+                                        alert('Payment integration coming soon! Special Pack selected.');
+                                        setShowSubscriptionModal(false);
+                                    }}
+                                    style={{
+                                        background: "#f57c00",
+                                        color: "white",
+                                        border: "none",
+                                        padding: "12px 24px",
+                                        borderRadius: "25px",
+                                        cursor: "pointer",
+                                        fontSize: "16px",
+                                        fontWeight: "600",
+                                        fontFamily: "momo trust display",
+                                        width: "100%",
+                                        transition: "all 0.2s ease"
+                                    }}
+                                    onMouseEnter={(e) => e.currentTarget.style.background = "#ef6c00"}
+                                    onMouseLeave={(e) => e.currentTarget.style.background = "#f57c00"}
+                                >
+                                    Subscribe Now
+                                </button>
+                            </div>
+
+                            {/* Deluxe Pack */}
+                            <div style={{
+                                background: "linear-gradient(135deg, #f3e5f5 0%, #ce93d8 100%)",
+                                borderRadius: "15px",
+                                padding: "25px",
+                                textAlign: "center",
+                                border: "2px solid #9c27b0",
+                                boxShadow: "0 8px 25px rgba(156, 39, 176, 0.2)",
+                                transition: "all 0.3s ease"
+                            }}
+                            onMouseEnter={(e) => e.currentTarget.style.transform = "translateY(-5px)"}
+                            onMouseLeave={(e) => e.currentTarget.style.transform = "translateY(0)"}
+                            >
+                                <div style={{
+                                    fontSize: "48px",
+                                    marginBottom: "15px",
+                                    color: "#7b1fa2"
+                                }}>
+                                    💎
+                                </div>
+                                <h3 style={{
+                                    margin: "0 0 10px 0",
+                                    color: "#7b1fa2",
+                                    fontSize: "24px",
+                                    fontWeight: "600",
+                                    fontFamily: "momo trust display"
+                                }}>
+                                    Deluxe Pack
+                                </h3>
+                                <div style={{
+                                    fontSize: "36px",
+                                    fontWeight: "bold",
+                                    color: "#7b1fa2",
+                                    marginBottom: "10px",
+                                    fontFamily: "momo trust display"
+                                }}>
+                                    ₹999
+                                </div>
+                                <div style={{
+                                    fontSize: "18px",
+                                    color: "#424242",
+                                    marginBottom: "20px",
+                                    fontFamily: "momo trust display"
+                                }}>
+                                    150 Credits
+                                </div>
+                                <button
+                                    onClick={() => {
+                                        alert('Payment integration coming soon! Deluxe Pack selected.');
+                                        setShowSubscriptionModal(false);
+                                    }}
+                                    style={{
+                                        background: "#7b1fa2",
+                                        color: "white",
+                                        border: "none",
+                                        padding: "12px 24px",
+                                        borderRadius: "25px",
+                                        cursor: "pointer",
+                                        fontSize: "16px",
+                                        fontWeight: "600",
+                                        fontFamily: "momo trust display",
+                                        width: "100%",
+                                        transition: "all 0.2s ease"
+                                    }}
+                                    onMouseEnter={(e) => e.currentTarget.style.background = "#6a1b9a"}
+                                    onMouseLeave={(e) => e.currentTarget.style.background = "#7b1fa2"}
+                                >
+                                    Subscribe Now
+                                </button>
+                            </div>
+                        </div>
+
+                        <div style={{
+                            textAlign: "center",
+                            color: "#666",
+                            fontSize: "14px",
+                            fontFamily: "momo trust display",
+                            lineHeight: "1.6"
+                        }}>
+                            <p style={{ margin: "0 0 10px 0" }}>
+                                💡 <strong>Credit Usage:</strong> 1 credit per listing, 2 credits per successful exchange
+                            </p>
+                            <p style={{ margin: 0 }}>
+                                🎁 <strong>Welcome Bonus:</strong> New users receive 5 free credits to get started!
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            )}
 
             {showSignUpPrompt && (
                 <div style={{
@@ -733,6 +1116,13 @@ function Home() {
                     onSignUpSuccess={() => {
                         localStorage.setItem("isAuthenticated", "true");
                         setIsAuthenticated(true);
+
+                        // Add 5 credits for successful sign up
+                        const currentCredits = parseInt(localStorage.getItem('userCredits') || '0');
+                        const newCredits = currentCredits + 5;
+                        localStorage.setItem('userCredits', newCredits.toString());
+                        setUserCredits(newCredits);
+
                         navigate("/home");
                         setShowFullSignUpPopup(false);
                     }}
@@ -1183,6 +1573,13 @@ function Home() {
                                             return;
                                         }
 
+                                        // Check if user has enough credits
+                                        if (userCredits < 1) {
+                                            alert('Insufficient credits! You need at least 1 credit to create a listing. Please subscribe to get more credits.');
+                                            setShowSubscriptionModal(true);
+                                            return;
+                                        }
+
                                         const listing = {
                                             id: Date.now(),
                                             image: selectedImage,
@@ -1199,6 +1596,11 @@ function Home() {
                                         setUploadedListings(updatedListings);
                                         localStorage.setItem('userListings', JSON.stringify(updatedListings));
 
+                                        // Consume 1 credit
+                                        const newCredits = userCredits - 1;
+                                        setUserCredits(newCredits);
+                                        localStorage.setItem('userCredits', newCredits.toString());
+
                                         // Reset form
                                         setSelectedImage(null);
                                         setNewListing({
@@ -1210,7 +1612,7 @@ function Home() {
                                         });
                                         setShowCreateListingModal(false);
 
-                                        alert('Listing created successfully!');
+                                        alert('Listing created successfully! 1 credit consumed.');
                                     }}
                                     style={{
                                         padding: "12px 24px",
