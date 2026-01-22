@@ -753,7 +753,7 @@ function Home() {
                                     onMouseEnter={(e) => e.currentTarget.style.background = "#1565c0"}
                                     onMouseLeave={(e) => e.currentTarget.style.background = "#1976d2"}
                                 >
-                                    Subscribe Now
+                                    Subscribe
                                 </button>
               </div>
 
@@ -839,7 +839,7 @@ function Home() {
                                     onMouseEnter={(e) => e.currentTarget.style.background = "#ef6c00"}
                                     onMouseLeave={(e) => e.currentTarget.style.background = "#f57c00"}
                                 >
-                                    Subscribe Now
+                                    Subscribe
                             </button>
                             </div>
 
@@ -910,7 +910,7 @@ function Home() {
                                     onMouseEnter={(e) => e.currentTarget.style.background = "#6a1b9a"}
                                     onMouseLeave={(e) => e.currentTarget.style.background = "#7b1fa2"}
                             >
-                                    Subscribe Now
+                                    Subscribe
                             </button>
                             </div>
                         </div>
