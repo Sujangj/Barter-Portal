@@ -1,11 +1,17 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import Header from './Header';
 import Footer from './Footer';
+import { SHARED_BG_URL } from './constants';
 import './Browse.css';
 
 const Browse = () => {
+    const navigate = useNavigate();
     const [searchTerm, setSearchTerm] = useState('');
     const [activeSort, setActiveSort] = useState('Relevance');
+    const [isAuthenticated, setIsAuthenticated] = useState(() => {
+        return localStorage.getItem("isAuthenticated") === "true";
+    });
 
 
     const products = [
@@ -87,7 +93,7 @@ const Browse = () => {
 
     return (
         <div className="browse-container" style={{
-            backgroundColor: "#000"
+            background: `url(${SHARED_BG_URL}) center center / cover no-repeat fixed`
         }}>
             <Header
                 showSignOutButton={true}
@@ -215,7 +221,7 @@ const Browse = () => {
                                             <p className="seller-rating">★ {product.sellerRating} Seller</p>
                                         </div>
                                     </div>
-                                    <button className="message-btn">
+                                    <button className="message-btn" onClick={() => navigate(`/message/${product.id}`)} >
                                         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                                             <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
                                         </svg>
