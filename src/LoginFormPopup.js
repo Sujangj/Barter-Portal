@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { LOGIN_HEADER_BG } from "./constants";
+import { LOGIN_HEADER_BG, API_BASE_URL } from "./constants";
 
 function LoginFormPopup({ onClose, onLoginSuccess }) {
     const [loginEmail, setLoginEmail] = useState("");
@@ -24,19 +24,31 @@ function LoginFormPopup({ onClose, onLoginSuccess }) {
         willChange: "transform"
     };
 
-    const handleLoginSubmit = (e) => {
+    const handleLoginSubmit = async (e) => {
         e.preventDefault();
         if (!loginEmail || !loginPassword) {
             setLoginError("Please fill in all fields");
             return;
         }
         setLoginError("");
-        // In a real app, you would authenticate here
-
-        // Simulate successful login
-        localStorage.setItem("isAuthenticated", "true");
-        onLoginSuccess();
-        onClose();
+        try {
+            const res = await fetch(`${API_BASE_URL}/auth/login`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ email: loginEmail, password: loginPassword })
+            });
+            const data = await res.json();
+            if (!res.ok) throw new Error(data.message || 'Login failed');
+            if (data.token) {
+                localStorage.setItem('token', data.token);
+                localStorage.setItem('isAuthenticated', 'true');
+            }
+            if (data.user) localStorage.setItem('user', JSON.stringify(data.user));
+            onLoginSuccess();
+            onClose();
+        } catch (err) {
+            setLoginError(err.message);
+        }
     };
 
     return (

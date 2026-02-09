@@ -1,7 +1,7 @@
 const express = require('express');
-const mongoose = require('mongoose');
 const cors = require('cors');
 const dotenv = require('dotenv');
+const connectDB = require('./config/database');
 
 // Load environment variables
 dotenv.config();
@@ -13,20 +13,7 @@ app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-// MongoDB Connection
-const connectDB = async () => {
-  try {
-    const conn = await mongoose.connect(process.env.MONGODB_URI, {
-      useNewUrlParser: true,
-      useUnifiedTopology: true,
-    });
-    console.log(`MongoDB Connected: ${conn.connection.host}`);
-  } catch (error) {
-    console.error(`Error: ${error.message}`);
-    process.exit(1);
-  }
-};
-
+// Connect to MongoDB
 connectDB();
 
 // Basic Health Check Route
@@ -34,17 +21,19 @@ app.get('/api/health', (req, res) => {
   res.status(200).json({ message: 'Backend API is running' });
 });
 
-// Import Routes (add as you create them)
-// const authRoutes = require('./routes/auth');
-// const productRoutes = require('./routes/products');
-// const cartRoutes = require('./routes/cart');
-// const orderRoutes = require('./routes/orders');
+// Import Routes
+const authRoutes = require('./routes/auth');
+const productRoutes = require('./routes/products');
+const cartRoutes = require('./routes/cart');
+const orderRoutes = require('./routes/orders');
+const userRoutes = require('./routes/users');
 
 // Use Routes
-// app.use('/api/auth', authRoutes);
-// app.use('/api/products', productRoutes);
-// app.use('/api/cart', cartRoutes);
-// app.use('/api/orders', orderRoutes);
+app.use('/api/auth', authRoutes);
+app.use('/api/products', productRoutes);
+app.use('/api/cart', cartRoutes);
+app.use('/api/orders', orderRoutes);
+app.use('/api/users', userRoutes);
 
 // Error Handling Middleware
 app.use((err, req, res, next) => {

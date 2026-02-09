@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { LOGIN_HEADER_BG } from "./constants";
+import { LOGIN_HEADER_BG, API_BASE_URL } from "./constants";
 
 function SignUpFormPopup({ onClose, onSignUpSuccess }) {
     const [signupName, setSignupName] = useState("");
@@ -27,7 +27,7 @@ function SignUpFormPopup({ onClose, onSignUpSuccess }) {
         willChange: "transform"
     };
 
-    const handleSignUpSubmit = (e) => {
+    const handleSignUpSubmit = async (e) => {
         e.preventDefault();
         if (!signupName || !signupPhone || !signupEmail || !signupPassword) {
             setSignupError("Please fill in all fields");
@@ -35,16 +35,32 @@ function SignUpFormPopup({ onClose, onSignUpSuccess }) {
             return;
         }
         setSignupError("");
-        setSignupSuccess("Account created!");
-        setSignupName("");
-        setSignupPhone("");
-        setSignupEmail("");
-        setSignupPassword("");
+        try {
+            const res = await fetch(`${API_BASE_URL}/auth/register`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ name: signupName, email: signupEmail, password: signupPassword, phone: signupPhone })
+            });
+            const data = await res.json();
+            if (!res.ok) throw new Error(data.message || 'Registration failed');
+            // Save token and mark authenticated
+            if (data.token) {
+                localStorage.setItem('token', data.token);
+                localStorage.setItem('isAuthenticated', 'true');
+            }
+            setSignupSuccess('Account created!');
+            setSignupName('');
+            setSignupPhone('');
+            setSignupEmail('');
+            setSignupPassword('');
 
-        setTimeout(() => {
-            onClose(); // Close the signup popup
-            onSignUpSuccess(); // Trigger login popup or redirect
-        }, 1200);
+            setTimeout(() => {
+                onClose();
+                onSignUpSuccess();
+            }, 800);
+        } catch (err) {
+            setSignupError(err.message);
+        }
     };
 
     return (

@@ -2,14 +2,12 @@ import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import Header from "./Header";
 import Footer from "./Footer";
+import { API_BASE_URL } from "./constants";
 
 function MyListings() {
     const navigate = useNavigate();
     const [selectedActivity, setSelectedActivity] = useState(null);
-    const [uploadedListings, setUploadedListings] = useState(() => {
-        const saved = localStorage.getItem('userListings');
-        return saved ? JSON.parse(saved) : [];
-    });
+    const [uploadedListings, setUploadedListings] = useState([]);
     const [isAuthenticated] = useState(() => {
         return localStorage.getItem("isAuthenticated") === "true";
     });
@@ -17,7 +15,24 @@ function MyListings() {
     useEffect(() => {
         if (!isAuthenticated) {
             navigate('/home');
+            return;
         }
+
+        // fetch user's listings
+        const fetchListings = async () => {
+            try {
+                const token = localStorage.getItem('token');
+                const res = await fetch(`${API_BASE_URL}/products/mine`, {
+                    headers: { Authorization: `Bearer ${token}` }
+                });
+                const data = await res.json();
+                if (!res.ok) throw new Error(data.message || 'Failed to fetch listings');
+                setUploadedListings(data || []);
+            } catch (err) {
+                console.error(err);
+            }
+        };
+        fetchListings();
     }, [isAuthenticated, navigate]);
 
     if (!isAuthenticated) {
@@ -216,11 +231,23 @@ function MyListings() {
                                                 <button
                                                     onClick={(e) => {
                                                         e.stopPropagation();
-                                                        if (window.confirm(`Are you sure you want to delete "${listing.name}"?`)) {
-                                                            const updatedListings = uploadedListings.filter(l => l.id !== listing.id);
-                                                            setUploadedListings(updatedListings);
-                                                            localStorage.setItem('userListings', JSON.stringify(updatedListings));
-                                                        }
+                                                            if (window.confirm(`Are you sure you want to delete "${listing.name}"?`)) {
+                                                                (async () => {
+                                                                    try {
+                                                                        const token = localStorage.getItem('token');
+                                                                        const res = await fetch(`${API_BASE_URL}/products/${listing._id}`, {
+                                                                            method: 'DELETE',
+                                                                            headers: { Authorization: `Bearer ${token}` }
+                                                                        });
+                                                                        const data = await res.json();
+                                                                        if (!res.ok) throw new Error(data.message || 'Delete failed');
+                                                                        const updatedListings = uploadedListings.filter(l => l._id !== listing._id);
+                                                                        setUploadedListings(updatedListings);
+                                                                    } catch (err) {
+                                                                        alert(err.message);
+                                                                    }
+                                                                })();
+                                                            }
                                                     }}
                                                     style={{
                                                         padding: "6px 12px",
